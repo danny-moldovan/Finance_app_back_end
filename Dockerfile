@@ -12,7 +12,7 @@ RUN pip install -r requirements.txt
 
 # Copy the application code
 COPY . .
-COPY .env .env
+#COPY .env .env
 
 # Expose the port Flask runs on
 EXPOSE 5000
