@@ -35,3 +35,8 @@ steps:
 # Store images in Google Artifact Registry 
 images:
   - us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/finance-app-back-end:${SHORT_SHA}
+
+# Options
+options:
+  logging: CLOUD_LOGGING_ONLY
+timeout: 3600s
