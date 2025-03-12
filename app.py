@@ -190,6 +190,8 @@ def generate_batch_summary():
         with open(os.path.join('./data', output_filename), "w") as f:
             f.writelines(['This', 'is', 'a', 'test', '.'])
 
+        log.info('Output file created: {}'.format(output_filename))
+
         if processing_result == "Request was successful" and output_filename is not None and os.path.exists(os.path.join('./data', output_filename)):
             log.info('Coping from {} to {}'.format(os.path.join('./data', output_filename), os.path.join('/workspace/data', output_filename)))
             os.system(f"cp {os.path.join('./data', output_filename)} {os.path.join('/workspace/data', output_filename)}")
