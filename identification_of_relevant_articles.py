@@ -97,55 +97,61 @@ def generate_summary_completions(term_of_interest_meaning, extracted_content_fro
     log.info('Asking an LLM to identify relevant articles and generate summaries')
     log.info('')
     yield log_message('Asking an LLM to identify relevant articles and generate summaries')
-    
-    summary_generation_prompt = SUMMARY_GENERATION_PROMPT_TEMPLATE.format(term_of_interest_meaning)
-    
-    article_count = 1
 
-    extracted_content_from_search_results_sorted_keys = sorted(list(extracted_content_from_search_results.keys()))
-    
-    for url in extracted_content_from_search_results_sorted_keys:
-        if extracted_content_from_search_results[url] is not None:
-            summary_generation_prompt += 'ARTICLE {}: \n URL: {} \n TEXT: {} \n \n'.format(article_count, 
-                                                                        url,
-                                                                        extracted_content_from_search_results[url]
-                                                                       )
-            article_count += 1
-
-            
-    log.info('Prompt length: {}'.format(len(summary_generation_prompt + summary_generation_response_format_prompt)))
-    log.info('')
-
-    completions = run_multiple_with_limited_time(send_summary_generation_request_to_llm,
-                                                 [summary_generation_prompt + summary_generation_response_format_prompt] * N_completions, 
-                                                 MAX_TIME_SUMMARY_GENERATION
-                                                )
-
-    for idx in completions.keys():
-        log.info('LLM output {} returned {} items'.format(idx + 1, len(completions[idx])))
-        log.info('')
-        yield log_message('LLM output {} returned {} items'.format(idx + 1, len(completions[idx])))
-
-        '''
-        for item in completions[idx]:
-            print('Article:', item['article_number'])
-            print('URL:', item['article_url'])
-            print('Impact on the term of interest:', item['impact_on_term_of_interest'])
-            print('Impact type:', item['impact_type'])
-            print()
+    try:    
+        summary_generation_prompt = SUMMARY_GENERATION_PROMPT_TEMPLATE.format(term_of_interest_meaning)
         
-        print()
-        '''
+        article_count = 1
+    
+        extracted_content_from_search_results_sorted_keys = sorted(list(extracted_content_from_search_results.keys()))
+        
+        for url in extracted_content_from_search_results_sorted_keys:
+            if extracted_content_from_search_results[url] is not None:
+                summary_generation_prompt += 'ARTICLE {}: \n URL: {} \n TEXT: {} \n \n'.format(article_count, 
+                                                                            url,
+                                                                            extracted_content_from_search_results[url]
+                                                                           )
+                article_count += 1
+    
+                
+        log.info('Prompt length: {}'.format(len(summary_generation_prompt + summary_generation_response_format_prompt)))
+        log.info('')
+    
+        completions = run_multiple_with_limited_time(send_summary_generation_request_to_llm,
+                                                     [summary_generation_prompt + summary_generation_response_format_prompt] * N_completions, 
+                                                     MAX_TIME_SUMMARY_GENERATION
+                                                    )
+    
+        for idx in completions.keys():
+            log.info('LLM output {} returned {} items'.format(idx + 1, len(completions[idx])))
+            log.info('')
+            yield log_message('LLM output {} returned {} items'.format(idx + 1, len(completions[idx])))
+    
+            '''
+            for item in completions[idx]:
+                print('Article:', item['article_number'])
+                print('URL:', item['article_url'])
+                print('Impact on the term of interest:', item['impact_on_term_of_interest'])
+                print('Impact type:', item['impact_type'])
+                print()
+            
+            print()
+            '''
+    
+            '''
+            for item in completions[idx]:
+                yield idx, 'Article', item['article_number']
+                yield idx, 'URL', item['article_url']
+                yield idx, 'Impact on the term of interest', item['impact_on_term_of_interest']
+                yield idx, 'Impact type', item['impact_type']
+            '''
+    
+            yield value_message(completions[idx])
 
-        '''
-        for item in completions[idx]:
-            yield idx, 'Article', item['article_number']
-            yield idx, 'URL', item['article_url']
-            yield idx, 'Impact on the term of interest', item['impact_on_term_of_interest']
-            yield idx, 'Impact type', item['impact_type']
-        '''
-
-        yield value_message(completions[idx])
+    except Exception as e:
+        log.info('Error: {}'.format(e))
+        log.info('')
+        yield log_message('Error: {}'.format(e))
 
     time_end = time.time()
     log.info('Elapsed: {} seconds'.format(int((time_end - time_start) * 100) / 100))

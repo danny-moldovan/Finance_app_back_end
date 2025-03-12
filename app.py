@@ -9,7 +9,7 @@ from time import sleep
 from multiprocessing import Process, Manager
 from google import genai
 from duckduckgo_search import DDGS
-from flask import Flask, request, Response, stream_with_context, jsonify
+from flask import Flask, request, Response, stream_with_context, jsonify, send_file
 #from flask_caching import Cache
 from search_term_generation import *
 from websearch import *
@@ -18,6 +18,7 @@ from identification_of_relevant_articles import *
 from aggregated_answer_generation import *
 from utils import *
 from cache import cache
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
@@ -32,97 +33,103 @@ serialized_results_filename = '/teamspace/studios/this_studio/back_end/serialize
 load_dotenv()
 
 def get_summary_about_search_term(query, output_filename = serialized_results_filename):
-    complete_results = {}
-
-    processing_start = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") 
-    complete_results['processing_start'] = json.dumps(processing_start)
-    log.info("The processing of the search term {} started at {}.".format(query, processing_start))
-    log.info('')
+    try:
+        complete_results = {}
     
-    term_of_interest_meaning = None
+        processing_start = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") 
+        complete_results['processing_start'] = json.dumps(processing_start)
+        log.info("The processing of the search term {} started at {}.".format(query, processing_start))
+        log.info('')
+        
+        term_of_interest_meaning = None
+        
+        all_search_terms_stream = generate_search_terms(query)
     
-    all_search_terms_stream = generate_search_terms(query)
-
-    all_search_terms_list = []
+        all_search_terms_list = []
+        
+        for message in all_search_terms_stream:
+            return_type, return_value = parse_message_sent(message)
+            if return_type == "log":
+                yield message
+            elif term_of_interest_meaning is None:
+                term_of_interest_meaning = return_value
+                yield value_message("Term meaning: {}".format(term_of_interest_meaning))
+            else:
+                yield message
+                all_search_terms_list.append(return_value)
+                #sleep(0.1)
     
-    for message in all_search_terms_stream:
-        return_type, return_value = parse_message_sent(message)
-        if return_type == "log":
+        complete_results['term_of_interest_meaning'] = term_of_interest_meaning
+        complete_results['all_search_terms'] = all_search_terms_list
+        
+        agg_search_results_list = []
+    
+        agg_search_results_stream = search_web(all_search_terms_list)
+        
+        for message in agg_search_results_stream:
+            return_type, return_value = parse_message_sent(message)
+            if return_type == "value":
+                agg_search_results_list.append(return_value)
+            else:
+                yield message
+    
+        complete_results['agg_search_results'] = agg_search_results_list
+    
+        extracted_content_from_search_results_stream = extract_content_from_search_results(agg_search_results_list)
+    
+        extracted_content_from_search_results = {}
+    
+        for message in extracted_content_from_search_results_stream:
+            return_type, return_value = parse_message_sent(message)
+            if return_type == "value":
+                for url in return_value.keys():
+                    extracted_content_from_search_results[url] = return_value[url]
+            else:
+                yield message
+    
+        complete_results['extracted_content_from_search_results'] = extracted_content_from_search_results
+        
+        summary_completions_stream = generate_summary_completions(term_of_interest_meaning, extracted_content_from_search_results)
+        
+        summary_completions = []
+        
+        for message in summary_completions_stream:
+            return_type, return_value = parse_message_sent(message)
+            if return_type == "value":
+                summary_completions.append(return_value)
+                #print(return_value)
+                #print()
+            else:
+                yield message
+    
+        complete_results['summary_completions'] = summary_completions
+        
+        final_output_stream = generate_aggregated_output(term_of_interest_meaning, summary_completions, extracted_content_from_search_results)
+    
+        final_output_list = []
+        
+        for message in final_output_stream:
+            return_type, return_value = parse_message_sent(message)
+            if return_type == "value":
+                final_output_list.append(return_value)    
             yield message
-        elif term_of_interest_meaning is None:
-            term_of_interest_meaning = return_value
-            yield value_message("Term meaning: {}".format(term_of_interest_meaning))
-        else:
-            yield message
-            all_search_terms_list.append(return_value)
-            #sleep(0.1)
-
-    complete_results['term_of_interest_meaning'] = term_of_interest_meaning
-    complete_results['all_search_terms'] = all_search_terms_list
     
-    agg_search_results_list = []
-
-    agg_search_results_stream = search_web(all_search_terms_list)
+        complete_results['final_output'] = final_output_list
     
-    for message in agg_search_results_stream:
-        return_type, return_value = parse_message_sent(message)
-        if return_type == "value":
-            agg_search_results_list.append(return_value)
-        else:
-            yield message
-
-    complete_results['agg_search_results'] = agg_search_results_list
-
-    extracted_content_from_search_results_stream = extract_content_from_search_results(agg_search_results_list)
-
-    extracted_content_from_search_results = {}
-
-    for message in extracted_content_from_search_results_stream:
-        return_type, return_value = parse_message_sent(message)
-        if return_type == "value":
-            for url in return_value.keys():
-                extracted_content_from_search_results[url] = return_value[url]
-        else:
-            yield message
-
-    complete_results['extracted_content_from_search_results'] = extracted_content_from_search_results
+        processing_end = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") 
+        complete_results['processing_end'] = json.dumps(processing_end)
+        log.info("The processing of the search term {} finished at {}.".format(query, processing_end))
+        log.info('')
     
-    summary_completions_stream = generate_summary_completions(term_of_interest_meaning, extracted_content_from_search_results)
-    
-    summary_completions = []
-    
-    for message in summary_completions_stream:
-        return_type, return_value = parse_message_sent(message)
-        if return_type == "value":
-            summary_completions.append(return_value)
-            #print(return_value)
-            #print()
-        else:
-            yield message
+        yield value_message({'complete_results': complete_results})
+        
+        with open(output_filename, "a") as f:  # Open in append mode
+            f.writelines([json.dumps({query: complete_results}) + '\n'])
 
-    complete_results['summary_completions'] = summary_completions
-    
-    final_output_stream = generate_aggregated_output(term_of_interest_meaning, summary_completions, extracted_content_from_search_results)
-
-    final_output_list = []
-    
-    for message in final_output_stream:
-        return_type, return_value = parse_message_sent(message)
-        if return_type == "value":
-            final_output_list.append(return_value)    
-        yield message
-
-    complete_results['final_output'] = final_output_list
-
-    processing_end = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") 
-    complete_results['processing_end'] = json.dumps(processing_end)
-    log.info("The processing of the search term {} finished at {}.".format(query, processing_end))
-    log.info('')
-
-    yield value_message({'complete_results': complete_results})
-    
-    with open(output_filename, "a") as f:  # Open in append mode
-        f.writelines([json.dumps({query: complete_results}) + '\n'])
+    except Exception as e:
+        log.info('Error: {}'.format(e))
+        log.info('')
+        yield log_message('Error: {}'.format(e))
 
 
 @app.route("/health_check", methods=["POST"])
@@ -145,7 +152,7 @@ def stream_health_check(query):
 def health_check_streaming():
     data = request.get_json()
     if not data or "query" not in data:
-        return json.dumps({"error": "Missing 'query' in request body"}), 400, {"Content-Type": "application/json"}
+        return jsonify({"error": "Missing 'query' in request body"}), 400, {"Content-Type": "application/json"}
 
     query = data["query"]
     return Response(stream_with_context(stream_health_check(query)), content_type = "text/plain")
@@ -155,7 +162,7 @@ def health_check_streaming():
 def generate_summary():
     data = request.get_json()
     if not data or "query" not in data:
-        return json.dumps({"error": "Missing 'query' in request body"}), 400, {"Content-Type": "application/json"}
+        return jsonify({"error": "Missing 'query' in request body"}), 400, {"Content-Type": "application/json"}
 
     query = data["query"]
     return Response(stream_with_context(get_summary_about_search_term(query)), content_type = "text/plain")
@@ -165,68 +172,83 @@ def generate_summary():
 @app.route("/generate_batch_summary", methods=["POST"])
 def generate_batch_summary():
     data = request.get_json()
-    if not data or "filename" not in data:
-        return json.dumps({"error": "Missing 'filename' in request body"}), 400, {"Content-Type": "application/json"}
+    if not data or "input_filename" not in data:
+        return jsonify({"error": "Missing 'input_filename' in request body"}), 400, {"Content-Type": "application/json"}
 
-    input_filename = data["filename"]
-    full_input_filename = os.path.join('./data', input_filename)
+    try:
+        input_filename = data.get("input_filename")
+        output_filename = data.get("output_filename")
     
-    '''
-    with open(full_input_filename, "r") as f:
-        input_data = f.readlines()
+        os.system(f"cp {os.path.join('./data', input_filename)} {os.path.join('./data', input_filename)}")
+    
+        processing_result = process_file(input_filename, output_filename)
 
-    output_data = input_data  #TODO: implement the logic
-    output_filename = input_filename.split('.txt')[0] + '_processed.txt'
-    full_output_filename = os.path.join('./data', output_filename)
+        if output_filename is None:
+            output_filename = input_filename.split('.txt')[0] + '_processed.txt'
+        
+        #print(output_filename)
+        #print(os.path.join('./data', output_filename))
+        #print(str(os.path.exists(os.path.join('./data', output_filename))) if os.path.join('./data', output_filename) is not None else 'does not exist')
+    
+        if processing_result == "Request was successful" and os.path.exists(os.path.join('./data', output_filename)):
+            os.system(f"cp {os.path.join('./data', output_filename)} ./data")
+            return jsonify({"message": "Request was successful!"}), 200, {"Content-Type": "application/json"}
 
-    with open(full_output_filename, "w") as f:
-        f.writelines([line + "\n" for line in output_data])
-    '''
-
-    processing_result = process_file(full_input_filename)
-
-    if processing_result == "Request was successful":
-        return jsonify({"message": "Request was successful!"}), 200, {"Content-Type": "application/json"}
-    else:
-        return json.dumps({"error": "Missing 'filename' in request body"}), 400, {"Content-Type": "application/json"}
+    except Exception as e:
+        log.info('Error: {}'.format(e))
+        log.info('')
+        return jsonify({"error": "Error processing file {}".format(e)}), 400, {"Content-Type": "application/json"}
 
 
-def process_file(input_filename):
+def process_file(input_filename, output_filename = None, n_rows = 3):
     log.info('Started processing the file')
     log.info('')
+
+    try:
+        if not input_filename:
+            return "Error: missing 'filename' in request body"
     
-    if not input_filename:
-        return "Error: missing 'filename' in request body"
-
-    full_input_filename = os.path.join('./data', input_filename)
-    with open(full_input_filename, "r") as f:
-        input_data = f.readlines()
-
-    log.info('The file has been read and it has {} lines'.format(len(input_data)))
-    log.info('')
-
-    output_filename = input_filename.split('.txt')[0] + '_processed.txt'
-    full_output_filename = os.path.join('./data', output_filename)
-    log.info('Output filename: {}'.format(full_output_filename))
-    log.info('')
-
-    n_rows = 3
-
-    output_data = []
+        full_input_filename = os.path.join('./data', input_filename)
+        with open(full_input_filename, "r") as f:
+            input_data = f.readlines()
     
-    for row in input_data[:n_rows]:
-        processed_row = ''
-        message_stream = get_summary_about_search_term(row.split('\n')[0], full_output_filename)        
-        for m in message_stream:
-            processed_row += m + '\n'
-
-        output_data.append({row: processed_row})
-        #print({row: processed_row})
+        log.info('The file has been read and it has {} lines'.format(len(input_data)))
+        log.info('')
+    
+        if output_filename is None:
+            output_filename = input_filename.split('.txt')[0] + '_processed.txt'
+            
+        full_output_filename = os.path.join('./data', output_filename)
+        log.info('Output filename: {}'.format(full_output_filename))
+        log.info('')
+    
+        if n_rows is None:
+            input_data_subset = input_data
+        else:
+            input_data_subset = input_data[:n_rows]
+    
+        output_data = []
         
-    #with open(full_output_filename, "w") as f:
-    #    f.writelines([json.dumps(row) for row in output_data])
+        for row in input_data_subset:
+            processed_row = ''
+            message_stream = get_summary_about_search_term(row.split('\n')[0], full_output_filename)        
+            for m in message_stream:
+                processed_row += m + '\n'
+    
+            output_data.append({row: processed_row})
+            #print({row: processed_row})
+    
+            #time.sleep(2)
+            
+        #with open(full_output_filename, "w") as f:
+        #    f.writelines([json.dumps(row) for row in output_data])
+    
+        return "Request was successful"
 
-    return "Request was successful"
+    except Exception as e:
+        log.info('Error: {}'.format(e))
+        log.info('')
+        return 'Error: {}'.format(e)
 
 
 if __name__ == "__main__":

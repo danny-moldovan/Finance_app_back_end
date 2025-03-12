@@ -62,46 +62,52 @@ def generate_aggregated_output(term_of_interest_meaning, summary_completions, ex
     log.info('Processing aggregation of the LLM outputs and generating final output')
     log.info('')
     yield log_message('Processing aggregation of the LLM outputs and generating final output')
-    
-    agg_prompt = AGGREGATION_PROMPT_TEMPLATE.format(term_of_interest_meaning)
-    
-    for completion in summary_completions:
-        for item in completion:
-            url = item['article_url']
-            if url not in extracted_content_from_search_results.keys():
-                log.info(url, ' not parsed')
-                log.info('')
-            else:
-                agg_prompt += 'Article ' + item['article_number'] + \
-                    '\nArticle URL: ' + url + \
-                    '\nArticle text: ' + extracted_content_from_search_results[url] + \
-                    '\nArticle impact on the term of interest: ' + item['impact_on_term_of_interest'] + \
-                    '\nArticle impact type: ' + item['impact_type'] + '\n\n'
 
-    #print('Aggregated prompt: ', agg_prompt + agg_response_format_prompt)
-    log.info('Aggregated prompt length: {}'.format(len(agg_prompt + agg_response_format_prompt)))
-    log.info('')
-    #print(agg_prompt + agg_response_format_prompt)
-    #print()
-
-    r = ask_llm_to_generate_aggregated_output(agg_prompt + agg_response_format_prompt)
-    n = len(r)
-    final_output = json.loads(r[5: n - 1])['items']
-    #print(final_output)
-    #print()
+    try:
+        agg_prompt = AGGREGATION_PROMPT_TEMPLATE.format(term_of_interest_meaning)
+        
+        for completion in summary_completions:
+            for item in completion:
+                url = item['article_url']
+                if url not in extracted_content_from_search_results.keys():
+                    log.info('{} not parsed'.format(url))
+                    log.info('')
+                else:
+                    agg_prompt += 'Article ' + item['article_number'] + \
+                        '\nArticle URL: ' + url + \
+                        '\nArticle text: ' + extracted_content_from_search_results[url] + \
+                        '\nArticle impact on the term of interest: ' + item['impact_on_term_of_interest'] + \
+                        '\nArticle impact type: ' + item['impact_type'] + '\n\n'
     
-    for item in final_output:
-        log.info('News: {}'.format(item['news']))
-        log.info('Most relevant URL: {}'.format(item['most_relevant_article_url']))
-        log.info('Impact on the term of interest: {}'.format(item['impact_of_news_on_term_of_interest']))
-        log.info('Impact type: {}'.format(item['impact_type_of_news']))
+        #print('Aggregated prompt: ', agg_prompt + agg_response_format_prompt)
+        log.info('Aggregated prompt length: {}'.format(len(agg_prompt + agg_response_format_prompt)))
         log.info('')
+        #print(agg_prompt + agg_response_format_prompt)
+        #print()
+    
+        r = ask_llm_to_generate_aggregated_output(agg_prompt + agg_response_format_prompt)
+        n = len(r)
+        final_output = json.loads(r[5: n - 1])['items']
+        #print(final_output)
+        #print()
+        
+        for item in final_output:
+            log.info('News: {}'.format(item['news']))
+            log.info('Most relevant URL: {}'.format(item['most_relevant_article_url']))
+            log.info('Impact on the term of interest: {}'.format(item['impact_of_news_on_term_of_interest']))
+            log.info('Impact type: {}'.format(item['impact_type_of_news']))
+            log.info('')
+    
+            yield value_message('News: {}\n'.format(item['news']))
+            yield value_message('Most relevant URL: {}\n'.format(item['most_relevant_article_url']))
+            yield value_message('Impact on the term of interest: {}\n'.format(item['impact_of_news_on_term_of_interest']))
+            yield value_message('Impact type: {}\n'.format(item['impact_type_of_news']))
 
-        yield value_message('News: {}\n'.format(item['news']))
-        yield value_message('Most relevant URL: {}\n'.format(item['most_relevant_article_url']))
-        yield value_message('Impact on the term of interest: {}\n'.format(item['impact_of_news_on_term_of_interest']))
-        yield value_message('Impact type: {}\n'.format(item['impact_type_of_news']))
-
+    except Exception as e:
+        log.info('Error: {}'.format(e))
+        log.info('')
+        yield log_message('Error: {}'.format(e))
+        
     time_end = time.time()
     log.info('Elapsed: {} seconds'.format(int((time_end - time_start) * 100) / 100))
     log.info('')

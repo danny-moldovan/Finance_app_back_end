@@ -39,19 +39,25 @@ def extract_content_from_search_results(agg_search_results_list):
     yield log_message('Extracting the content from the websites')
     log.info('Extracting the content from the websites')
     log.info('')
-    
-    extracted_content_from_search_results = run_multiple_with_limited_time(extractTextFromURL, agg_search_results_list, 3)
 
-    URLs_could_be_parsed = 0
+    try:
+        extracted_content_from_search_results = run_multiple_with_limited_time(extractTextFromURL, agg_search_results_list, 3)
     
-    for k in extracted_content_from_search_results.keys():
-        if extracted_content_from_search_results[k] is not None and len(extracted_content_from_search_results[k].strip()) > 0:
-            yield value_message({k: extracted_content_from_search_results[k]})
-            URLs_could_be_parsed += 1
-    
-    yield log_message('{} websites could be parsed\n'.format(URLs_could_be_parsed))
-    log.info('{} websites could be parsed\n'.format(URLs_could_be_parsed))
-    log.info('')
+        URLs_could_be_parsed = 0
+        
+        for k in extracted_content_from_search_results.keys():
+            if extracted_content_from_search_results[k] is not None and len(extracted_content_from_search_results[k].strip()) > 0:
+                yield value_message({k: extracted_content_from_search_results[k]})
+                URLs_could_be_parsed += 1
+        
+        yield log_message('{} websites could be parsed\n'.format(URLs_could_be_parsed))
+        log.info('{} websites could be parsed\n'.format(URLs_could_be_parsed))
+        log.info('')
+
+    except Exception as e:
+        log.info('Error: {}'.format(e))
+        log.info('')
+        yield log_message('Error: {}'.format(e))
     
     time_end = time.time()
     log.info('Elapsed: {} seconds\n'.format(int((time_end - time_start) * 100) / 100))

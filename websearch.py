@@ -64,29 +64,38 @@ def search_web(all_search_terms, batch_size = 1, max_time_per_batch = 10):
     log.info('Searching the web')
     log.info('')
 
-    batches = create_batches(all_search_terms, batch_size) #or: len(all_search_terms) // 3
-    yield log_message('Created {} batches of search requests'.format(len(batches)))
-    log.info('Created {} batches of search requests \n'.format(len(batches)))
-    log.info('')
+    try:
+        if len(all_search_terms) == 0:
+            raise Error('No search terms to be searched')
+            
+        batches = create_batches(all_search_terms, batch_size) #or: len(all_search_terms) // 3
+        yield log_message('Created {} batches of search requests'.format(len(batches)))
+        log.info('Created {} batches of search requests \n'.format(len(batches)))
+        log.info('')
+        
+        search_results = run_multiple_with_limited_time(perform_search_per_batch, batches, max_time_per_batch)
     
-    search_results = run_multiple_with_limited_time(perform_search_per_batch, batches, max_time_per_batch)
-
-    agg_search_results = set()
-
-    for k in search_results.keys():
-        if search_results[k] is not None:
-            for u in search_results[k]:
-                agg_search_results.add(u)
-
-    agg_search_results = list(agg_search_results)
-    yield log_message('Found {} distinct web results'.format(len(agg_search_results)))
-    log.info('Found {} distinct web results\n'.format(len(agg_search_results)))
-    log.info('')
+        agg_search_results = set()
     
+        for k in search_results.keys():
+            if search_results[k] is not None:
+                for u in search_results[k]:
+                    agg_search_results.add(u)
+    
+        agg_search_results = list(agg_search_results)
+        yield log_message('Found {} distinct web results'.format(len(agg_search_results)))
+        log.info('Found {} distinct web results\n'.format(len(agg_search_results)))
+        log.info('')
+        
+        for s in agg_search_results:
+            yield value_message(s)
+
+    except Exception as e:
+        log.info('Error: {}'.format(e))
+        log.info('')
+        yield log_message('Error: {}'.format(e))
+
     time_end = time.time()
     log.info('Elapsed: {} seconds'.format(int((time_end - time_start) * 100) / 100))
     log.info('')
-    
-    for s in agg_search_results:
-        yield value_message(s)
         

@@ -87,55 +87,45 @@ def generate_search_terms(query, n_search_terms_each_step = 5):
     log.info('Generating search terms')
     log.info('')
 
-    '''
-    if use_cache:
-        search_terms_retrieved_from_cache = search_cache(search_terms_cache_filename, query.lower())
+    try:
+        if query is None or len(query) == 0:
+            raise Error('Invalid query')
+            
+        r = ask_llm_to_generate_search_terms(query, n_search_terms_each_step)
+        n = len(r)
+        query_understand_results = json.loads(r[5: n - 1])
     
-        if search_terms_retrieved_from_cache is not None:
-            print('Found entry in the cache')
-            query_meaning, all_search_terms = search_terms_retrieved_from_cache
+        all_search_terms = set()
+        for k in ['list_search_terms', 'list_search_terms_tracked_index', 'list_search_terms_country_or_region', 
+            'list_search_terms_industries_and_sectors', 'list_search_terms_related_terms']:
+            for s in query_understand_results[k]:
+                all_search_terms.add(s)
     
-            yield query_meaning
+        all_search_terms = list(all_search_terms)
     
-            for s in all_search_terms:
-                yield s
+        if query not in all_search_terms:
+            all_search_terms.append(query)
     
-            return
-    '''
-
-    r = ask_llm_to_generate_search_terms(query, n_search_terms_each_step)
-    n = len(r)
-    query_understand_results = json.loads(r[5: n - 1])
-
-    all_search_terms = set()
-    for k in ['list_search_terms', 'list_search_terms_tracked_index', 'list_search_terms_country_or_region', 
-        'list_search_terms_industries_and_sectors', 'list_search_terms_related_terms']:
-        for s in query_understand_results[k]:
-            all_search_terms.add(s)
-
-    all_search_terms = list(all_search_terms)
-
-    if query not in all_search_terms:
-        all_search_terms.append(query)
-
-    query_meaning = query_understand_results['term_meaning']
-    log.info('Term meaning: {}'.format(query_meaning))
-    log.info('')
-
-    yield log_message('Generated {} search terms'.format(len(all_search_terms)))
-    log.info('Generated {} search terms'.format(len(all_search_terms)))
-    #print(all_search_terms)
-    log.info('')
+        query_meaning = query_understand_results['term_meaning']
+        log.info('Term meaning: {}'.format(query_meaning))
+        log.info('')
     
+        yield log_message('Generated {} search terms'.format(len(all_search_terms)))
+        log.info('Generated {} search terms'.format(len(all_search_terms)))
+        #print(all_search_terms)
+        log.info('')
+        
+        yield value_message(query_meaning)
+    
+        for s in all_search_terms:
+            yield value_message(s)
+
+    except Exception as e:
+        log.info('Error: {}'.format(e))
+        log.info('')
+        yield log_message('Error: {}'.format(e))
+
     time_end = time.time()
     log.info('Elapsed: {} seconds'.format(int((time_end - time_start) * 100) / 100))
     log.info('')
-
-    #update_cache(search_terms_cache_filename, {query.lower(): (query_meaning, all_search_terms)})
-    #print('Results saved into the cache')
-    
-    yield value_message(query_meaning)
-
-    for s in all_search_terms:
-        yield value_message(s)
         

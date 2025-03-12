@@ -1,0 +1,459 @@
+Started processing the file
+
+The file has been read and it has 18 lines
+
+Output filename: ./data/test_cases_processed.txt
+
+The processing of the search term US Economy started at 2025-03-12 16:54:36.
+
+Generating search terms
+
+Term meaning: US Economy
+
+Generated 21 search terms
+
+Elapsed: 0.0 seconds
+
+Searching the web
+
+Created 21 batches of search requests 
+
+
+For batch number 1 (of length 1) found 10 results
+
+For batch number 3 (of length 1) found 10 results
+
+For batch number 6 (of length 1) found 10 results
+
+For batch number 4 (of length 1) found 10 results
+
+For batch number 2 (of length 1) found 10 results
+
+For batch number 7 (of length 1) found 10 results
+
+For batch number 5 (of length 1) found 10 results
+
+For batch number 10 (of length 1) found 10 results
+
+For batch number 8 (of length 1) found 10 results
+For batch number 9 (of length 1) found 10 results
+For batch number 11 (of length 1) found 10 results
+
+
+
+For batch number 16 (of length 1) found 10 results
+For batch number 14 (of length 1) found 10 results
+
+
+For batch number 13 (of length 1) found 10 results
+
+For batch number 15 (of length 1) found 10 results
+
+For batch number 18 (of length 1) found 10 results
+
+For batch number 17 (of length 1) found 10 results
+
+For batch number 19 (of length 1) found 10 results
+For batch number 12 (of length 1) found 10 results
+
+For batch number 20 (of length 1) found 10 results
+For batch number 21 (of length 1) found 10 results
+
+
+
+Found 156 distinct web results
+
+
+Elapsed: 0.1 seconds
+
+Extracting the content from the websites
+
+72 websites could be parsed
+
+
+Elapsed: 0.67 seconds
+
+
+Asking an LLM to identify relevant articles and generate summaries
+
+Prompt length: 292707
+
+LLM output 1 returned 10 items
+
+LLM output 2 returned 10 items
+
+LLM output 3 returned 10 items
+
+Elapsed: 0.02 seconds
+
+Processing aggregation of the LLM outputs and generating final output
+
+Aggregated prompt length: 159461
+
+News: Growing Recession Fears Intensify as Trump's Trade Policies Trigger Market Turmoil and Economic Uncertainty
+Most relevant URL: https://www.usatoday.com/story/news/2025/03/11/recession-tips-stocks-plunge-trump-tariff-fears/82260561007/
+Impact on the term of interest: President Trump's escalating trade war and tariff threats are causing significant market volatility, plummeting consumer confidence, and increasing recession fears. Economists warn that these policies could lead to higher consumer prices, reduced business investment, and an overall economic downturn.
+Impact type: negative
+
+News: Goldman Sachs and S&P Global Downgrade US GDP Growth Forecasts, Citing Negative Impact of Tariffs
+Most relevant URL: https://www.livemint.com/global/goldman-sachs-cuts-forecast-for-us-economy-trump-s-tariffs-are-to-blame-11741746040808.html
+Impact on the term of interest: Major financial institutions like Goldman Sachs and S&P Global have revised down their US GDP growth forecasts for 2025. This downgrade is directly attributed to the anticipated adverse effects of President Trump's tariff policies on consumer prices, business investments, and overall economic activity, signaling a weaker economic outlook.
+Impact type: negative
+
+News: Ray Dalio Warns of Imminent US Debt Crisis with Potential for Global Economic Repercussions
+Most relevant URL: https://www.moneycontrol.com/news/business/markets/ray-dalio-sounds-alarm-on-us-debt-crisis-and-its-worldwide-impact-12963345.html
+Impact on the term of interest: Ray Dalio, a prominent investment strategist, has raised concerns about a looming US debt crisis. He points to a potential lack of buyers for the substantial amount of US debt that needs to be sold, which could trigger a severe supply-demand imbalance and have profound negative consequences for the US and global economies.
+Impact type: negative
+
+News: Consumer Spending Weakens, Adding to Economic Slowdown Concerns
+Most relevant URL: https://www.businessinsider.com/airlines-retailer-big-box-stocks-selloff-consumer-spending-strength-recession-2025-3
+Impact on the term of interest: Airlines and retailers are reporting a decline in consumer spending, a key driver of the US economy. This weakening demand, influenced by persistent inflation, high interest rates, and tariffs, indicates a significant slowdown in economic activity and heightens the risk of a recession.
+Impact type: negative
+
+Elapsed: 0.0 seconds
+
+The processing of the search term US Economy finished at 2025-03-12 16:54:37.
+
+The processing of the search term S&P 500 started at 2025-03-12 16:54:37.
+
+Generating search terms
+
+Term meaning: Standard & Poor's 500 Index
+
+Generated 21 search terms
+
+Elapsed: 0.0 seconds
+
+Searching the web
+
+Created 21 batches of search requests 
+
+
+For batch number 1 (of length 1) found 10 results
+
+For batch number 2 (of length 1) found 10 results
+
+For batch number 3 (of length 1) found 10 results
+
+For batch number 4 (of length 1) found 10 results
+
+For batch number 5 (of length 1) found 10 results
+For batch number 7 (of length 1) found 10 results
+
+
+For batch number 9 (of length 1) found 10 results
+
+For batch number 8 (of length 1) found 10 results
+
+For batch number 11 (of length 1) found 10 results
+
+For batch number 13 (of length 1) found 10 results
+
+For batch number 12 (of length 1) found 10 results
+
+For batch number 6 (of length 1) found 10 results
+
+For batch number 14 (of length 1) found 10 results
+
+For batch number 10 (of length 1) found 0 results
+
+For batch number 16 (of length 1) found 10 results
+For batch number 17 (of length 1) found 10 results
+
+
+For batch number 20 (of length 1) found 10 results
+
+For batch number 15 (of length 1) found 10 results
+
+For batch number 21 (of length 1) found 10 results
+
+For batch number 18 (of length 1) found 10 results
+For batch number 19 (of length 1) found 10 results
+
+
+Found 137 distinct web results
+
+
+Elapsed: 0.14 seconds
+
+Extracting the content from the websites
+
+50 websites could be parsed
+
+
+Elapsed: 0.62 seconds
+
+
+Asking an LLM to identify relevant articles and generate summaries
+
+Prompt length: 139048
+
+LLM output 1 returned 10 items
+
+LLM output 2 returned 10 items
+
+LLM output 3 returned 10 items
+
+Elapsed: 0.03 seconds
+
+Processing aggregation of the LLM outputs and generating final output
+
+Aggregated prompt length: 137536
+
+News: Wall Street Suffers Major Rout Amid Tariff Fears, S&P 500 Plunges, Erasing Trillions in Market Value
+Most relevant URL: https://www.channelnewsasia.com/business/asia-stock-markets-us-tariff-losses-4995281
+Impact on the term of interest: US President Trump's tariff policies triggered a massive sell-off in the stock market, resulting in the S&P 500 experiencing a significant plunge and wiping out trillions of dollars in market capitalization, signaling strong investor concern and uncertainty.
+Impact type: negative
+
+News: S&P 500 Enters Correction Territory as Tariff Turmoil and Market Jitters Intensify
+Most relevant URL: https://www.financialexpress.com/market/wall-street-wobbles-tariff-turmoil-sparks-market-jitters-sampp-500-hits-correction-territory-3774915/
+Impact on the term of interest: Amidst growing concerns over trade tensions and volatile tariff policies, the S&P 500 officially entered correction territory, defined as a 10% drop from its recent peak, indicating increased market instability and potential for further downward movement.
+Impact type: negative
+
+News: Goldman Sachs Cuts S&P 500 Year-End Target, Citing Weaker Economic Outlook and Tariff Risks
+Most relevant URL: https://www.moneycontrol.com/news/business/markets/goldman-sachs-slashes-s-p-500-target-after-recent-market-rout-12963427.html
+Impact on the term of interest: Goldman Sachs revised its year-end target for the S&P 500 downwards, from 6,500 to 6,200, reflecting a reduced GDP growth forecast and elevated uncertainty due to persisting trade tensions and the anticipated negative impacts of tariffs on the US economy, signaling a less optimistic outlook for the index.
+Impact type: negative
+
+News: Former Treasury Secretary Summers Warns of 50% Probability of US Recession
+Most relevant URL: https://markets.businessinsider.com/news/stocks/why-former-u-s-treasury-secretary-summers-sees-a-50-recession-risk-1034466133
+Impact on the term of interest: Former US Treasury Secretary Lawrence Summers expressed concerns about a nearly 50% chance of a US recession this year, attributing the risk to policies enacted by the Trump administration, including tariffs, which are creating economic uncertainty and potentially hindering business investment and consumer confidence, thus posing a threat to the S&P 500.
+Impact type: negative
+
+News: Ray Dalio Sounds Alarm on Severe US Debt Crisis and Potential Global Economic Fallout
+Most relevant URL: https://www.moneycontrol.com/news/business/markets/ray-dalio-sounds-alarm-on-us-debt-crisis-and-its-worldwide-impact-12963345.html
+Impact on the term of interest: Ray Dalio, a prominent investor, warned about a looming US debt crisis due to a supply-demand imbalance, emphasizing that the US needs to sell a substantial amount of debt but may face insufficient demand. This situation poses a systemic risk to the US financial system and global economy, potentially leading to significant negative consequences for the S&P 500.
+Impact type: negative
+
+Elapsed: 12.99 seconds
+
+The processing of the search term S&P 500 finished at 2025-03-12 16:54:51.
+
+The processing of the search term US stock market started at 2025-03-12 16:54:51.
+
+Generating search terms
+
+Term meaning: US stock market
+
+Generated 20 search terms
+
+Elapsed: 0.0 seconds
+
+Searching the web
+
+Created 20 batches of search requests 
+
+
+For batch number 1 (of length 1) found 10 results
+
+For batch number 2 (of length 1) found 10 results
+
+For batch number 3 (of length 1) found 10 results
+
+For batch number 4 (of length 1) found 10 results
+
+For batch number 5 (of length 1) found 10 results
+
+For batch number 6 (of length 1) found 10 results
+
+For batch number 9 (of length 1) found 10 results
+
+For batch number 7 (of length 1) found 10 results
+
+For batch number 8 (of length 1) found 10 results
+
+For batch number 11 (of length 1) found 10 results
+
+For batch number 10 (of length 1) found 10 results
+
+For batch number 12 (of length 1) found 0 results
+
+For batch number 13 (of length 1) found 10 results
+
+For batch number 14 (of length 1) found 10 results
+
+For batch number 16 (of length 1) found 10 results
+
+For batch number 17 (of length 1) found 10 results
+
+For batch number 15 (of length 1) found 10 results
+
+For batch number 19 (of length 1) found 10 results
+
+For batch number 18 (of length 1) found 10 results
+
+For batch number 20 (of length 1) found 10 results
+
+Found 159 distinct web results
+
+
+Elapsed: 0.09 seconds
+
+Extracting the content from the websites
+
+66 websites could be parsed
+
+
+Elapsed: 14.21 seconds
+
+
+Asking an LLM to identify relevant articles and generate summaries
+
+Prompt length: 316717
+
+LLM output 3 returned 10 items
+
+LLM output 2 returned 10 items
+
+LLM output 1 returned 10 items
+
+Elapsed: 34.66 seconds
+
+Processing aggregation of the LLM outputs and generating final output
+
+Aggregated prompt length: 222465
+
+News: US Stock Market Plunges to Three-Year Low Amid Rising Tariff and Recession Fears
+Most relevant URL: https://www.usatoday.com/story/news/2025/03/11/recession-tips-stocks-plunge-trump-tariff-fears/82260561007/
+Impact on the term of interest: The US stock market experienced a significant downturn, marking its worst day in three years. The Dow Jones Industrial Average plummeted 890 points, while the S&P 500 and Nasdaq also suffered substantial losses. This sharp decline was triggered by growing concerns on Wall Street regarding President Trump's newly implemented tariff policies and the escalating risk of a potential recession, both of which are expected to negatively impact the US economy.
+Impact type: negative
+
+News: Goldman Sachs and Other Financial Institutions Downgrade Outlook for US Equities Citing Tariff and Economic Uncertainty
+Most relevant URL: https://www.aol.com/finance/goldman-sachs-cuts-p-500-135231693.html
+Impact on the term of interest: Goldman Sachs has lowered its year-end target for the S&P 500, reducing it from 6,500 to 6,200. This decision reflects concerns about the detrimental effects of tariffs and the overall uncertainty surrounding the economic and political landscape under the Trump administration. Other financial institutions, like Citi, have also expressed a more cautious outlook, downgrading US equities to 'neutral' due to similar fears of recession and weakening economic momentum. These actions by major financial players indicate a diminished confidence in the future performance of the US stock market.
+Impact type: negative
+
+News: Escalating Trade Tensions and Tariff Policies Spark Broad Equity Sell-Off and Market Volatility
+Most relevant URL: https://www.bloomberg.com/news/live-blog/2025-03-11/stocks-swoon-on-tariff-escalation
+Impact on the term of interest: President Trump's aggressive trade policies, including increased tariffs on steel and aluminum and threats of further tariffs on other countries, have intensified trade tensions and created significant market volatility. This has led to a widespread sell-off in equities as investors become increasingly concerned about the potential for an economic slowdown and the negative consequences of trade wars on corporate earnings and economic growth. The uncertainty surrounding these policies is driving investors to seek safer assets, moving away from stocks and contributing to downward pressure on the US stock market.
+Impact type: negative
+
+News: Technology Sector Heavily Hit as Nasdaq Suffers Steepest Drop Since 2022 Amid Recession and Tariff Concerns
+Most relevant URL: https://www.livemint.com/market/stock-market-news/momentum-stocks-bear-market-stock-recommendations-raja-venkatraman-it-stocks-fmcg-auto-stocks-11741697319206.html
+Impact on the term of interest: The Nasdaq Composite index, heavily weighted in technology stocks, experienced a sharp 4% decline, marking its most significant single-day drop since 2022. This downturn was primarily driven by mounting fears of a US recession and the uncertainties created by President Trump's trade tariff policies. The technology sector, often seen as a high-growth area, is particularly sensitive to economic downturns and trade disruptions, leading to a substantial negative impact on tech stocks and the broader US stock market.
+Impact type: negative
+
+News: Analysts Suggest Trump Administration May Be Intentionally Stressing Economy, Causing Market Instability
+Most relevant URL: https://www.aol.com/finance/commentary-trump-may-wooing-bidencession-161900998.html
+Impact on the term of interest: Commentaries and analyses suggest a growing concern that President Trump's administration might be deliberately pursuing policies that stress the US economy, potentially to trigger a recession early in his term and shift blame to the previous administration. This perceived strategy, characterized by aggressive tariff implementation and a seeming disregard for stock market reactions, is creating significant unease among investors and contributing to market instability, as it introduces an element of policy-driven economic risk and uncertainty.
+Impact type: negative
+
+Elapsed: 15.84 seconds
+
+The processing of the search term US stock market finished at 2025-03-12 16:55:56.
+
+The processing of the search term CHF/USD started at 2025-03-12 16:58:50.
+
+Generating search terms
+
+Term meaning: Swiss Franc/US Dollar
+
+Generated 21 search terms
+
+Elapsed: 6.17 seconds
+
+Searching the web
+
+Created 21 batches of search requests 
+
+
+For batch number 1 (of length 1) found 10 results
+
+For batch number 17 (of length 1) found 10 results
+
+For batch number 3 (of length 1) found 10 results
+
+For batch number 5 (of length 1) found 10 results
+
+For batch number 20 (of length 1) found 10 results
+
+For batch number 18 (of length 1) found 10 results
+
+For batch number 8 (of length 1) found 10 results
+
+For batch number 21 (of length 1) found 10 results
+
+For batch number 6 (of length 1) found 10 results
+
+For batch number 9 (of length 1) found 10 results
+
+For batch number 11 (of length 1) found 10 results
+
+For batch number 19 (of length 1) found 10 results
+
+For batch number 13 (of length 1) found 10 results
+
+For batch number 2 (of length 1) found 10 results
+
+For batch number 14 (of length 1) found 10 results
+
+For batch number 16 (of length 1) found 10 results
+
+For batch number 15 (of length 1) found 10 results
+
+For batch number 12 (of length 1) found 10 results
+
+For batch number 7 (of length 1) found 10 results
+For batch number 10 (of length 1) found 10 results
+
+For batch number 4 (of length 1) found 10 results
+
+
+Found 155 distinct web results
+
+
+Elapsed: 1.46 seconds
+
+Extracting the content from the websites
+
+79 websites could be parsed
+
+
+Elapsed: 11.12 seconds
+
+
+Asking an LLM to identify relevant articles and generate summaries
+
+Prompt length: 383362
+
+LLM output 3 returned 10 items
+
+LLM output 2 returned 10 items
+
+LLM output 1 returned 10 items
+
+Elapsed: 25.47 seconds
+
+Processing aggregation of the LLM outputs and generating final output
+
+Aggregated prompt length: 257600
+
+News: US trade war escalates as Trump's tariffs trigger EU and Canada retaliation, boosting safe-haven demand for Swiss Franc.
+Most relevant URL: https://www.mirror.co.uk/news/us-news/donald-trump-tariffs-spark-trade-34844502
+Impact on the term of interest: Trump's tariffs on steel and aluminum have initiated a trade war with EU and Canada, causing global economic instability and increasing demand for safe-haven currencies like the Swiss Franc, thus strengthening it against the US Dollar.
+Impact type: positive
+
+News: Growing fears of US recession amid Trump's trade policies and job cuts weaken US Dollar, driving investors to safe-haven Swiss Franc.
+Most relevant URL: https://www.usatoday.com/story/news/local/washington/2025/03/11/are-we-going-into-recession-trump-stokes-fears-us-washington/82273513007
+Impact on the term of interest: Rising concerns about a US recession due to Trump's trade war and federal job cuts are weakening the US Dollar as investors anticipate slower economic growth and potential interest rate cuts. This environment favors safe-haven currencies like the Swiss Franc, leading to its appreciation against the US Dollar.
+Impact type: positive
+
+News: Uncertainty in financial markets rises as Trump's tariffs on steel and aluminum take effect, increasing demand for safe-haven Swiss Franc.
+Most relevant URL: https://www3.nhk.or.jp/nhkworld/en/news/20250312_08/
+Impact on the term of interest: The implementation of US tariffs on steel and aluminum is generating uncertainty and volatility in financial markets. This uncertainty boosts the appeal of safe-haven assets, including the Swiss Franc, potentially causing it to strengthen against the US Dollar.
+Impact type: positive
+
+News: Swiss government seeks talks with US to analyze negative impact of new US tariffs on Swiss economy.
+Most relevant URL: https://www.reuters.com/world/swiss-seeking-talks-with-us-trade-analysing-potential-tariff-impact-2025-03-12/
+Impact on the term of interest: Switzerland is engaging with the US to discuss the potential adverse effects of newly imposed US tariffs on its economy. This news suggests potential economic headwinds for Switzerland due to trade tensions, which could negatively affect the Swiss Franc, causing it to weaken against the US Dollar.
+Impact type: negative
+
+News: Experts predict Trump's trade conflicts will hinder Swiss economic growth.
+Most relevant URL: https://www.swissinfo.ch/eng/foreign-affairs/trumps-trade-conflicts-hinder-switzerlands-economic-growth/88998240
+Impact on the term of interest: Analysts forecast that President Trump's trade policies and ongoing trade disputes are expected to impede Switzerland's economic growth, particularly in its export sector. This less favorable economic outlook for Switzerland may lead to a depreciation of the Swiss Franc against the US Dollar as investors anticipate reduced economic activity.
+Impact type: negative
+
+Elapsed: 11.39 seconds
+
+The processing of the search term CHF/USD finished at 2025-03-12 16:59:46.
+
