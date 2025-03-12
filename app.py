@@ -125,6 +125,32 @@ def get_summary_about_search_term(query, output_filename = serialized_results_fi
         f.writelines([json.dumps({query: complete_results}) + '\n'])
 
 
+@app.route("/health_check", methods=["POST"])
+def health_check():
+    data = request.get_json()
+    if not data or "query" not in data:
+        return json.dumps({"error": "Missing 'query' in request body"}), 400, {"Content-Type": "application/json"}
+
+    query = data["query"]
+    return jsonify({"message": "Request {} was successful!".format(query)}), 200, {"Content-Type": "application/json"}
+
+
+def stream_health_check(query):
+    yield 'Request' + '\n'
+    yield query + '\n'
+    yield 'was successful!' + '\n'
+
+
+@app.route("/health_check_streaming", methods=["POST"])
+def health_check_streaming():
+    data = request.get_json()
+    if not data or "query" not in data:
+        return json.dumps({"error": "Missing 'query' in request body"}), 400, {"Content-Type": "application/json"}
+
+    query = data["query"]
+    return Response(stream_with_context(stream_health_check(query)), content_type = "text/plain")
+
+
 @app.route("/generate_summary", methods=["POST"])
 def generate_summary():
     data = request.get_json()
