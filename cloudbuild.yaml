@@ -22,7 +22,7 @@ steps:
 
   # Display output file
   - name: 'gcr.io/cloud-builder/docker'
-    args ['head', '-10', '/app/data/test_cases_processed.txt']
+    args: ['head', '-10', '/app/data/test_cases_processed.txt']
 
   # Docker push to Google Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
