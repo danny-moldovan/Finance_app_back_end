@@ -54,7 +54,7 @@ steps:
            '--region', 'us-central1', '--platform', 'managed', 
            '--allow-unauthenticated',
            '--set-secrets=GEMINI_API_KEY=GEMINI_API_KEY:latest',
-           '--memory', '1000Mi']
+           '--memory', '1300Mi']
 
 # Save test logs to Google Cloud Storage
 #artifacts:
