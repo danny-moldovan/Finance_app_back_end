@@ -21,7 +21,7 @@ steps:
            'python', '-c', "from app import process_file; process_file('test_cases.txt')"]
 
   # Display output file
-  - name: 'gcr.io/cloud-builder/docker'
+  - name: 'gcr.io/cloud-builders/docker'
     args: ['head', '-10', '/app/data/test_cases_processed.txt']
 
   # Docker push to Google Artifact Registry
