@@ -195,8 +195,8 @@ def generate_batch_summary():
         #print(str(os.path.exists(os.path.join('./data', output_filename))) if os.path.join('./data', output_filename) is not None else 'does not exist')
     
         if processing_result == "Request was successful" and output_filename is not None and os.path.exists(os.path.join('./data', output_filename)):
-            log.info('Coping from {} to {}'.format(os.path.join('./data', output_filename), os.path.join('workspace/data', output_filename)))
-            os.system(f"cp {os.path.join('./data', output_filename)} {os.path.join('workspace/data', output_filename)}")
+            log.info('Coping from {} to {}'.format(os.path.join('./data', output_filename), os.path.join('/workspace/data', output_filename)))
+            os.system(f"cp {os.path.join('./data', output_filename)} {os.path.join('/workspace/data', output_filename)}")
             return jsonify({"message": "Request was successful!"}), 200, {"Content-Type": "application/json"}
 
     except Exception as e:
