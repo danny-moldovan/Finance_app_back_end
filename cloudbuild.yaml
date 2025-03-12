@@ -25,6 +25,15 @@ steps:
       - "-d"
       - '{"input_filename": "test_cases.txt", "output_filename": "test_cases_processed_current.txt"}'
 
+  # Listing all files in the ./data directory
+  - name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        echo "Listing all files in ./data directory:"
+        ls -lh ./data
+        
   # Upload the file to a GCS bucket (implemented a for loop just in case there are multiple such files)
   - name: "gcr.io/cloud-builders/gcloud"
     entrypoint: "bash"
