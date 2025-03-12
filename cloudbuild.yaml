@@ -32,7 +32,7 @@ steps:
       - "-c"
       - |
         echo "Moving all files starting with 'test_cases_processed_current' to GCS..."
-        for file in test_cases_processed_current*; do
+        for file in ./data/test_cases_processed_current*; do
           if [ -f "$file" ]; then
             echo "Uploading $file to GCS..."
             gsutil mv "$file" gs://finance-app-back-end-evaluation-logs/
