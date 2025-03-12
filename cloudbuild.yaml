@@ -23,7 +23,7 @@ steps:
     args: ['gcloud', 'run', 'deploy', 'finance-app-back-end-${SHORT_SHA}', 
            '--image=us-central1-docker.pkg.dev/${PROJECT_ID}/finance-app-back-end/app:${SHORT_SHA}', 
            '--region', 'us-central1', '--platform', 'managed', 
-           '--allow-unauthenticated'
+           '--allow-unauthenticated',
            '--set-screts=GEMINI_API_KEY=GEMINI_API_KEY:latest']
 
 # Save test logs to Google Cloud Storage
