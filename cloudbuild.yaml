@@ -31,7 +31,7 @@ steps:
     args:
       - "-c"
       - |
-        echo "Listing all files in the /workspace directory:"
+        echo "Listing all files in the /workspace/data directory:"
         ls -lh /workspace/data
         
   # Upload the file to a GCS bucket (implemented a for loop just in case there are multiple such files)
