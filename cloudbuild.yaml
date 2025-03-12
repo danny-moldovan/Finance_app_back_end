@@ -15,14 +15,37 @@ steps:
            'us-central1-docker.pkg.dev/${PROJECT_ID}/finance-app-back-end/app:latest', '.']
 
   # Run evaluation on the test set
-  #- name: 'gcr.io/cloud-builders/docker'
-  #  args: ['run', '--rm', '-v', '/data:/app/data',
-  #         'us-central1-docker.pkg.dev/${PROJECT_ID}/finance-app-back-end/app:latest', 
-  #         'python', '-c', "from app import process_file; process_file('test_cases.txt')"]
+  - name: "curlimages/curl"
+    args:
+      - "-X"
+      - "POST"
+      - "https://finance-app-back-end-911835065349.us-central1.run.app/generate_batch_summary"
+      - "-H"
+      - "Content-Type: application/json"
+      - "-d"
+      - '{"input_filename": "test_cases.txt", "output_filename": "test_cases_processed_current.txt"}'
 
+  # Add a timestamp to the filename
+  - name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        TIMESTAMP=$(date +"%Y%m%d-%H%M%S")
+        NEW_FILENAME="test_cases_processed_current_${TIMESTAMP}.txt"
+        mv test_cases_processed_current.txt $NEW_FILENAME
+        echo "Renamed file to: $NEW_FILENAME"
+    
+  # Upload the file to a GCS bucket
+  - name: "gcr.io/cloud-builders/gsutil"
+    args:
+      - "cp"
+      - "$NEW_FILENAME"
+      - "gs://finance-app-back-end-evaluation-logs/"
+    
   # Display output file
   #- name: 'gcr.io/cloud-builders/docker'
-  #  args: ['head', '-10', '/app/data/test_cases_processed.txt']
+  #  args: ['tail', '-10', '/app/data/test_cases_processed.txt']
 
   # Docker push to Google Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
