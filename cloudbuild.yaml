@@ -15,7 +15,7 @@ steps:
            'us-central1-docker.pkg.dev/${PROJECT_ID}/finance-app-back-end/app:latest', '.']
 
   # Run evaluation on the test set
-  - name: "curlimages/curl"
+  - name: "gcr.io/cloud-builders/curl"
     args:
       - "-X"
       - "POST"
