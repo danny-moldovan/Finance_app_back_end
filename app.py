@@ -192,6 +192,8 @@ def generate_batch_summary():
 
         log.info('Output file created: {}'.format(output_filename))
 
+        os.system("mkdir -p /workspace/data")
+        
         if processing_result == "Request was successful" and output_filename is not None and os.path.exists(os.path.join('./data', output_filename)):
             log.info('Coping from {} to {}'.format(os.path.join('./data', output_filename), os.path.join('/workspace/data', output_filename)))
             os.system(f"cp {os.path.join('./data', output_filename)} {os.path.join('/workspace/data', output_filename)}")
