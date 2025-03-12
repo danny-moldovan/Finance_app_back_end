@@ -20,7 +20,7 @@ steps:
 
   # Deploy to Cloud Run
   - name: google/cloud-sdk
-    args: ['gcloud', 'run', 'deploy', 'finance-app-back-end-${SHORT_SHA}', 
+    args: ['gcloud', 'run', 'deploy', 'finance-app-back-end', 
            '--image=us-central1-docker.pkg.dev/${PROJECT_ID}/finance-app-back-end/app:${SHORT_SHA}', 
            '--region', 'us-central1', '--platform', 'managed', 
            '--allow-unauthenticated',
