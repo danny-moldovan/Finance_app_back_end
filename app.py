@@ -180,17 +180,21 @@ def generate_batch_summary():
         output_filename = data.get("output_filename")
     
         os.system(f"cp {os.path.join('./data', input_filename)} {os.path.join('./data', input_filename)}")
-    
-        processing_result = process_file(input_filename, output_filename)
 
-        if output_filename is None:
-            output_filename = input_filename.split('.txt')[0] + '_processed.txt'
+        current_timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") 
         
+        #if output_filename is None:
+        #    output_filename = input_filename.split('.txt')[0] + '_processed' + current_timestamp + '.txt'
+        #else:
+        #    output_filename = output_filename.split('.txt')[0] + current_timestamp + '.txt'
+            
+        processing_result, output_filename = process_file(input_filename, output_filename)
+
         #print(output_filename)
         #print(os.path.join('./data', output_filename))
         #print(str(os.path.exists(os.path.join('./data', output_filename))) if os.path.join('./data', output_filename) is not None else 'does not exist')
     
-        if processing_result == "Request was successful" and os.path.exists(os.path.join('./data', output_filename)):
+        if processing_result == "Request was successful" and output_filename is not None and os.path.exists(os.path.join('./data', output_filename)):
             os.system(f"cp {os.path.join('./data', output_filename)} ./data")
             return jsonify({"message": "Request was successful!"}), 200, {"Content-Type": "application/json"}
 
@@ -206,7 +210,7 @@ def process_file(input_filename, output_filename = None, n_rows = 3):
 
     try:
         if not input_filename:
-            return "Error: missing 'filename' in request body"
+            return "Error: missing 'filename' in request body", ''
     
         full_input_filename = os.path.join('./data', input_filename)
         with open(full_input_filename, "r") as f:
@@ -214,9 +218,13 @@ def process_file(input_filename, output_filename = None, n_rows = 3):
     
         log.info('The file has been read and it has {} lines'.format(len(input_data)))
         log.info('')
-    
+
+        current_timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S").replace(' ', '-') 
+        
         if output_filename is None:
-            output_filename = input_filename.split('.txt')[0] + '_processed.txt'
+            output_filename = input_filename.split('.txt')[0] + '-processed-' + current_timestamp + '.txt'
+        else:
+            output_filename = output_filename.split('.txt')[0] + '-' + current_timestamp + '.txt'
             
         full_output_filename = os.path.join('./data', output_filename)
         log.info('Output filename: {}'.format(full_output_filename))
@@ -243,12 +251,12 @@ def process_file(input_filename, output_filename = None, n_rows = 3):
         #with open(full_output_filename, "w") as f:
         #    f.writelines([json.dumps(row) for row in output_data])
     
-        return "Request was successful"
+        return "Request was successful", output_filename
 
     except Exception as e:
         log.info('Error: {}'.format(e))
         log.info('')
-        return 'Error: {}'.format(e)
+        return 'Error: {}'.format(e), ''
 
 
 if __name__ == "__main__":

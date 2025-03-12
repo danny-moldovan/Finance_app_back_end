@@ -25,23 +25,19 @@ steps:
       - "-d"
       - '{"input_filename": "test_cases.txt", "output_filename": "test_cases_processed_current.txt"}'
 
-  # Add a timestamp to the filename
+  # Upload the file to a GCS bucket (implemented a for loop just in case there are multiple such files)
   - name: "gcr.io/cloud-builders/gcloud"
     entrypoint: "bash"
     args:
       - "-c"
       - |
-        TIMESTAMP=$(date +"%Y%m%d-%H%M%S")
-        NEW_FILENAME="test_cases_processed_current_${TIMESTAMP}.txt"
-        mv test_cases_processed_current.txt $NEW_FILENAME
-        echo "Renamed file to: $NEW_FILENAME"
-    
-  # Upload the file to a GCS bucket
-  - name: "gcr.io/cloud-builders/gsutil"
-    args:
-      - "cp"
-      - "$NEW_FILENAME"
-      - "gs://finance-app-back-end-evaluation-logs/"
+        echo "Moving all files starting with 'test_cases_processed_current' to GCS..."
+        for file in test_cases_processed_current*; do
+          if [ -f "$file" ]; then
+            echo "Uploading $file to GCS..."
+            gsutil mv "$file" gs://finance-app-back-end-evaluation-logs/
+          fi
+        done
     
   # Display output file
   #- name: 'gcr.io/cloud-builders/docker'
