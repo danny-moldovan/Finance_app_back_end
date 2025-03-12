@@ -12,16 +12,26 @@ steps:
   # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 
-           'us-central1-docker.pkg.dev/${PROJECT_ID}/finance-app-back-end/app:${SHORT_SHA}', '.']
+           'us-central1-docker.pkg.dev/${PROJECT_ID}/finance-app-back-end/app:latest', '.']
+
+  # Run evaluation on the test set
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['docker', 'run', '-v', '$(pwd)/data:/app/data',
+           'us-central1-docker.pkg.dev/${PROJECT_ID}/finance-app-back-end/app:latest', 
+           'python', '-c', "from app import process_file; process_file('test_cases.txt')"]
+
+  # Display output file
+  - name: 'gcr.io/cloud-builder/docker'
+    args ['head', '-10', '/app/data/test_cases_processed.txt']
 
   # Docker push to Google Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push',  'us-central1-docker.pkg.dev/${PROJECT_ID}/finance-app-back-end/app:${SHORT_SHA}']
+    args: ['push',  'us-central1-docker.pkg.dev/${PROJECT_ID}/finance-app-back-end/app:latest']
 
   # Deploy to Cloud Run
   - name: google/cloud-sdk
     args: ['gcloud', 'run', 'deploy', 'finance-app-back-end', 
-           '--image=us-central1-docker.pkg.dev/${PROJECT_ID}/finance-app-back-end/app:${SHORT_SHA}', 
+           '--image=us-central1-docker.pkg.dev/${PROJECT_ID}/finance-app-back-end/app:latest', 
            '--region', 'us-central1', '--platform', 'managed', 
            '--allow-unauthenticated',
            '--set-secrets=GEMINI_API_KEY=GEMINI_API_KEY:latest',
