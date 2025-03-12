@@ -16,7 +16,7 @@ steps:
 
   # Run evaluation on the test set
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['docker', 'run', '-v', '$(pwd)/data:/app/data',
+    args: ['run', '--rm', '-v', '$(pwd)/data:/app/data',
            'us-central1-docker.pkg.dev/${PROJECT_ID}/finance-app-back-end/app:latest', 
            'python', '-c', "from app import process_file; process_file('test_cases.txt')"]
 
