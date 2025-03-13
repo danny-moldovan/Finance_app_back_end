@@ -68,7 +68,7 @@ def get_summary_about_search_term(query, output_filename = serialized_results_fi
         
         agg_search_results_list = []
     
-        agg_search_results_stream = search_web(all_search_terms_list)
+        agg_search_results_stream = search_web(all_search_terms_list, 10)
         
         for message in agg_search_results_stream:
             return_type, return_value = parse_message_sent(message)
