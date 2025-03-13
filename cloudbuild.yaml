@@ -30,7 +30,7 @@ steps:
 
         cat /workspace/evaluation_response_current.json
 
-        if [ "$(sudo jq -r '.message' /workspace/evaluation_response_current.json)" != "Request was successful!" ]; then
+        if [ "$(jq -r '.message' /workspace/evaluation_response_current.json)" != "Request was successful!" ]; then
           echo "Error: The batch summary generation failed!"
           exit 1
         fi
