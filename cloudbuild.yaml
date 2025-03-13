@@ -21,6 +21,8 @@ steps:
       - "-c"
       - |
         echo 'Running evaluation of the currently deployed code...'
+
+        sudo apt update && sudo apt install -y jq
         
         curl -s -X POST https://finance-app-back-end-911835065349.us-central1.run.app/generate_batch_summary \
           -H "Content-Type: application/json" \
@@ -28,14 +30,13 @@ steps:
 
         cat /workspace/evaluation_response_current.json
 
-        if [[ jq -r '.message' /workspace/evaluation_response_current.json != "Request was successful!" ]]; then
+        if [ "$(sudo jq -r '.message' /workspace/evaluation_response_current.json)" != "Request was successful!" ]; then
           echo "Error: The batch summary generation failed!"
           exit 1
         fi
 
         echo "The batch summary was generated successfully!"
 
-       
     #args:
     #  - "-X"
     #  - "POST"
