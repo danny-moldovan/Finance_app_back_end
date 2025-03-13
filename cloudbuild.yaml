@@ -58,7 +58,9 @@ steps:
            '--region', 'us-central1', '--platform', 'managed', 
            '--allow-unauthenticated',
            '--set-secrets=GEMINI_API_KEY=GEMINI_API_KEY:latest',
-           '--memory', '4000Mi']
+           '--memory', '4000Mi',
+           '--timeout', '1200'           
+           ]
 
   # Run evaluation of the currently deployed code on the test set
   - name: "gcr.io/cloud-builders/curl"
