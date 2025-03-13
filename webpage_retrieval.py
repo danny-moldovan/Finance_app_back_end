@@ -8,7 +8,7 @@ from utils import *
 @cache.memoize(timeout = 60 * 60) #1 hour in seconds
 def processWebpage(url):
     try:
-        #print('Extracting {}'.format(url))
+        print('Extracting {}'.format(url))
         response = requests.get(url)
         soup = BeautifulSoup(response.text, 'html.parser') 
         all_tags = soup.find_all() #soup.find_all()
@@ -24,7 +24,7 @@ def processWebpage(url):
         #print('Extracted content: {}.'.format(join(all_text_deduplicated)))
     
         return ' '.join(all_text_deduplicated)
-    except:
+    except Exception as e:
         #print('Exception occured for the URL: {}'.format(url))
         return ''
 
