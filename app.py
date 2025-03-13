@@ -187,8 +187,11 @@ def generate_batch_summary():
 
         current_timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") 
     
-        processing_result, output_filename = process_file(input_filename, output_filename)
+        file_processing_output = process_file(input_filename, output_filename)
 
+        processing_result = file_processing_output.get('message')
+        output_filename = file_processing_output.get('output_filename')
+        
         #processing_result = "Request was successful"
         #output_filename = 'test_cases_processed-test.txt'
         #with open(os.path.join('./data', output_filename), "w") as f:
@@ -201,7 +204,7 @@ def generate_batch_summary():
             #os.system(f"cp {os.path.join('./data', output_filename)} {os.path.join('/workspace/data', output_filename)}")
             #output = os.popen("ls -lh /workspace/data").read()
             #log.info('Directory output: {}'.format(output))  
-            return jsonify({"message": "Request was successful!"}), 200, {"Content-Type": "application/json"}
+            return jsonify({"message": "Request was successful!", "output_filename": output_filename}), 200, {"Content-Type": "application/json"}
 
     except Exception as e:
         log.info('Error: {}'.format(e))
@@ -264,7 +267,7 @@ def process_file(input_filename, output_filename = None, n_rows = 3):
 
         upload_to_gcs(storage_bucket_name, full_output_filename, output_filename)
         
-        return "Request was successful", output_filename
+        return {"message": "Request was successful", "output_filename": output_filename}
 
     except Exception as e:
         log.info('Error: {}'.format(e))

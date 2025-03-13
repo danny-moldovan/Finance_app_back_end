@@ -14,16 +14,37 @@ steps:
     args: ['build', '-t', 
            'us-central1-docker.pkg.dev/${PROJECT_ID}/finance-app-back-end/app:latest', '.']
 
-  # Run evaluation on the test set
+  # Run evaluation of the currently deployed code on the test set
   - name: "gcr.io/cloud-builders/curl"
+    entrypoint: "sh"
     args:
-      - "-X"
-      - "POST"
-      - "https://finance-app-back-end-911835065349.us-central1.run.app/generate_batch_summary"
-      - "-H"
-      - "Content-Type: application/json"
-      - "-d"
-      - '{"input_filename": "test_cases.txt", "output_filename": "test_cases_processed_current.txt"}'
+      - "-c"
+      - |
+        RESPONSE=$(curl -s -X POST https://finance-app-back-end-911835065349.us-central1.run.app/generate_batch_summary \
+          -H "Content-Type: application/json" \
+          -d '{"input_filename": "test_cases.txt", "output_filename": "test_cases_processed_current"}')
+          
+        echo "Response: $RESPONSE"
+        
+        MESSAGE=$(echo "$RESPONSE" | jq -r '.message')
+
+        if [ "$MESSAGE" != "Success" ]; then
+          echo "Error: The batch summary generation failed!"
+          exit 1
+        fi
+
+        echo "The batch summary was generated successfully!"
+
+        echo "$RESPONSE" | jq -r '.' > /workspace/evaluation_response_current.json
+        
+    #args:
+    #  - "-X"
+    #  - "POST"
+    #  - "https://finance-app-back-end-911835065349.us-central1.run.app/generate_batch_summary"
+    #  - "-H"
+    #  - "Content-Type: application/json"
+    #  - "-d"
+    #  - '{"input_filename": "test_cases.txt", "output_filename": "test_cases_processed_current.txt"}'
 
   # Docker push to Google Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
@@ -37,6 +58,17 @@ steps:
            '--allow-unauthenticated',
            '--set-secrets=GEMINI_API_KEY=GEMINI_API_KEY:latest',
            '--memory', '1300Mi']
+
+  # Run evaluation of the newly deployed code on the test set
+  - name: "gcr.io/cloud-builders/curl"
+    args:
+      - "-X"
+      - "POST"
+      - "https://finance-app-back-end-911835065349.us-central1.run.app/generate_batch_summary"
+      - "-H"
+      - "Content-Type: application/json"
+      - "-d"
+      - '{"input_filename": "test_cases.txt", "output_filename": "test_cases_processed_new.txt"}'
 
 # Save test logs to Google Cloud Storage
 #artifacts:
