@@ -91,7 +91,7 @@ def get_summary_about_search_term(query, output_filename = serialized_results_fi
             else:
                 yield message
     
-        complete_results['extracted_content_from_search_results'] = extracted_content_from_search_results
+        #complete_results['extracted_content_from_search_results'] = extracted_content_from_search_results
         
         summary_completions_stream = generate_summary_completions(term_of_interest_meaning, extracted_content_from_search_results)
         

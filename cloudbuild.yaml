@@ -58,7 +58,8 @@ steps:
            '--region', 'us-central1', '--platform', 'managed', 
            '--allow-unauthenticated',
            '--set-secrets=GEMINI_API_KEY=GEMINI_API_KEY:latest',
-           '--memory', '4000Mi',
+           '--cpu', '2',
+           '--memory', '8000Mi',
            '--timeout', '3600'           
            ]
 
