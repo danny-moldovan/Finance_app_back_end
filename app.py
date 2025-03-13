@@ -187,7 +187,7 @@ def generate_batch_summary():
 
         current_timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") 
     
-        file_processing_output = process_file(input_filename, output_filename, 1)
+        file_processing_output = process_file(input_filename, output_filename, None)
 
         processing_result = file_processing_output.get('message')
         output_filename = file_processing_output.get('output_filename')

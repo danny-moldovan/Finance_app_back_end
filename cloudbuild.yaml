@@ -72,7 +72,7 @@ steps:
         
         curl -s -X POST https://finance-app-back-end-911835065349.us-central1.run.app/generate_batch_summary \
           -H "Content-Type: application/json" \
-          -d '{"input_filename": "test_cases.txt", "output_filename": "test_cases_processed_new"}' | jq -r '.' > /workspace/evaluation_response_new.json
+          -d '{"input_filename": "test_cases.txt", "output_filename": "test_cases_processed_new"}' > /workspace/evaluation_response_new.json
 
         cat /workspace/evaluation_response_new.json
 
