@@ -264,7 +264,7 @@ def process_file(input_filename, output_filename = None, n_rows = 3):
             output_data.append({row: processed_row})
             #print({row: processed_row})
     
-            #time.sleep(2)
+            time.sleep(2)
 
         log.info('The file {} has been successfully processed. The output file is {}.'.format(input_filename, output_filename))
         log.info('')
