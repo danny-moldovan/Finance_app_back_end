@@ -20,7 +20,7 @@ steps:
     args:
       - "-c"
       - |
-        echo 'Running generate_summary...'
+        echo 'Running evaluation of the currently deployed code...'
         
         cat << 'EOF' > /workspace/run_summary_current.sh
         
