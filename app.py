@@ -187,7 +187,7 @@ def generate_batch_summary():
 
         current_timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") 
     
-        file_processing_output = process_file(input_filename, output_filename)
+        file_processing_output = process_file(input_filename, output_filename, None)
 
         processing_result = file_processing_output.get('message')
         output_filename = file_processing_output.get('output_filename')
@@ -242,10 +242,9 @@ def process_file(input_filename, output_filename = None, n_rows = 3):
         log.info('Output filename: {}'.format(full_output_filename))
         log.info('')
 
-        with open(full_output_filename, "w") as f:
-            f.writelines(['This', 'is', 'a', 'test', '.'])
+        #with open(full_output_filename, "w") as f:
+        #    f.writelines(['This', 'is', 'a', 'test', '.'])
             
-        '''
         if n_rows is None:
             input_data_subset = input_data
         else:
@@ -263,7 +262,6 @@ def process_file(input_filename, output_filename = None, n_rows = 3):
             #print({row: processed_row})
     
             #time.sleep(2)
-        '''          
 
         upload_to_gcs(storage_bucket_name, full_output_filename, output_filename)
         
