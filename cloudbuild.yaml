@@ -59,7 +59,7 @@ steps:
            '--allow-unauthenticated',
            '--set-secrets=GEMINI_API_KEY=GEMINI_API_KEY:latest',
            '--memory', '4000Mi',
-           '--timeout', '1200'           
+           '--timeout', '2400'           
            ]
 
   # Run evaluation of the currently deployed code on the test set
@@ -72,7 +72,7 @@ steps:
 
         apt update && apt install -y jq
         
-        curl -m 1200 -s -X POST https://finance-app-back-end-911835065349.us-central1.run.app/generate_batch_summary \
+        curl -m 2400 -s -X POST https://finance-app-back-end-911835065349.us-central1.run.app/generate_batch_summary \
           -H "Content-Type: application/json" \
           -d '{"input_filename": "test_cases.txt", "output_filename": "test_cases_processed_new"}' > /workspace/evaluation_response_new.json
 
