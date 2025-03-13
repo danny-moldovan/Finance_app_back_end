@@ -20,15 +20,15 @@ steps:
     args:
       - "-c"
       - |
-        RESPONSE=$(curl -s -X POST https://finance-app-back-end-911835065349.us-central1.run.app/generate_batch_summary \
+        RESPONSE="$(curl -s -X POST https://finance-app-back-end-911835065349.us-central1.run.app/generate_batch_summary \
           -H "Content-Type: application/json" \
-          -d '{"input_filename": "test_cases.txt", "output_filename": "test_cases_processed_current"}')
+          -d '{"input_filename": "test_cases.txt", "output_filename": "test_cases_processed_current"}')"
           
         echo "Response: $RESPONSE"
         
-        MESSAGE=$(echo "$RESPONSE" | jq -r '.message')
+        MESSAGE="$(echo "$RESPONSE" | jq -r '.message')"
 
-        if [ "$MESSAGE" != "Success" ]; then
+        if [ "$MESSAGE" != "Request was successful!" ]; then
           echo "Error: The batch summary generation failed!"
           exit 1
         fi
