@@ -2,6 +2,8 @@ from multiprocessing import Process, Manager
 import os
 import json
 import logging
+from google.cloud import storage
+import google.auth
 
 log = logging.getLogger('logger')
 log.setLevel(logging.DEBUG)
@@ -80,3 +82,35 @@ def log_message(m):
 
 def value_message(m):
     return json.dumps({"return_type": "value", "return_value": m}) + "\n"
+
+def authenticate_gcs():
+    try:
+        credentials, project = google.auth.default()
+        print(f"Authenticated with project: {project}")
+        return credentials
+    except Exception as e:
+        print(f"Authentication failed: {e}")
+        return None
+
+def download_from_gcs(bucket_name, source_blob_name, destination_file_name):
+    """Downloads a file from Google Cloud Storage."""
+    try:
+        storage_client = storage.Client()
+        bucket = storage_client.bucket(bucket_name)
+        blob = bucket.blob(source_blob_name)
+        blob.download_to_filename(destination_file_name)
+        print(f"Downloaded {source_blob_name} from {bucket_name} to {destination_file_name}")
+    except Exception as e:
+        print(f"Error downloading file: {e}")
+
+def upload_to_gcs(bucket_name, source_file_name, destination_blob_name):
+    """Uploads a file to Google Cloud Storage."""
+    try:
+        storage_client = storage.Client()
+        bucket = storage_client.bucket(bucket_name)
+        blob = bucket.blob(destination_blob_name)
+        blob.upload_from_filename(source_file_name)
+        print(f"Uploaded {source_file_name} to gs://{bucket_name}/{destination_blob_name}")
+    except Exception as e:
+        print(f"Error uploading file: {e}")
+        

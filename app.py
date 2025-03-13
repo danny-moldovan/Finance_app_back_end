@@ -19,6 +19,8 @@ from aggregated_answer_generation import *
 from utils import *
 from cache import cache
 from werkzeug.utils import secure_filename
+from google.cloud import storage
+import google.auth
 
 app = Flask(__name__)
 
@@ -29,8 +31,10 @@ cache.init_app(app)
 #manual_cache_dir = '/teamspace/studios/this_studio/back_end/manual_cache'
 
 serialized_results_filename = '/teamspace/studios/this_studio/back_end/serialized_results.txt'
+storage_bucket_name = 'finance-app-back-end-evaluation-logs'
 
 load_dotenv()
+#os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "wide-gecko-275009-f7654d8bfa4f.json"
 
 def get_summary_about_search_term(query, output_filename = serialized_results_filename):
     try:
@@ -175,7 +179,7 @@ def generate_batch_summary():
     if not data or "input_filename" not in data:
         return jsonify({"error": "Missing 'input_filename' in request body"}), 400, {"Content-Type": "application/json"}
 
-    try:
+    try:        
         input_filename = data.get("input_filename")
         output_filename = data.get("output_filename")
     
@@ -183,28 +187,20 @@ def generate_batch_summary():
 
         current_timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") 
     
-        #processing_result, output_filename = process_file(input_filename, output_filename)
+        processing_result, output_filename = process_file(input_filename, output_filename)
 
-        processing_result = "Request was successful"
-        output_filename = 'test_cases_processed-test.txt'
-        with open(os.path.join('./data', output_filename), "w") as f:
-            f.writelines(['This', 'is', 'a', 'test', '.'])
+        #processing_result = "Request was successful"
+        #output_filename = 'test_cases_processed-test.txt'
+        #with open(os.path.join('./data', output_filename), "w") as f:
+        #    f.writelines(['This', 'is', 'a', 'test', '.'])
 
-        log.info('Output file created: {}'.format(output_filename))
-
-        os.system("mkdir -p /workspace/data")
-
-        output = os.popen("ls -lh /workspace").read()
-        log.info('Directory output: {}'.format(output))    
-
-        output = os.popen("ls -lh /workspace/data").read()
-        log.info('Directory output: {}'.format(output))  
+        #log.info('Output file created: {}'.format(output_filename))
         
         if processing_result == "Request was successful" and output_filename is not None and os.path.exists(os.path.join('./data', output_filename)):
-            log.info('Coping from {} to {}'.format(os.path.join('./data', output_filename), os.path.join('/workspace/data', output_filename)))
-            os.system(f"cp {os.path.join('./data', output_filename)} {os.path.join('/workspace/data', output_filename)}")
-            output = os.popen("ls -lh /workspace/data").read()
-            log.info('Directory output: {}'.format(output))  
+            #log.info('Coping from {} to {}'.format(os.path.join('./data', output_filename), os.path.join('/workspace/data', output_filename)))
+            #os.system(f"cp {os.path.join('./data', output_filename)} {os.path.join('/workspace/data', output_filename)}")
+            #output = os.popen("ls -lh /workspace/data").read()
+            #log.info('Directory output: {}'.format(output))  
             return jsonify({"message": "Request was successful!"}), 200, {"Content-Type": "application/json"}
 
     except Exception as e:
@@ -220,8 +216,12 @@ def process_file(input_filename, output_filename = None, n_rows = 3):
     try:
         if not input_filename:
             return "Error: missing 'filename' in request body", ''
-    
+
+        authenticate_gcs()
+
         full_input_filename = os.path.join('./data', input_filename)
+        download_from_gcs(storage_bucket_name, input_filename, full_input_filename)
+        
         with open(full_input_filename, "r") as f:
             input_data = f.readlines()
     
@@ -238,7 +238,11 @@ def process_file(input_filename, output_filename = None, n_rows = 3):
         full_output_filename = os.path.join('./data', output_filename)
         log.info('Output filename: {}'.format(full_output_filename))
         log.info('')
-    
+
+        with open(full_output_filename, "w") as f:
+            f.writelines(['This', 'is', 'a', 'test', '.'])
+            
+        '''
         if n_rows is None:
             input_data_subset = input_data
         else:
@@ -256,10 +260,10 @@ def process_file(input_filename, output_filename = None, n_rows = 3):
             #print({row: processed_row})
     
             #time.sleep(2)
-            
-        #with open(full_output_filename, "w") as f:
-        #    f.writelines([json.dumps(row) for row in output_data])
-    
+        '''          
+
+        upload_to_gcs(storage_bucket_name, full_output_filename, output_filename)
+        
         return "Request was successful", output_filename
 
     except Exception as e:
