@@ -30,7 +30,7 @@ steps:
     args: ['push',  'us-central1-docker.pkg.dev/${PROJECT_ID}/finance-app-back-end/app:latest']
 
   # Deploy to Cloud Run
-  - name: google/cloud-sdk`
+  - name: google/cloud-sdk
     args: ['gcloud', 'run', 'deploy', 'finance-app-back-end', 
            '--image=us-central1-docker.pkg.dev/${PROJECT_ID}/finance-app-back-end/app:latest', 
            '--region', 'us-central1', '--platform', 'managed', 
