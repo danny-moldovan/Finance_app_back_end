@@ -251,6 +251,9 @@ def process_file(input_filename, output_filename = None, n_rows = 3):
             input_data_subset = input_data[:n_rows]
     
         output_data = []
+
+        log.info('{} rows will be processed'.format(len(input_data_subset)))
+        log.info('')
         
         for row in input_data_subset:
             processed_row = ''
@@ -262,6 +265,9 @@ def process_file(input_filename, output_filename = None, n_rows = 3):
             #print({row: processed_row})
     
             #time.sleep(2)
+
+        log.info('The file {} has been successfully processed. The output file is {}.'.format(input_filename, output_filename))
+        log.info('')
 
         upload_to_gcs(storage_bucket_name, full_output_filename, output_filename)
         
