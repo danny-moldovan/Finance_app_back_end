@@ -59,16 +59,35 @@ steps:
            '--set-secrets=GEMINI_API_KEY=GEMINI_API_KEY:latest',
            '--memory', '1300Mi']
 
-  # Run evaluation of the newly deployed code on the test set
+  # Run evaluation of the currently deployed code on the test set
   - name: "gcr.io/cloud-builders/curl"
+    entrypoint: "sh"
     args:
-      - "-X"
-      - "POST"
-      - "https://finance-app-back-end-911835065349.us-central1.run.app/generate_batch_summary"
-      - "-H"
-      - "Content-Type: application/json"
-      - "-d"
-      - '{"input_filename": "test_cases.txt", "output_filename": "test_cases_processed_new.txt"}'
+      - "-c"
+      - |
+        echo 'Running evaluation of the currently deployed code...'
+
+        apt update && apt install -y jq
+        
+        curl -s -X POST https://finance-app-back-end-911835065349.us-central1.run.app/generate_batch_summary \
+          -H "Content-Type: application/json" \
+          -d '{"input_filename": "test_cases.txt", "output_filename": "test_cases_processed_new"}' | jq -r '.' > /workspace/evaluation_response_new.json
+
+        cat /workspace/evaluation_response_new.json
+
+        if [ "$(jq -r '.message' /workspace/evaluation_response_new.json)" != "Request was successful!" ]; then
+          echo "Error: The batch summary generation failed!"
+          exit 1
+        fi
+
+        echo "The batch summary was generated successfully!"
+
+  #Compare the two evaluation files
+  - name: python
+    entrypoint: python
+    args: [evaluation.py] 
+
+
 
 # Save test logs to Google Cloud Storage
 #artifacts:
