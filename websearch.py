@@ -8,15 +8,21 @@ NEWS_RESULT_COUNT = 10
 
 @cache.memoize(timeout = 60 * 60) #1 hour in seconds
 def perform_search_one_term(s):
-    search_results = duckduckgo_client.duckduckgo_client.news(
-        keywords = s, 
-        region = "us-en", #or "wt-wt" ?
-        #safesearch = "off", 
-        timelimit = "d", #results from today only
-        max_results = NEWS_RESULT_COUNT
-    )
+    try:
+        search_results = duckduckgo_client.duckduckgo_client.news(
+            keywords = s, 
+            region = "us-en", #or "wt-wt" ?
+            #safesearch = "off", 
+            timelimit = "d", #results from today only
+            max_results = NEWS_RESULT_COUNT
+        )
+    
+        return [n['url'] for n in search_results]
 
-    return [n['url'] for n in search_results]
+    except Exception as e:
+        log.info('Error: {}'.format(e))
+        log.info('')
+        return []
 
 def perform_search_per_batch(i, batch, return_dict):
     count_results_per_batch = 0
