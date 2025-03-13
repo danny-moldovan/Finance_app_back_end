@@ -22,23 +22,20 @@ steps:
       - |
         echo 'Running evaluation of the currently deployed code...'
         
-        RESPONSE="$(curl -s -X POST https://finance-app-back-end-911835065349.us-central1.run.app/generate_batch_summary \
+        curl -s -X POST https://finance-app-back-end-911835065349.us-central1.run.app/generate_batch_summary \
           -H "Content-Type: application/json" \
-          -d '{"input_filename": "test_cases.txt", "output_filename": "test_cases_processed_current"}')"
-          
-        echo "Response: $RESPONSE"
-        
-        MESSAGE="$(echo "$RESPONSE" | jq -r '.message')"
+          -d '{"input_filename": "test_cases.txt", "output_filename": "test_cases_processed_current"} | jq -r '.' > /workspace/evaluation_response_current.json
 
-        if [[ "$MESSAGE" != "Request was successful!" ]]; then
+        cat /workspace/evaluation_response_current.json
+
+        if [[ jq -r '.message' /workspace/evaluation_response_current.json != "Request was successful!" ]]; then
           echo "Error: The batch summary generation failed!"
           exit 1
         fi
 
         echo "The batch summary was generated successfully!"
 
-        echo "$RESPONSE" | jq -r '.' > /workspace/evaluation_response_current.json
-        
+       
     #args:
     #  - "-X"
     #  - "POST"
