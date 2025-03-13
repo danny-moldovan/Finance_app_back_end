@@ -16,15 +16,11 @@ steps:
 
   # Run evaluation of the currently deployed code on the test set
   - name: "gcr.io/cloud-builders/curl"
-    entrypoint: "sh"
+    entrypoint: "bash"
     args:
       - "-c"
       - |
         echo 'Running evaluation of the currently deployed code...'
-        
-        cat << 'EOF' > /workspace/run_summary_current.sh
-        
-        #!/bin/sh
         
         RESPONSE="$(curl -s -X POST https://finance-app-back-end-911835065349.us-central1.run.app/generate_batch_summary \
           -H "Content-Type: application/json" \
@@ -34,7 +30,7 @@ steps:
         
         MESSAGE="$(echo "$RESPONSE" | jq -r '.message')"
 
-        if [ "$MESSAGE" != "Request was successful!" ]; then
+        if [[ "$MESSAGE" != "Request was successful!" ]]; then
           echo "Error: The batch summary generation failed!"
           exit 1
         fi
@@ -42,12 +38,6 @@ steps:
         echo "The batch summary was generated successfully!"
 
         echo "$RESPONSE" | jq -r '.' > /workspace/evaluation_response_current.json
-
-        EOF
-
-        chmod +x /workspace/run_summary_current.sh
-        
-        sh /workspace/run_summary_current.sh
         
     #args:
     #  - "-X"
