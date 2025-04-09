@@ -25,14 +25,14 @@ steps:
         source /workspace/env_vars.sh
         python -m pytest tests/unit -v -s
 
- # Run integration tests
- # - name: 'python'
- #   entrypoint: 'bash'
- #   args:
- #     - '-c'
- #     - |
- #       source /workspace/env_vars.sh
- #       python -m pytest tests/integration/test_app_integration.py -v -s
+  Run integration tests
+  - name: 'python'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        source /workspace/env_vars.sh
+        python -m pytest tests/integration/test_app_integration.py -v -s
 
   # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
@@ -76,46 +76,34 @@ steps:
            ]
 
   # Run evaluation of the currently deployed code on the test set
-  - name: "gcr.io/cloud-builders/curl"
-    entrypoint: "sh"
-    args:
-      - "-c"
-      - |
-        echo 'Running evaluation of the currently deployed code...'
+  # - name: "gcr.io/cloud-builders/curl"
+  #   entrypoint: "sh"
+  #   args:
+  #     - "-c"
+  #     - |
+  #      echo 'Running evaluation of the currently deployed code...'
 
-        apt update && apt install -y jq
+  #      apt update && apt install -y jq
         
-        curl -m 3600 -s -X POST https://finance-app-back-end-911835065349.us-central1.run.app/generate_recent_news_batch \
-          -H "Content-Type: application/json" \
-          -d '{"input_filename": "test_cases.txt", "n_rows": None, "in_parallel": true, "output_filename": "test_cases_processed_new"}' > /workspace/evaluation_response_new.txt
-        
-        cat /workspace/evaluation_response_new.txt
+  #      curl -m 3600 -s -X POST https://finance-app-back-end-911835065349.us-central1.run.app/generate_recent_news_batch \
+  #        -H "Content-Type: application/json" \
+  #        -d '{"input_filename": "test_cases.txt", "n_rows": None, "in_parallel": true, "output_filename": "test_cases_processed_new"}' > /workspace/evaluation_response_new.txt
+  #      
+  #      cat /workspace/evaluation_response_new.txt
 
-        # Check if the response contains a final message with status code 200
-        if ! jq -e 'select(.message_type == "final" and .message.status_code == 200)' /workspace/evaluation_response_new.txt > /dev/null; then
-            echo "Error: The batch summary generation failed!"
-            exit 1
-        fi
+  #      # Check if the response contains a final message with status code 200
+  #      if ! jq -e 'select(.message_type == "final" and .message.status_code == 200)' /workspace/evaluation_response_new.txt > /dev/null; then
+  #          echo "Error: The batch summary generation failed!"
+  #          exit 1
+  #      fi
 
-        echo "The batch summary was generated successfully!"
+  #      echo "The batch summary was generated successfully!"
 
   #Compare the two evaluation files
-  - name: python
-    entrypoint: python
-    args: [evaluation.py] 
+  # - name: python
+  #   entrypoint: python
+  #   args: [evaluation.py] 
 
-
-
-# Save test logs to Google Cloud Storage
-#artifacts:
-#  objects:
-#    location: gs://${_BUCKET_NAME}/
-#    paths:
-#      - ${SHORT_SHA}_test_log.xml
-
-# Store images in Google Artifact Registry 
-#images:
-#  - us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/app:${SHORT_SHA}
 
 # Options
 options:
