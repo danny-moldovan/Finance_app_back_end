@@ -4,7 +4,7 @@ steps:
     entrypoint: pip
     args: ["install", "-r", "requirements.txt", "--user"]
 
- # Access the Gemini API KEY secret and make it available for tests
+  # Access the Gemini API KEY secret and make it available for tests
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
     args:
@@ -16,7 +16,7 @@ steps:
         echo "export GEMINI_API_KEY=$$(cat /workspace/api_key.txt)" > /workspace/env_vars.sh
         cat /workspace/env_vars.sh
 
-# Run unit tests
+  # Run unit tests
   - name: 'python'
     entrypoint: 'bash'
     args:
@@ -25,7 +25,7 @@ steps:
         source /workspace/env_vars.sh
         python -m pytest tests/unit -v -s
 
-  Run integration tests
+  # Run integration tests
   - name: 'python'
     entrypoint: 'bash'
     args:
