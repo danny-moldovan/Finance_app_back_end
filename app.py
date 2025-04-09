@@ -5,7 +5,8 @@ from multiprocessing import Queue
 from typing import Callable, Generator, Union
 
 # Third-party imports
-from flask import Flask, request
+from flask import Flask, request, Response, stream_with_context
+from flask_cors import CORS
 
 # Local imports
 from progress_sink import ProgressSink
@@ -18,6 +19,26 @@ from generation_of_most_impactful_news import generate_most_impactful_news
 from utils import *
 
 app = Flask(__name__)
+
+# Configure CORS with specific settings for streaming
+CORS(app, resources={
+    r"/*": {
+        "origins": "*",  # Allow all origins
+        "methods": ["GET", "POST", "OPTIONS"],
+        "allow_headers": ["Content-Type"],
+        "expose_headers": ["Content-Type"],
+        "supports_credentials": False,
+        "max_age": 600
+    }
+})
+
+# Add CORS headers to all responses
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+    response.headers.add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+    return response
 
 
 def execute_pipeline_steps(query: str, sink: ProgressSink) -> GenerateRecentNews:
@@ -454,8 +475,11 @@ def health_check_streaming():
     #return Response(stream_with_context(stream_health_check(query)), content_type = "text/plain")
 
 
-@app.route("/generate_recent_news", methods=["POST"])
+@app.route("/generate_recent_news", methods=["POST", "OPTIONS"])
 def generate_recent_news():
+    if request.method == "OPTIONS":
+        return "", 200
+
     request_body = request.get_json()
     if not request_body or len(request_body.get('query', '')) <= 1:
         return json.dumps({"error": "Missing 'query' in request body"}), 400, {"Content-Type": "application/json"}
@@ -465,16 +489,45 @@ def generate_recent_news():
         max_llm_requests_per_sec=5
     )
 
-    return stream_pipeline(request_body, run_pipeline)   #Response(stream_with_context(stream_pipeline(query)), mimetype='text/event-stream')
+    def generate():
+        for message in stream_pipeline(request_body, run_pipeline):
+            yield f"{json.dumps(message)}\n"
+
+    return Response(
+        stream_with_context(generate()),
+        mimetype='application/json',
+        headers={
+            'Cache-Control': 'no-cache',
+            'Connection': 'keep-alive',
+            'Content-Type': 'application/json',
+            'X-Accel-Buffering': 'no'
+        }
+    )
 
 
-@app.route("/generate_recent_news_batch", methods=["POST"])
+@app.route("/generate_recent_news_batch", methods=["POST", "OPTIONS"])
 def generate_recent_news_batch():
+    if request.method == "OPTIONS":
+        return "", 200
+
     request_body = request.get_json()
     if not request_body or len(request_body.get('input_filename', '')) <= 1:
         return json.dumps({"error": "Missing 'input_filename' in request body"}), 400, {"Content-Type": "application/json"}  
 
-    return stream_pipeline(request_body, run_pipeline_batch)   #Response(stream_with_context(stream_pipeline(query)), mimetype='text/event-stream')
+    def generate():
+        for message in stream_pipeline(request_body, run_pipeline_batch):
+            yield f"{json.dumps(message)}\n"
+
+    return Response(
+        stream_with_context(generate()),
+        mimetype='application/json',
+        headers={
+            'Cache-Control': 'no-cache',
+            'Connection': 'keep-alive',
+            'Content-Type': 'application/json',
+            'X-Accel-Buffering': 'no'
+        }
+    )
     
 
 if __name__ == "__main__":
