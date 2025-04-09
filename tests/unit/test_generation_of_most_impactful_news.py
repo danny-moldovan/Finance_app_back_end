@@ -7,7 +7,6 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 from generate_recent_news import GenerateRecentNews, News, Article, ImpactType
 from generation_of_most_impactful_news import generate_most_impactful_news
 from progress_sink import ProgressSink
-from llm_client import llm_client
 
 
 class TestGenerateMostImpactfulNews(unittest.TestCase):
