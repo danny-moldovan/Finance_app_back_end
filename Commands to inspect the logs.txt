@@ -1,0 +1,42 @@
+rm -f logs_back_end.log && python app1.py
+
+rm -rf cache && rm -f logs_back_end.log && python app1.py
+
+cp logs_back_end.log logs_back_end1.log && rm -rf cache1 && cp -r cache cache1 && rm -rf cache && rm -f logs_back_end.log && python app1.py
+
+tail -50 logs_back_end.log
+
+cat logs_back_end.log | grep "Search results already stored in the cache for the same search query"
+
+cat logs_back_end.log | grep "Extracting"
+
+cat logs_back_end.log | grep "Checking the cache for:"
+
+cat logs_back_end.log | grep "Sending request to the LLM"
+
+cat logs_back_end.log | grep "Cache entry set for LLM call" | sort
+
+cat logs_back_end.log | grep "An exception ocurred during the LLM call" | grep -v "429"
+
+cat logs_back_end.log | grep "Error when sending summary generation request to the LLM"
+
+cat logs_back_end.log | grep "There was a problem with the final generation LLM request for"
+
+cat logs_back_end.log | grep "Got rate limit error, retrying in"
+
+cat logs_back_end.log | grep "Attempt" | sort
+
+cat logs_back_end.log | grep "Max retries reached" 
+
+cat logs_back_end.log | grep "relevant articles" | grep "Cache entry set" | wc -l
+
+cat logs_back_end.log | grep "'most impactful news'" | grep "exception" | wc -l
+
+cat logs_back_end.log | grep "most impactful news" | grep "Generated" | sort
+
+cat logs_back_end.log | grep "most impactful news" | grep "Generated" | sort | wc -l
+
+cat logs_back_end.log | grep "An exception ocurred during the identification of relevant articles for"
+
+cat logs_back_end.log | grep "An exception ocurred during the generation of the most impactful news for"
+

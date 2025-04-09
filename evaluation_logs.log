@@ -1,0 +1,8 @@
+Evaluation started
+
+Evaluation before deployment:
+
+['{"message_type": "progress", "message": "Processing file \\"test_cases.txt\\" started: 2025-04-09 05:47:07"}', '{"message_type": "progress", "message": "Processing query \\"US Economy\\" started: 2025-04-09 05:47:10"}', '{"message_type": "progress", "message": "Processing query \\"S&P 500\\" started: 2025-04-09 05:47:10"}', '{"message_type": "progress", "message": "Processing query \\"US Economy\\" finished: 2025-04-09 05:48:26"}', '{"message_type": "progress", "message": "Processing query \\"S&P 500\\" finished: 2025-04-09 05:49:07"}', '{"message_type": "progress", "message": {"number_of_outputs": 2, "number_of_search_terms": [41, 20], "number_of_retrieved_urls": [278, 138], "number_of_parsed_urls": [68, 44], "number_of_relevant_articles": [3, 3], "number_of_chars_in_most_impactful_news": [507, 552]}}', '{"message_type": "progress", "message": "Processing file \\"test_cases.txt\\" finished: 2025-04-09 05:49:10"}', '{"message_type": "progress", "message": "Processing file \\"test_cases.txt\\" took: 122.69 seconds"}', '{"message_type": "final", "message": {"status_code": 200, "output_filename": "test_cases-processed-2025-04-09-05:47:10.txt"}}']
+Error: File /workspace/evaluation_response_new.json does not exist
+Evaluation finished successfully
+

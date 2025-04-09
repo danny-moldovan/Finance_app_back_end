@@ -1,107 +1,118 @@
-import duckduckgo_client
-from utils import *
-import time
-from cache import cache
+from cache import cache, TTL
+from generate_recent_news import GenerateRecentNews
+from progress_sink import ProgressSink
+from utils import log, get_and_log_current_time, log_processing_duration, run_multiple_with_limited_time, convert_to_dictionary
+from websearch_client import websearch_client
 
-NEWS_RESULT_COUNT = 10
+
+MAX_TIME_WEBSEARCH_PER_SEARCH_TERM = None
 
 
-@cache.memoize(timeout = 60 * 60) #1 hour in seconds
-def perform_search_one_term(s):
-    try:
-        search_results = duckduckgo_client.duckduckgo_client.news(
-            keywords = s, 
-            region = "us-en", #or "wt-wt" ?
-            #safesearch = "off", 
-            timelimit = "d", #results from today only
-            max_results = NEWS_RESULT_COUNT
-        )
+def _set_entry_for_timed_out_searches(search_terms: list[str], search_results: dict[str, list[str]]) -> dict[str, list[str]]:
+    """
+    Sets an empty entry into the result dictionary and into the cache for search terms for which the web search timed out
     
-        return [n['url'] for n in search_results]
-
-    except Exception as e:
-        log.info('Error: {}'.format(e))
-        log.info('')
-        return []
-
-def perform_search_per_batch(i, batch, return_dict):
-    count_results_per_batch = 0
-
-    '''
-    for s in batch:
-        print('Searching {}'.format(s))
-        news_results = news_search_client.news.search(
-                query = s, 
-                market = "en-us", 
-                freshness = "Day",
-                sort_by = "Date",
-                count = NEWS_RESULT_COUNT
-                )
-        return_dict[s] = [n.url for n in news_results.value]
-        count_results_per_batch += len([n.url for n in news_results.value])
-    '''
-
-    for s in batch:
-        
-        '''
-        news_results = DDGS().news(keywords = s, 
-                          region = "us-en", #or "wt-wt" ?
-                          #safesearch = "off", 
-                          timelimit = "d", #results from today only
-                          max_results = NEWS_RESULT_COUNT)        
-
-        return_dict[s] = [n['url'] for n in news_results]
-        count_results_per_batch += len([n['url'] for n in news_results])
-        '''
-
-        return_dict[s] = perform_search_one_term(s)
-        count_results_per_batch += len(return_dict[s])
-        
-        #Available fields: date, title, body, url, image, source
-
-    log.info('For batch number {} (of length {}) found {} results'.format(i + 1, len(batch), count_results_per_batch))
-    log.info('')
-
-
-def search_web(all_search_terms, batch_size = 1, max_time_per_batch = 10):
-    time_start = time.time()
+    Args:
+        search_terms (list[str]): A list of search terms
+        search_results (dict[str, list[str]]): A dictionary containing for each search term the list of retrieved URLs
     
-    yield log_message('Searching the web')
-    log.info('Searching the web')
-    log.info('')
-
-    try:
-        if len(all_search_terms) == 0:
-            raise Error('No search terms to be searched')
-            
-        batches = create_batches(all_search_terms, batch_size) #or: len(all_search_terms) // 3
-        yield log_message('Created {} batches of search requests'.format(len(batches)))
-        log.info('Created {} batches of search requests \n'.format(len(batches)))
-        log.info('')
-        
-        search_results = run_multiple_with_limited_time(perform_search_per_batch, batches, max_time_per_batch)
+    Returns:
+        dict[str, list[str]]: The search_results dictionary, into which an empty list was set as a result for each search that timed out
+    """
     
-        agg_search_results = set()
-    
-        for k in search_results.keys():
-            if search_results[k] is not None:
-                for u in search_results[k]:
-                    agg_search_results.add(u)
-    
-        agg_search_results = list(agg_search_results)
-        yield log_message('Found {} distinct web results'.format(len(agg_search_results)))
-        log.info('Found {} distinct web results\n'.format(len(agg_search_results)))
-        log.info('')
-        
-        for s in agg_search_results:
-            yield value_message(s)
+    for s in search_terms:   
+        key = "Search results for: {}".format(s)
+        if cache.get(key=key, default=["No cache entry found"]) == ["No cache entry found"]:
+            cache.set(key=key, value=[], expire=TTL)
+            #log.info('Cache entry set (after the search was done) for {}: {}\n'.format(s, []))
+            search_results[s] = []
 
-    except Exception as e:
-        log.info('Error: {}'.format(e))
-        log.info('')
-        yield log_message('Error: {}'.format(e))
+    return search_results
+    
 
-    time_end = time.time()
-    log.info('Elapsed: {} seconds'.format(int((time_end - time_start) * 100) / 100))
-    log.info('')
-        
+def _log_search_results(search_results: dict[str, list[str]]) -> None:
+    """
+    Logs the count of search results for each search term in sorted order.
+    
+    Args:
+        search_results (dict[str, list[str]]): A dictionary containing for each search term the list of retrieved URLs
+
+    Returns:
+        None    
+    """
+    
+    sorted_keys = sorted(list(search_results.keys()))
+    search_results_counts = [len(search_results[key]) for key in sorted_keys]
+
+    log.info(msg='Search results: {}\n'.format(search_results_counts))
+
+
+def _aggregate_search_results(search_results: dict[str, list[str]]) -> list[str]:
+    """
+    Aggregates and deduplicates search results for multiple search terms
+    
+    Args:
+        search_results (dict[str, list[str]]): A dictionary containing for each search term the list of retrieved URLs
+    
+    Returns:
+        list[str]: A sorted list containing the aggregated and deduplicated search results
+    """
+    
+    aggregated_search_results = set(url for urls in search_results.values() for url in urls)
+    return sorted(list(aggregated_search_results))
+
+
+def perform_web_search(recent_news: GenerateRecentNews, sink: ProgressSink) -> GenerateRecentNews:
+    """
+    Perform websearch of the generated search terms
+    
+    Args:
+        recent_news (GenerateRecentNews): The news generation request, having the search_terms field populated
+        sink (ProgressSink): A message sink to which progress messages are sent
+    
+    Returns:
+        GenerateRecentNews: A new object with retrieved URLs based on the search terms
+    
+    Raises:
+        ValueError: If search_terms is empty
+    """
+
+    timestamp_start = get_and_log_current_time(message=f'The web search for {recent_news.query} started at', sink=sink)   
+    
+    if len(recent_news.search_terms) == 0:
+        raise Exception("Search terms have not been generated")
+    
+    def wrapper(search_function):
+        return lambda search_term, results: results.append({search_term: search_function(search_term)['search_results']})
+    
+    search_results = list(run_multiple_with_limited_time(
+        func=wrapper(websearch_client.search_web),
+        args=recent_news.search_terms,
+        max_time=MAX_TIME_WEBSEARCH_PER_SEARCH_TERM
+    ))
+    search_results = convert_to_dictionary(key_value_list=search_results)  
+    search_results = _set_entry_for_timed_out_searches(
+        search_terms=recent_news.search_terms,
+        search_results=search_results
+    )
+    _log_search_results(search_results=search_results)
+
+    aggregated_results = _aggregate_search_results(search_results=search_results)
+    result_count = len(aggregated_results)
+    sink.send(message=f'Found {result_count} search results')
+    log.info(msg=f'Found {result_count} search results\n')
+    
+    timestamp_end = get_and_log_current_time(message=f'The web search for {recent_news.query} finished at', sink=sink)
+    log_processing_duration(
+        timestamp_start=timestamp_start,
+        timestamp_end=timestamp_end,
+        message=f'The web search for {recent_news.query}',
+        sink=sink
+    )
+    
+    return GenerateRecentNews(
+        query=recent_news.query,
+        query_meaning=recent_news.query_meaning,
+        search_terms=recent_news.search_terms,
+        retrieved_urls=aggregated_results
+    )

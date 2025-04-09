@@ -1,0 +1,64 @@
+def make_logger(log_file_path:str) -> Callable[[str, int]]
+  int = debug level
+  return fn
+
+@enum
+class ImpactType
+
+@dataclass(frozen=True)
+class NewsItem:
+  description: str
+  impact_type: ImpactType
+
+@dataclass(frozen=True)
+class NewsItems:
+  news_items: list[NewsItem]
+
+
+class Messages:
+  message_type: MessageType
+  content: str
+
+
+def get_timer() -> datetime
+  processing_start = datetime.datetime.now()
+  log.info(f"The processing of the search term {query} started at {processing_start}.]n")
+
+def log_time(start_timer: datetime) -> None
+   processing_end = datetime.datetime.now()
+        complete_results['processing_end'] = json.dumps(processing_end.strftime("%Y-%m-%d %H:%M:%S"))
+        complete_results['processing_duration'] = (processing_end - processing_start).total_seconds()
+        log.info("The processing of the search term {} finished at {}.".format(query, processing_end))
+        log.info('')
+
+        for message in final_output_stream:
+            return_type, return_value = parse_message_sent(message)
+            if return_type == "value":
+                final_output_list.append(return_value)    
+            yield message
+    
+
+
+def stream_summary(query : str, logger : Callable[[str, int]]) -> NewsItems:
+@@@Stream summary about the search term
+
+Args
+  query: the query to generate bullet points
+  logger: The logging function
+
+Returns
+  An iterator over the generated News Items
+
+Raise
+   TODO Decide when this fails
+@@@
+        start_timer = get_timer()
+        agg_results = AggResults(logger=logger)
+        agg_results = generate_search_terms(agg_results)
+        agg_results = search_web(agg_results)
+        agg_results = extract_content_from_search_results(agg_results)
+        agg_results = generate_summary_completions(agg_results)
+        agg_results = generate_aggregated_output(agg_results)
+        log_time(start_timer)
+        agg_results.persist()
+        return agg_results.MakeNewsItems() 

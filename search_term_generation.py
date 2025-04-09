@@ -1,13 +1,10 @@
-import time
-from utils import *
-import gemini_client
-import json
-from cache import cache
-
-#search_terms_cache_filename = 'search_terms_cache.pkl'
+from generate_recent_news import GenerateRecentNews
+from llm_client import llm_client
+from progress_sink import ProgressSink
+from utils import log, get_and_log_current_time, log_processing_duration
 
 
-QUERY_UNDERSTANDING_PROMPT_TEMPLATE = '''Please perform the following steps:
+SEARCH_TERM_GENERATION_PROMPT_TEMPLATE = '''Please perform the following steps:
 Step 1: If the TERM OF INTEREST is a symbol of a financial instrument (for example stocks, bonds or currencies or currency pairs)
 then please identify its explicit name. Please keep it very concise.
 
@@ -46,86 +43,95 @@ In any of the above search terms please replace any year with 'latest'.
 If the TERM OF INTEREST does not refer to finance or economics, please leave the whole output empty.
 
 TERM OF INTEREST: {1}
-
 '''
 
-response_format_prompt = """
-        
-        Use the following JSON schema and make sure that the output can be parsed into JSON format.
-        Don't include into the output anything else than the JSON schema.
 
-        Return: 
-        {
-            term_meaning: str
-            list_search_terms: list[str]
-            tracked_index: str
-            list_search_terms_tracked_index: list[str]
-            country_or_region: str
-            list_search_terms_country_or_region: list[str]
-            industries_and_sectors: str
-            list_search_terms_industries_and_sectors: list[str]
-            related_terms: str
-            list_search_terms_related_terms: list[str]
-            list[str]
-        }
-        """
+SEARCH_TERM_GENERATION_RESPONSE_FORMAT = """
+Use the following JSON schema and make sure that the output can be parsed into JSON format.
+Don't include into the output anything else than the JSON schema.
 
-@cache.memoize(timeout = 60 * 60) #1 hour in seconds
-def ask_llm_to_generate_search_terms(query, n_search_terms_each_step = 5):
-    response = gemini_client.gemini_client.models.generate_content(
-        model = GEMINI_REASONING_MODEL_NAME,
-        contents = QUERY_UNDERSTANDING_PROMPT_TEMPLATE.format(n_search_terms_each_step, query) + response_format_prompt
-    )
-
-    return response.candidates[0].content.parts[0].text.replace('`', '')
+Return: 
+{
+    "query_meaning": str,
+    "list_search_terms": list[str],
+    "tracked_index": str,
+    "list_search_terms_tracked_index": list[str],
+    "country_or_region": str,
+    "list_search_terms_country_or_region": list[str],
+    "industries_and_sectors": str,
+    "list_search_terms_industries_and_sectors": list[str],
+    "related_terms": str,
+    "list_search_terms_related_terms": list[str]
+}
+"""
 
 
-def generate_search_terms(query, n_search_terms_each_step = 5):
-    time_start = time.time()
+NUMBER_SEARCH_TERMS_EACH_STEP = 5
 
-    yield log_message('Generating search terms')
-    log.info('Generating search terms')
-    log.info('')
 
-    try:
-        if query is None or len(query) == 0:
-            raise Error('Invalid query')
+def _aggregate_search_terms(query: str, llm_response_content: dict[str, list[str]]) -> list[str]:
+    """
+    Aggregate search terms from the LLM answer
+    
+    Args:
+        query (str): The initial query
+        llm_response_content (dict): The content of the LLM response to the summary generation request
+    
+    Returns:
+        A sorted list of all generated search terms (including the original query)
+    """
+    
+    search_terms = set()
+    
+    for k in ['list_search_terms', 'list_search_terms_tracked_index', 'list_search_terms_country_or_region', 
+              'list_search_terms_industries_and_sectors', 'list_search_terms_related_terms']:
+        search_terms.update(llm_response_content[k])
+
+    if query not in search_terms:
+        search_terms.add(query)
+
+    return sorted(list(search_terms))
+    
             
-        r = ask_llm_to_generate_search_terms(query, n_search_terms_each_step)
-        n = len(r)
-        query_understand_results = json.loads(r[5: n - 1])
+def generate_search_terms(query: str, sink: ProgressSink) -> GenerateRecentNews:
+    """
+    Generate recent news based on the input query.
     
-        all_search_terms = set()
-        for k in ['list_search_terms', 'list_search_terms_tracked_index', 'list_search_terms_country_or_region', 
-            'list_search_terms_industries_and_sectors', 'list_search_terms_related_terms']:
-            for s in query_understand_results[k]:
-                all_search_terms.add(s)
+    Args:
+        query (str): The initial news generation request
+        sink (ProgressSink): A message sink to which progress messages are sent
     
-        all_search_terms = list(all_search_terms)
-    
-        if query not in all_search_terms:
-            all_search_terms.append(query)
-    
-        query_meaning = query_understand_results['term_meaning']
-        log.info('Term meaning: {}'.format(query_meaning))
-        log.info('')
-    
-        yield log_message('Generated {} search terms'.format(len(all_search_terms)))
-        log.info('Generated {} search terms'.format(len(all_search_terms)))
-        #print(all_search_terms)
-        log.info('')
-        
-        yield value_message(query_meaning)
-    
-        for s in all_search_terms:
-            yield value_message(s)
+    Returns:
+        GenerateRecentNews: A new object with query meaning and generated search terms based on the query
+    """
 
-    except Exception as e:
-        log.info('Error: {}'.format(e))
-        log.info('')
-        yield log_message('Error: {}'.format(e))
-
-    time_end = time.time()
-    log.info('Elapsed: {} seconds'.format(int((time_end - time_start) * 100) / 100))
-    log.info('')
+    timestamp_start = get_and_log_current_time(message=f'The generation of the search terms for {query} started at', sink=sink)   
+    
+    LLM_response = llm_client.ask_LLM(
+        prompt=SEARCH_TERM_GENERATION_PROMPT_TEMPLATE.format(NUMBER_SEARCH_TERMS_EACH_STEP, query) + SEARCH_TERM_GENERATION_RESPONSE_FORMAT, 
+        cache_prefix=(query, "search terms")
+    )
+    
+    if LLM_response['status_code'] != 200:
+        raise Exception(f'An exception occurred during the LLM call for {(query, "search terms")}')
         
+    response_content = LLM_response['response_content']
+    
+    query_meaning = response_content["query_meaning"]
+    sink.send(message=f"The meaning of the query is: {query_meaning}")
+    log.info(msg=f"The meaning of the query is: {query_meaning}\n")
+
+    search_terms = _aggregate_search_terms(query=query, llm_response_content=response_content)
+    
+    sink.send(message=f"Generated {len(search_terms)} search terms")
+    log.info(msg=f"Generated {len(search_terms)} search terms\n")
+
+    timestamp_end = get_and_log_current_time(message=f'The generation of the search terms for {query} finished at', sink=sink)
+
+    log_processing_duration(timestamp_start=timestamp_start, timestamp_end=timestamp_end, message=f'The generation of the search terms for {query}', sink=sink)
+    
+    return GenerateRecentNews(
+        query=query,
+        query_meaning=query_meaning,
+        search_terms=search_terms
+    )

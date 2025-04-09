@@ -1,283 +1,481 @@
-import requests
-import os
+# Standard library imports
 import json
-from dotenv import load_dotenv
-from bs4 import BeautifulSoup 
-import datetime
-import time
-from time import sleep
-from multiprocessing import Process, Manager
-from google import genai
-from duckduckgo_search import DDGS
-from flask import Flask, request, Response, stream_with_context, jsonify, send_file
-#from flask_caching import Cache
-from search_term_generation import *
-from websearch import *
-from webpage_retrieval import *
-from identification_of_relevant_articles import *
-from aggregated_answer_generation import *
+import threading
+from multiprocessing import Queue
+from typing import Callable, Generator
+
+# Third-party imports
+from flask import Flask, request
+
+# Local imports
+from progress_sink import ProgressSink
+from generate_recent_news import GenerateRecentNews
+from search_term_generation import generate_search_terms
+from websearch import perform_web_search
+from crawling import perform_crawling
+from identification_of_relevant_articles import identify_relevant_articles
+from generation_of_most_impactful_news import generate_most_impactful_news
 from utils import *
-from cache import cache
-from werkzeug.utils import secure_filename
-from google.cloud import storage
-import google.auth
 
 app = Flask(__name__)
 
-app.config['CACHE_TYPE'] = 'filesystem'
-app.config['CACHE_DIR'] = '/teamspace/studios/this_studio/back_end/flask_cache'
-app.config['CACHE_DEFAULT_TIMEOUT'] = 60 * 60 * 24 * 10 #10 days in seconds
-cache.init_app(app)
-#manual_cache_dir = '/teamspace/studios/this_studio/back_end/manual_cache'
 
-serialized_results_filename = '/teamspace/studios/this_studio/back_end/serialized_results.txt'
-storage_bucket_name = 'finance-app-back-end-evaluation-logs'
+def execute_pipeline_steps(query: str, sink: ProgressSink) -> GenerateRecentNews:
+    """
+    Executes all steps of the news generation pipeline for a single query.
+    
+    Args:
+        query (str): The search query to process
+        sink (ProgressSink): A sink for logging progress
+    
+    Returns:
+        GenerateRecentNews: An object containing the generated news and all intermediary results
+    """
 
-load_dotenv()
-#os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "wide-gecko-275009-f7654d8bfa4f.json"
+    news_generation_pipeline_output = generate_search_terms(query=query, sink=sink)
+    news_generation_pipeline_output = perform_web_search(recent_news=news_generation_pipeline_output, sink=sink)
+    news_generation_pipeline_output = perform_crawling(recent_news=news_generation_pipeline_output, sink=sink)
+    news_generation_pipeline_output = identify_relevant_articles(recent_news=news_generation_pipeline_output, sink=sink)
+    news_generation_pipeline_output = generate_most_impactful_news(recent_news=news_generation_pipeline_output, sink=sink)
+    return news_generation_pipeline_output
+    
 
-def get_summary_about_search_term(query, output_filename = serialized_results_filename):
+def run_pipeline(request_body: dict, queue: Queue) -> None:
+    """
+    Runs the pipeline for generating recent news about an input query.
+    
+    Args:
+        request_body (dict): The initial news generation request containing the query
+        queue (Queue): A queue for sending progress messages
+    
+    Returns:
+        None
+    """
+    
+    sink = ProgressSink(queue=queue)
+    query = request_body['query']
+    
+    news_generation_pipeline_output = execute_pipeline_steps(query=query, sink=sink)
+    sink.send_final(final_output=news_generation_pipeline_output._serialize_most_impactful_news())
+
+
+def get_output_and_log_filenames(request_body: dict) -> dict:
+    """
+    Generates output and log filenames based on the input filename and current timestamp.
+    
+    Args:
+        request_body (dict): The request containing input and optional output filenames
+    
+    Returns:
+        dict: A dictionary containing the generated output and log filenames
+    """
+
+    input_filename = request_body['input_filename']
+    base_output_filename = request_body.get('output_filename', input_filename.split('.txt')[0] + '-processed')
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
+    
+    output_filename = f"{base_output_filename}-{timestamp}.txt"
+    log_filename = f"{base_output_filename}-{timestamp}-logs.log"
+
+    return {
+        'output_filename': output_filename,
+        'log_filename': log_filename
+    }
+
+
+def read_data(input_filename: str, n_rows: str | None = None) -> list[str]:
+    """
+    Reads data from a file and optionally limits the number of rows to process.
+    
+    Args:
+        input_filename (str): The name of the file to read
+        n_rows (str | None, optional): Maximum number of rows to read. If None, reads all rows.
+    
+    Returns:
+        list[str]: A list of queries read from the file
+    
+    Raises:
+        FileNotFoundError: If the input file does not exist
+        ValueError: If n_rows is not a valid integer
+    """
+    
+    file_path = os.path.join('./data', input_filename)
+    
     try:
-        complete_results = {}
-    
-        processing_start = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") 
-        complete_results['processing_start'] = json.dumps(processing_start)
-        log.info("The processing of the search term {} started at {}.".format(query, processing_start))
-        log.info('')
-        
-        term_of_interest_meaning = None
-        
-        all_search_terms_stream = generate_search_terms(query)
-    
-        all_search_terms_list = []
-        
-        for message in all_search_terms_stream:
-            return_type, return_value = parse_message_sent(message)
-            if return_type == "log":
-                yield message
-            elif term_of_interest_meaning is None:
-                term_of_interest_meaning = return_value
-                yield value_message("Term meaning: {}".format(term_of_interest_meaning))
-            else:
-                yield message
-                all_search_terms_list.append(return_value)
-                #sleep(0.1)
-    
-        complete_results['term_of_interest_meaning'] = term_of_interest_meaning
-        complete_results['all_search_terms'] = all_search_terms_list
-        
-        agg_search_results_list = []
-    
-        agg_search_results_stream = search_web(all_search_terms_list, 10)
-        
-        for message in agg_search_results_stream:
-            return_type, return_value = parse_message_sent(message)
-            if return_type == "value":
-                agg_search_results_list.append(return_value)
-            else:
-                yield message
-    
-        complete_results['agg_search_results'] = agg_search_results_list
-    
-        extracted_content_from_search_results_stream = extract_content_from_search_results(agg_search_results_list)
-    
-        extracted_content_from_search_results = {}
-    
-        for message in extracted_content_from_search_results_stream:
-            return_type, return_value = parse_message_sent(message)
-            if return_type == "value":
-                for url in return_value.keys():
-                    extracted_content_from_search_results[url] = return_value[url]
-            else:
-                yield message
-    
-        #complete_results['extracted_content_from_search_results'] = extracted_content_from_search_results
-        
-        summary_completions_stream = generate_summary_completions(term_of_interest_meaning, extracted_content_from_search_results)
-        
-        summary_completions = []
-        
-        for message in summary_completions_stream:
-            return_type, return_value = parse_message_sent(message)
-            if return_type == "value":
-                summary_completions.append(return_value)
-                #print(return_value)
-                #print()
-            else:
-                yield message
-    
-        complete_results['summary_completions'] = summary_completions
-        
-        final_output_stream = generate_aggregated_output(term_of_interest_meaning, summary_completions, extracted_content_from_search_results)
-    
-        final_output_list = []
-        
-        for message in final_output_stream:
-            return_type, return_value = parse_message_sent(message)
-            if return_type == "value":
-                final_output_list.append(return_value)    
-            yield message
-    
-        complete_results['final_output'] = final_output_list
-    
-        processing_end = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") 
-        complete_results['processing_end'] = json.dumps(processing_end)
-        log.info("The processing of the search term {} finished at {}.".format(query, processing_end))
-        log.info('')
-    
-        yield value_message({'complete_results': complete_results})
-        
-        with open(output_filename, "a") as f:  # Open in append mode
-            f.writelines([json.dumps({query: complete_results}) + '\n'])
+        with open(file_path, "r") as f:
+            data = [line.strip() for line in f if line.strip()]
+            
+        total_rows = len(data)
+        if n_rows is None:
+            log.info(msg=f'The input file has been read, it contains {total_rows} rows and all will be processed\n')
+            return data
+            
+        try:
+            n_rows_int = int(n_rows)
+            if n_rows_int <= 0:
+                raise ValueError("n_rows must be a positive integer")
+                
+            data_subset = data[:n_rows_int]
+            log.info(msg=f'The input file has been read, it contains {total_rows} rows, {len(data_subset)} will be processed\n')
+            return data_subset
+            
+        except ValueError as e:
+            log.info(msg=f'Invalid n_rows value: {n_rows}\n')
+            raise ValueError(f"n_rows must be a valid integer: {str(e)}")
+            
+    except FileNotFoundError:
+        log.info(msg=f'File not found: {file_path}\n')
+        raise FileNotFoundError(f"Input file does not exist: {file_path}")
 
+
+def start_rate_limiters(max_search_requests_per_sec: int = 30, max_llm_requests_per_sec: int = 5) -> None:
+    """
+    Initializes and starts the rate limiters for search and LLM requests.
+    
+    Args:
+        max_search_requests_per_sec (int, optional): Maximum search requests per second. Defaults to 30.
+        max_llm_requests_per_sec (int, optional): Maximum LLM requests per second. Defaults to 5.
+    
+    Returns:
+        None
+    
+    Raises:
+        ValueError: If rate limits are not positive integers
+    """
+    if max_search_requests_per_sec <= 0 or max_llm_requests_per_sec <= 0:
+        raise ValueError("Rate limits must be positive integers")
+    
+    # Only update if the values have changed
+    current_search_limit = rate_limiter_search_requests.get_max_requests_per_sec()
+    current_llm_limit = rate_limiter_llm_calls.get_max_requests_per_sec()
+    
+    if current_search_limit != max_search_requests_per_sec:
+        rate_limiter_search_requests.update_max_requests_per_sec(max_requests_per_sec=max_search_requests_per_sec)
+    
+    if current_llm_limit != max_llm_requests_per_sec:
+        rate_limiter_llm_calls.update_max_requests_per_sec(max_requests_per_sec=max_llm_requests_per_sec)
+    
+    # Log the current limits in a single statement
+    log.info('Rate limiters configured: search={}/sec, llm={}/sec\n'.format(
+        rate_limiter_search_requests.get_max_requests_per_sec(),
+        rate_limiter_llm_calls.get_max_requests_per_sec()
+    ))
+    
+    # Start background processes for both limiters
+    processes = []
+    for limiter in [rate_limiter_search_requests, rate_limiter_llm_calls]:
+        process = Process(target=limiter.reset_count, daemon=True)
+        process.start()
+        processes.append(process)
+    
+    log.info('Started {} background processes for rate limiters\n'.format(len(processes)))
+
+
+def process_batch(
+    pipeline: Callable, 
+    queries: list[str], 
+    output_writer: FileWriter, 
+    sink_summary_progress_messages: ProgressSink, 
+    sink_detailed_progress_messages: ProgressSink, 
+    in_parallel: bool = False
+) -> list[GenerateRecentNews]:
+    """
+    Processes a batch of queries either sequentially or in parallel.
+    
+    Args:
+        pipeline (Callable): The pipeline function to execute for each query
+        queries (list[str]): List of queries to process
+        output_writer (FileWriter): Writer for saving results
+        sink_summary_progress_messages (ProgressSink): Sink for summary progress messages
+        sink_detailed_progress_messages (ProgressSink): Sink for detailed progress messages
+        in_parallel (bool, optional): Whether to process queries in parallel. Defaults to False.
+    
+    Returns:
+        list[GenerateRecentNews]: List of results for each processed query
+    
+    Raises:
+        ValueError: If queries list is empty
+        Exception: If processing fails
+    """
+
+    if not queries:
+        raise ValueError("Queries list cannot be empty")
+    
+    batch_processing_results = []
+    log.info('Processing {} queries in {} mode\n'.format(
+        len(queries), 
+        'parallel' if in_parallel else 'sequential'
+    ))
+
+    # Configure rate limiters based on processing mode
+    rate_limits = {
+        'search': 10 if in_parallel else 30,
+        'llm': 1 if in_parallel else 5
+    }
+    start_rate_limiters(
+        max_search_requests_per_sec=rate_limits['search'],
+        max_llm_requests_per_sec=rate_limits['llm']
+    )
+
+    def process_single_query(query: str) -> GenerateRecentNews:
+        """Process a single query and handle timing/logging."""
+        timestamp_start = get_and_log_current_time(
+            message=f'Processing query "{query}" started',
+            sink=sink_summary_progress_messages
+        )
+        
+        pipeline_output = pipeline(query=query, sink=sink_detailed_progress_messages)
+        
+        output_writer.write(message=json.dumps({
+            query: pipeline_output._serialize_most_impactful_news()
+        }))
+        
+        get_and_log_current_time(
+            message=f'Processing query "{query}" finished',
+            sink=sink_summary_progress_messages
+        )
+        
+        return pipeline_output
+
+    if in_parallel:
+        # Use a wrapper to capture results in parallel processing
+        def parallel_wrapper(query, batch_processing_results):
+            result = process_single_query(query)
+            batch_processing_results.append(result)
+            return result
+
+        batch_processing_results = list(run_multiple_with_limited_time(
+            func=parallel_wrapper,
+            args=queries,
+            max_time=None
+        ))
+    else:
+        # Process queries sequentially
+        for query in queries:
+            result = process_single_query(query)
+            batch_processing_results.append(result)
+
+    return batch_processing_results
+
+
+def get_statistics(batch_processing_results: list[GenerateRecentNews]) -> dict:
+    """
+    Generates statistics about the batch processing results.
+    
+    Args:
+        batch_processing_results (list[GenerateRecentNews]): List of results from batch processing
+    
+    Returns:
+        dict: Statistics about the processing results 
+    """
+    
+    return {
+        'number_of_outputs': len(batch_processing_results),
+        'number_of_search_terms': [len(result.search_terms) for result in batch_processing_results],
+        'number_of_retrieved_urls': [len(result.retrieved_urls) for result in batch_processing_results],
+        'number_of_parsed_urls': [len(result.parsed_urls) for result in batch_processing_results],
+        'number_of_relevant_articles': [len(result.relevant_articles) for result in batch_processing_results],
+        'number_of_chars_in_most_impactful_news': [
+            sum(len(news.news_summary) for news in result.most_impactful_news) 
+            for result in batch_processing_results
+        ]
+    }
+
+
+def run_pipeline_batch(request_body: dict, queue: Queue) -> None:
+    """
+    Runs the pipeline for generating recent news about queries in a file.
+    
+    Args:
+        request_body (dict): The initial news generation request containing file information
+        queue (Queue): A queue for sending progress messages
+    
+    Returns:
+        None
+    
+    Raises:
+        ValueError: If input_filename is missing or invalid
+        Exception: For any other processing errors
+    """
+    if not request_body or not request_body.get('input_filename'):
+        raise ValueError("Missing or invalid input_filename in request body")
+    
+    sink = ProgressSink(queue=queue)
+    output_writer = None
+    
+    try:
+        # Setup detailed progress tracking
+        message_queue_detailed_progress_messages = Queue()
+        sink_detailed_progress_messages = ProgressSink(queue=message_queue_detailed_progress_messages)
+        
+        input_filename = request_body['input_filename']
+        
+        # Log start time
+        timestamp_start = get_and_log_current_time(
+            message=f'Processing file "{input_filename}" started',
+            sink=sink
+        )
+        
+        # Setup GCS and download file
+        authenticate_gcs()
+        download_from_gcs(source_filename=input_filename)
+        
+        # Read and process queries
+        queries = read_data(
+            input_filename=input_filename,
+            n_rows=request_body.get('n_rows', None)
+        )
+        
+        if not queries:
+            raise ValueError(f"No valid queries found in file {input_filename}")
+        
+        # Setup output files
+        filenames = get_output_and_log_filenames(request_body=request_body)
+        output_filename = filenames['output_filename']
+        log_filename = filenames['log_filename']
+        
+        output_writer = FileWriter(filename=os.path.join('./data', output_filename))
+        
+        # Process batch
+        batch_processing_results = process_batch(
+            pipeline=execute_pipeline_steps,
+            queries=queries,
+            output_writer=output_writer,
+            sink_summary_progress_messages=sink,
+            sink_detailed_progress_messages=sink_detailed_progress_messages,
+            in_parallel=request_body.get('in_parallel', False)
+        )
+        
+        # Send statistics
+        batch_processing_statistics = get_statistics(batch_processing_results=batch_processing_results)
+        sink.send(message=batch_processing_statistics)
+        
+        # Close output writer before upload
+        if output_writer:
+            output_writer.close()
+        
+        # Upload results to GCS
+        upload_to_gcs(
+            source_filename=os.path.join('./data', output_filename),
+            destination_filename=output_filename
+        )
+        upload_to_gcs(
+            source_filename=LOG_FILENAME,
+            destination_filename=log_filename
+        )
+        
+        # Log completion
+        timestamp_end = get_and_log_current_time(
+            message=f'Processing file "{input_filename}" finished',
+            sink=sink
+        )
+        log_processing_duration(
+            timestamp_start=timestamp_start,
+            timestamp_end=timestamp_end,
+            message=f'Processing file "{input_filename}"',
+            sink=sink
+        )
+        
+        # Send final success message
+        sink.send_final(final_output={
+            'status_code': 200,
+            'output_filename': output_filename
+        })
+        
     except Exception as e:
-        log.info('Error: {}'.format(e))
-        log.info('')
-        yield log_message('Error: {}'.format(e))
+        # Ensure resources are cleaned up
+        if output_writer:
+            output_writer.close()
+        sink.close()
+        log.error(f"Error processing batch: {str(e)}")
+        raise
+
+
+def stream_pipeline(request_body: dict, run_pipeline: Callable) -> Generator:
+    """
+    Runs the pipeline and streams the messages sent by the pipeline to the sink.
+    
+    Args:
+        request_body (dict): The initial news generation request
+        run_pipeline (Callable): The pipeline function to execute
+    
+    Returns:
+        Generator: A stream of progress messages for the recent news generation pipeline
+    """
+    
+    message_queue = Queue()
+
+    generation_thread = threading.Thread(
+        target=run_pipeline,
+        args=(request_body, message_queue,)
+    )
+
+    generation_thread.start()
+    
+    while True:
+        msg = message_queue.get()
+        if msg is None:
+            break
+        yield msg
+        
+    generation_thread.join()
 
 
 @app.route("/health_check", methods=["POST"])
-def health_check():
+def health_check() -> tuple[str, int, dict]:
+    """
+    Health check endpoint that verifies the service is running.
+    
+    Returns:
+        tuple[str, int, dict]: Response message, status code, and headers
+    """
     data = request.get_json()
     if not data or "query" not in data:
         return json.dumps({"error": "Missing 'query' in request body"}), 400, {"Content-Type": "application/json"}
 
-    query = data["query"]
-    return jsonify({"message": "Request {} was successful!".format(query)}), 200, {"Content-Type": "application/json"}
-
-
-def stream_health_check(query):
-    yield 'Request' + '\n'
-    yield query + '\n'
-    yield 'was successful!' + '\n'
+    query = data['query']
+    return json.dumps({"message": "Request {} was successful!".format(query)}), 200, {"Content-Type": "application/json"}
 
 
 @app.route("/health_check_streaming", methods=["POST"])
 def health_check_streaming():
     data = request.get_json()
-    if not data or "query" not in data:
-        return jsonify({"error": "Missing 'query' in request body"}), 400, {"Content-Type": "application/json"}
+    if not data or 'query' not in data:
+        return json.dumps({"error": "Missing 'query' in request body"}), 400, {"Content-Type": "application/json"}
 
-    query = data["query"]
-    return Response(stream_with_context(stream_health_check(query)), content_type = "text/plain")
+    query = data['query']
 
+    def stream_health_check(query):
+        yield 'Request' + '\n'
+        yield query + '\n'
+        yield 'was successful!' + '\n'
 
-@app.route("/generate_summary", methods=["POST"])
-def generate_summary():
-    data = request.get_json()
-    if not data or "query" not in data:
-        return jsonify({"error": "Missing 'query' in request body"}), 400, {"Content-Type": "application/json"}
-
-    query = data["query"]
-    return Response(stream_with_context(get_summary_about_search_term(query)), content_type = "text/plain")
-    #return Response(QUERY_UNDERSTANDING_PROMPT_TEMPLATE.format(" ", " "), content_type="text/plain")
+    return stream_health_check(query)
+    #return Response(stream_with_context(stream_health_check(query)), content_type = "text/plain")
 
 
-@app.route("/generate_batch_summary", methods=["POST"])
-def generate_batch_summary():
-    data = request.get_json()
-    if not data or "input_filename" not in data:
-        return jsonify({"error": "Missing 'input_filename' in request body"}), 400, {"Content-Type": "application/json"}
+@app.route("/generate_recent_news", methods=["POST"])
+def generate_recent_news():
+    request_body = request.get_json()
+    if not request_body or len(request_body.get('query', '')) <= 1:
+        return json.dumps({"error": "Missing 'query' in request body"}), 400, {"Content-Type": "application/json"}
 
-    try:        
-        input_filename = data.get("input_filename")
-        output_filename = data.get("output_filename")
+    start_rate_limiters(
+        max_search_requests_per_sec=30,
+        max_llm_requests_per_sec=5
+    )
+
+    return stream_pipeline(request_body, run_pipeline)   #Response(stream_with_context(stream_pipeline(query)), mimetype='text/event-stream')
+
+
+@app.route("/generate_recent_news_batch", methods=["POST"])
+def generate_recent_news_batch():
+    request_body = request.get_json()
+    if not request_body or len(request_body.get('input_filename', '')) <= 1:
+        return json.dumps({"error": "Missing 'input_filename' in request body"}), 400, {"Content-Type": "application/json"}  
+
+    return stream_pipeline(request_body, run_pipeline_batch)   #Response(stream_with_context(stream_pipeline(query)), mimetype='text/event-stream')
     
-        #os.system(f"cp {os.path.join('./data', input_filename)} {os.path.join('./data', input_filename)}")
-
-        current_timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") 
-    
-        file_processing_output = process_file(input_filename, output_filename, None)
-
-        processing_result = file_processing_output.get('message')
-        output_filename = file_processing_output.get('output_filename')
-        
-        #processing_result = "Request was successful"
-        #output_filename = 'test_cases_processed-test.txt'
-        #with open(os.path.join('./data', output_filename), "w") as f:
-        #    f.writelines(['This', 'is', 'a', 'test', '.'])
-
-        #log.info('Output file created: {}'.format(output_filename))
-        
-        if processing_result == "Request was successful" and output_filename is not None and os.path.exists(os.path.join('./data', output_filename)):
-            #log.info('Coping from {} to {}'.format(os.path.join('./data', output_filename), os.path.join('/workspace/data', output_filename)))
-            #os.system(f"cp {os.path.join('./data', output_filename)} {os.path.join('/workspace/data', output_filename)}")
-            #output = os.popen("ls -lh /workspace/data").read()
-            #log.info('Directory output: {}'.format(output))  
-            return jsonify({"message": "Request was successful!", "output_filename": output_filename}), 200, {"Content-Type": "application/json"}
-
-    except Exception as e:
-        log.info('Error: {}'.format(e))
-        log.info('')
-        return jsonify({"error": "Error processing file {}".format(e)}), 400, {"Content-Type": "application/json"}
-
-
-def process_file(input_filename, output_filename = None, n_rows = 3):
-    log.info('Started processing the file')
-    log.info('')
-
-    try:
-        if not input_filename:
-            return "Error: missing 'filename' in request body", ''
-
-        authenticate_gcs()
-
-        full_input_filename = os.path.join('./data', input_filename)
-        download_from_gcs(storage_bucket_name, input_filename, full_input_filename)
-        
-        with open(full_input_filename, "r") as f:
-            input_data = f.readlines()
-    
-        log.info('The file has been read and it has {} lines'.format(len(input_data)))
-        log.info('')
-
-        current_timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S").replace(' ', '-') 
-        
-        if output_filename is None:
-            output_filename = input_filename.split('.txt')[0] + '-processed-' + current_timestamp + '.txt'
-        else:
-            output_filename = output_filename.split('.txt')[0] + '-' + current_timestamp + '.txt'
-            
-        full_output_filename = os.path.join('./data', output_filename)
-        log.info('Output filename: {}'.format(full_output_filename))
-        log.info('')
-
-        #with open(full_output_filename, "w") as f:
-        #    f.writelines(['This', 'is', 'a', 'test', '.'])
-            
-        if n_rows is None:
-            input_data_subset = input_data
-        else:
-            input_data_subset = input_data[:n_rows]
-    
-        output_data = []
-
-        log.info('{} rows will be processed'.format(len(input_data_subset)))
-        log.info('')
-        
-        for row in input_data_subset:
-            processed_row = ''
-            message_stream = get_summary_about_search_term(row.split('\n')[0], full_output_filename)        
-            for m in message_stream:
-                processed_row += m + '\n'
-    
-            output_data.append({row: processed_row})
-            #print({row: processed_row})
-    
-            time.sleep(2)
-
-        log.info('The file {} has been successfully processed. The output file is {}.'.format(input_filename, output_filename))
-        log.info('')
-
-        upload_to_gcs(storage_bucket_name, full_output_filename, output_filename)
-        
-        return {"message": "Request was successful", "output_filename": output_filename}
-
-    except Exception as e:
-        log.info('Error: {}'.format(e))
-        log.info('')
-        return 'Error: {}'.format(e), ''
-
 
 if __name__ == "__main__":
     app.run(host = "0.0.0.0", port = 8080, debug = True)

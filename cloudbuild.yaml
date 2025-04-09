@@ -5,47 +5,39 @@ steps:
   #  args: ["install", "-r", "requirements.txt", "--user"]
 
   # Run unit tests
-  #- name: python
-  #  entrypoint: python
-  #  args: ["-m", "pytest", "--junitxml=${SHORT_SHA}_test_log.xml"] 
+  - name: python
+    entrypoint: python
+    args: ["-m", "pytest", "tests/unit", "-vv", "--log-cli-level=DEBUG"] 
+
+  # Run integration tests
+  - name: python
+    entrypoint: python
+    args: ["-m", "pytest", "tests/integration/test_app_integration.py", "-vv", "--log-cli-level=DEBUG"] 
 
   # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 
            'us-central1-docker.pkg.dev/${PROJECT_ID}/finance-app-back-end/app:latest', '.']
 
-    
   # Run evaluation of the currently deployed code on the test set
-  - name: "gcr.io/cloud-builders/curl"
-    entrypoint: "sh"
-    args:
-      - "-c"
-      - |
-        echo 'Running evaluation of the currently deployed code...'
+  #- name: "gcr.io/cloud-builders/curl"
+  #  entrypoint: "sh"
+  #  args:
+  #    - "-c"
+  #    - |
+  #      curl -m 3600 -s -X POST https://finance-app-back-end-911835065349.us-central1.run.app/generate_batch_summary \
+  #        -H "Content-Type: application/json" \
+  #        -d '{"input_filename": "test_cases.txt", "n_rows": None, "in_parallel": true, "output_filename": "test_cases_processed_current"}' > /workspace/evaluation_response_new.txt
+  #      
+  #      cat /workspace/evaluation_response_current.txt
 
-        #apt update && apt install -y jq
-        
-        #curl -s -X POST https://finance-app-back-end-911835065349.us-central1.run.app/generate_batch_summary \
-        #  -H "Content-Type: application/json" \
-        #  -d '{"input_filename": "test_cases.txt", "output_filename": "test_cases_processed_current"}' | jq -r '.' > /workspace/evaluation_response_current.json
+  #      # Check if the response contains a final message with status code 200
+  #      if ! jq -e 'select(.message_type == "final" and .message.status_code == 200)' /workspace/evaluation_response_current.txt > /dev/null; then
+  #          echo "Error: The batch summary generation failed!"
+  #          exit 1
+  #      fi
 
-        #cat /workspace/evaluation_response_current.json
-
-        #if [ "$(jq -r '.message' /workspace/evaluation_response_current.json)" != "Request was successful!" ]; then
-        #  echo "Error: The batch summary generation failed!"
-        #  exit 1
-        #fi
-
-        echo "The batch summary was generated successfully!"
-
-    #args:
-    #  - "-X"
-    #  - "POST"
-    #  - "https://finance-app-back-end-911835065349.us-central1.run.app/generate_batch_summary"
-    #  - "-H"
-    #  - "Content-Type: application/json"
-    #  - "-d"
-    #  - '{"input_filename": "test_cases.txt", "output_filename": "test_cases_processed_current.txt"}'
+  #      echo "The batch summary was generated successfully!"
 
   # Docker push to Google Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
@@ -60,7 +52,7 @@ steps:
            '--set-secrets=GEMINI_API_KEY=GEMINI_API_KEY:latest',
            '--cpu', '2',
            '--memory', '8000Mi',
-           '--timeout', '3600'           
+           '--timeout', '7200'           
            ]
 
   # Run evaluation of the currently deployed code on the test set
@@ -75,15 +67,14 @@ steps:
         
         curl -m 3600 -s -X POST https://finance-app-back-end-911835065349.us-central1.run.app/generate_batch_summary \
           -H "Content-Type: application/json" \
-          -d '{"input_filename": "test_cases.txt", "output_filename": "test_cases_processed_new"}' > /workspace/evaluation_response_new.json
-
-        echo 'The curl command finished'
+          -d '{"input_filename": "test_cases.txt", "n_rows": None, "in_parallel": true, "output_filename": "test_cases_processed_new"}' > /workspace/evaluation_response_new.txt
         
-        cat /workspace/evaluation_response_new.json
+        cat /workspace/evaluation_response_new.txt
 
-        if [ "$(jq -r '.message' /workspace/evaluation_response_new.json)" != "Request was successful!" ]; then
-          echo "Error: The batch summary generation failed!"
-          exit 1
+        # Check if the response contains a final message with status code 200
+        if ! jq -e 'select(.message_type == "final" and .message.status_code == 200)' /workspace/evaluation_response_new.txt > /dev/null; then
+            echo "Error: The batch summary generation failed!"
+            exit 1
         fi
 
         echo "The batch summary was generated successfully!"
@@ -109,4 +100,4 @@ steps:
 # Options
 options:
   logging: CLOUD_LOGGING_ONLY
-timeout: 3600s
+timeout: 7200s
