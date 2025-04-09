@@ -2,7 +2,7 @@
 import json
 import threading
 from multiprocessing import Queue
-from typing import Callable, Generator
+from typing import Callable, Generator, Union
 
 # Third-party imports
 from flask import Flask, request
@@ -83,13 +83,13 @@ def get_output_and_log_filenames(request_body: dict) -> dict:
     }
 
 
-def read_data(input_filename: str, n_rows: str | None = None) -> list[str]:
+def read_data(input_filename: str, n_rows: Union[str, None] = None) -> list[str]:
     """
     Reads data from a file and optionally limits the number of rows to process.
     
     Args:
         input_filename (str): The name of the file to read
-        n_rows (str | None, optional): Maximum number of rows to read. If None, reads all rows.
+        n_rows (Union[str, None], optional): Maximum number of rows to read. If None, reads all rows.
     
     Returns:
         list[str]: A list of queries read from the file

@@ -96,11 +96,11 @@ class TestNewsGenerationEndpoints:
             if message['message_type'] == 'final':
                 found_final_message = True
                 final_message = message['message']
-                print('Final message: ', final_message, '\n')
+                #print('Final message: ', final_message, '\n')
                 assert len(final_message) >= 1 and len(final_message[0])>= 300
                 break
         
-        print('Found final message: ', found_final_message)
+        #print('Found final message: ', found_final_message)
         assert found_final_message, "No final message found in the response stream"
 
     def test_generate_recent_news_endpoint_with_missing_query(self, client):
@@ -119,7 +119,7 @@ class TestBatchProcessingEndpoints:
         response = client.post('/generate_recent_news_batch', 
                             json={
                                 'input_filename': 'test_cases.txt',
-                                'n_rows': 2,
+                                'n_rows': '2',
                                 'in_parallel': False
                             })
         assert response.status_code == 200
@@ -143,7 +143,7 @@ class TestBatchProcessingEndpoints:
         response = client.post('/generate_recent_news_batch', 
                             json={
                                 'input_filename': 'test_cases.txt',
-                                'n_rows': 2,
+                                'n_rows': '2',
                                 'in_parallel': True
                             })
         assert response.status_code == 200
