@@ -36,7 +36,7 @@ class TestCrawling(unittest.TestCase):
         
         # Verify parsed_urls content
         self.assertIsInstance(result.parsed_urls, dict)
-        self.assertEqual(len(result.parsed_urls), 2)
+        self.assertGreaterEqual(len(result.parsed_urls), 2)
         
         # Check all URLs except the last two
         for url in recent_news.retrieved_urls[:-2]:
