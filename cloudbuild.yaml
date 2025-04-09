@@ -82,7 +82,7 @@ steps:
            '--set-secrets=GEMINI_API_KEY=GEMINI_API_KEY:latest',
            '--cpu', '2',
            '--memory', '8000Mi',
-           '--timeout', '7200'           
+           '--timeout', '3600'           
            ]
 
   # Run evaluation of the currently deployed code on the test set
@@ -130,4 +130,4 @@ steps:
 # Options
 options:
   logging: CLOUD_LOGGING_ONLY
-timeout: 7200s
+timeout: 3600s
