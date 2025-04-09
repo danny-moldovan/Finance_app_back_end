@@ -4,15 +4,45 @@ steps:
     entrypoint: pip
     args: ["install", "-r", "requirements.txt", "--user"]
 
+ # Access the Gemini API KEY secret and make it available for tests
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        # Access the secret and store it in a temporary file
+        gcloud secrets versions access latest --secret=GEMINI_API_KEY > /workspace/api_key.txt
+        # Set environment variables for the next step
+        echo "export GEMINI_API_KEY=$$(cat /workspace/api_key.txt)" > /workspace/env_vars.sh
+        cat /workspace/env_vars.sh
+
+# Run unit tests
+  - name: 'python'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        source /workspace/env_vars.sh
+        python -m pytest tests/unit -v -s
+
+ # Run integration tests
+  - name: 'python'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        source /workspace/env_vars.sh
+        python -m pytest tests/integration/test_app_integration.py -v -s
+
   # Run unit tests
-  - name: python
-    entrypoint: python
-    args: ["-m", "pytest", "tests/unit", "-vv", "--log-cli-level=DEBUG"] 
+  #- name: python
+  #  entrypoint: python
+  #  args: ["-m", "pytest", "tests/unit", "-vv", "--log-cli-level=DEBUG"] 
 
   # Run integration tests
-  - name: python
-    entrypoint: python
-    args: ["-m", "pytest", "tests/integration/test_app_integration.py", "-vv", "--log-cli-level=DEBUG"] 
+  #- name: python
+  #  entrypoint: python
+  #  args: ["-m", "pytest", "tests/integration/test_app_integration.py", "-vv", "--log-cli-level=DEBUG"] 
 
   # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
