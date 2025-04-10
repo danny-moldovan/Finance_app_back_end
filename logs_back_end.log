@@ -1,22 +1,22 @@
-The crawling for test query started at: 2025-04-10 05:58:06
+The crawling for test query started at: 2025-04-10 06:04:49
 
 4 URLs out of 4 could be parsed
 
-The crawling for test query finished at: 2025-04-10 05:58:06
+The crawling for test query finished at: 2025-04-10 06:04:49
 
-The crawling for test query took: 0.04 seconds
+The crawling for test query took: 0.06 seconds
 
-The generation of the most impactful news for Bitcoin started at: 2025-04-10 05:58:06
+The generation of the most impactful news for Bitcoin started at: 2025-04-10 06:04:49
 
 The prompt for the generation of the most impactful news for Bitcoin contains 2208 characters
 
 Generated 0 most impactful news for Bitcoin
 
-The generation of the most impactful news for Bitcoin finished at: 2025-04-10 05:58:06
+The generation of the most impactful news for Bitcoin finished at: 2025-04-10 06:04:49
 
 The generation of the most impactful news for Bitcoin took: 0.00 seconds
 
-The generation of the most impactful news for Bitcoin started at: 2025-04-10 05:58:06
+The generation of the most impactful news for Bitcoin started at: 2025-04-10 06:04:49
 
 The prompt for the generation of the most impactful news for Bitcoin contains 2208 characters
 
@@ -24,17 +24,17 @@ Error generating most impactful news for Bitcoin: LLM call failed for Bitcoin wi
 
 Validation error for Bitcoin: No relevant articles have been identified
 
-The generation of the most impactful news for Bitcoin started at: 2025-04-10 05:58:06
+The generation of the most impactful news for Bitcoin started at: 2025-04-10 06:04:49
 
 The prompt for the generation of the most impactful news for Bitcoin contains 2417 characters
 
 Generated 2 most impactful news for Bitcoin
 
-The generation of the most impactful news for Bitcoin finished at: 2025-04-10 05:58:06
+The generation of the most impactful news for Bitcoin finished at: 2025-04-10 06:04:49
 
 The generation of the most impactful news for Bitcoin took: 0.00 seconds
 
-The identification of relevant articles for Bitcoin started at: 2025-04-10 05:58:06
+The identification of relevant articles for Bitcoin started at: 2025-04-10 06:04:49
 
 The prompt for the identification of relevant articles for Bitcoin contains 1783 characters
 
@@ -46,101 +46,101 @@ The LLM completion 3 had an issue: 500
 
 The counts of relevant articles identified for Bitcoin are: [0, 0, 0]
 
-The identification of relevant articles for Bitcoin finished at: 2025-04-10 05:58:06
+The identification of relevant articles for Bitcoin finished at: 2025-04-10 06:04:49
 
 The identification of relevant articles for Bitcoin took: 0.03 seconds
 
-The identification of relevant articles for Bitcoin started at: 2025-04-10 05:58:06
+The identification of relevant articles for Bitcoin started at: 2025-04-10 06:04:49
 
 The prompt for the identification of relevant articles for Bitcoin contains 1783 characters
 
 The counts of relevant articles identified for Bitcoin are: [2, 2, 2]
 
-The identification of relevant articles for Bitcoin finished at: 2025-04-10 05:58:06
+The identification of relevant articles for Bitcoin finished at: 2025-04-10 06:04:49
 
-The identification of relevant articles for Bitcoin took: 0.04 seconds
+The identification of relevant articles for Bitcoin took: 0.02 seconds
 
-The generation of the search terms for test query started at: 2025-04-10 05:58:06
+The generation of the search terms for test query started at: 2025-04-10 06:04:49
 
 The meaning of the query is: Test query meaning
 
 Generated 6 search terms
 
-The generation of the search terms for test query finished at: 2025-04-10 05:58:06
+The generation of the search terms for test query finished at: 2025-04-10 06:04:49
 
 The generation of the search terms for test query took: 0.00 seconds
 
-The generation of the search terms for  started at: 2025-04-10 05:58:06
+The generation of the search terms for  started at: 2025-04-10 06:04:49
 
 The meaning of the query is: 
 
 Generated 1 search terms
 
-The generation of the search terms for  finished at: 2025-04-10 05:58:06
+The generation of the search terms for  finished at: 2025-04-10 06:04:49
 
 The generation of the search terms for  took: 0.00 seconds
 
-The generation of the search terms for test query started at: 2025-04-10 05:58:06
+The generation of the search terms for test query started at: 2025-04-10 06:04:49
 
 The meaning of the query is: 
 
 Generated 1 search terms
 
-The generation of the search terms for test query finished at: 2025-04-10 05:58:06
+The generation of the search terms for test query finished at: 2025-04-10 06:04:49
 
 The generation of the search terms for test query took: 0.00 seconds
 
-The generation of the search terms for test query started at: 2025-04-10 05:58:06
+The generation of the search terms for test query started at: 2025-04-10 06:04:49
 
-The generation of the search terms for test query started at: 2025-04-10 05:58:06
+The generation of the search terms for test query started at: 2025-04-10 06:04:49
 
 The meaning of the query is: Test query meaning
 
 Generated 11 search terms
 
-The generation of the search terms for test query finished at: 2025-04-10 05:58:06
+The generation of the search terms for test query finished at: 2025-04-10 06:04:49
 
 The generation of the search terms for test query took: 0.00 seconds
 
-The web search for test query started at: 2025-04-10 05:58:06
+The web search for test query started at: 2025-04-10 06:04:49
 
 Search results: [3, 3]
 
 Found 4 search results
 
-The web search for test query finished at: 2025-04-10 05:58:06
+The web search for test query finished at: 2025-04-10 06:04:49
 
-The web search for test query took: 0.03 seconds
+The web search for test query took: 0.02 seconds
 
-The web search for test query started at: 2025-04-10 05:58:06
+The web search for test query started at: 2025-04-10 06:04:49
 
 Search results: [0, 0]
 
 Found 0 search results
 
-The web search for test query finished at: 2025-04-10 05:58:06
+The web search for test query finished at: 2025-04-10 06:04:49
 
-The web search for test query took: 0.04 seconds
+The web search for test query took: 0.02 seconds
 
-The web search for test query started at: 2025-04-10 05:58:06
+The web search for test query started at: 2025-04-10 06:04:49
 
 Search results: [2, 0]
 
 Found 2 search results
 
-The web search for test query finished at: 2025-04-10 05:58:06
+The web search for test query finished at: 2025-04-10 06:04:49
 
-The web search for test query took: 0.06 seconds
+The web search for test query took: 0.02 seconds
 
-The web search for test query started at: 2025-04-10 05:58:06
+The web search for test query started at: 2025-04-10 06:04:49
 
-The web search for test query started at: 2025-04-10 05:58:06
+The web search for test query started at: 2025-04-10 06:04:49
 
 Search results: [2, 2]
 
 Found 3 search results
 
-The web search for test query finished at: 2025-04-10 05:58:06
+The web search for test query finished at: 2025-04-10 06:04:49
 
 The web search for test query took: 0.03 seconds
 

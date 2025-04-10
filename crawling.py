@@ -38,7 +38,7 @@ def _crawl_url_using_crawlbase(url: str) -> dict[str, str]:
 
     except requests.exceptions.RequestException as e:
         status_code = getattr(e.response, 'status_code', 500) if hasattr(e, 'response') else 500
-        log.info(msg=f"Error crawling URL {url} using Crawlbase: {str(e)}\n")
+        #log.info(msg=f"Error crawling URL {url} using Crawlbase: {str(e)}\n")
         return {'status_code': status_code, 'content': ''}
 
 
