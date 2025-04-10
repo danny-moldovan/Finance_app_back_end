@@ -76,7 +76,7 @@ class TestWebSearch(unittest.TestCase):
         
         with patch('websearch.websearch_client.search_web', side_effect=lambda term: {'search_results': mock_search_results[term]}):
             result = perform_web_search(recent_news=self.recent_news, sink=self.sink)
-            #print('Retrieved URLs: ', result.retrieved_urls)
+            print('Retrieved URLs: ', result.retrieved_urls)
 
             # Verify the result has deduplicated URLs
             self.assertIsInstance(result, GenerateRecentNews)
