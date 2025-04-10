@@ -54,7 +54,7 @@ class TestBatchProcessingEndpoints:
         response = client.post('/generate_recent_news_batch', 
                             json={
                                 'input_filename': 'test_cases.txt',
-                                'n_rows': '1',
+                                'n_rows': '2',
                                 'in_parallel': False
                             })
         
@@ -81,7 +81,7 @@ class TestBatchProcessingEndpoints:
         response = client.post('/generate_recent_news_batch', 
                             json={
                                 'input_filename': 'test_cases.txt',
-                                'n_rows': '1',
+                                'n_rows': '2',
                                 'in_parallel': True
                             })
         
