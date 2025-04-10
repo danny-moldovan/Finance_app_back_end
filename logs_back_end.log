@@ -1,146 +1,591 @@
-The crawling for test query started at: 2025-04-10 06:04:49
+Processing file "test_cases.txt" started: 2025-04-10 06:13:57
 
-4 URLs out of 4 could be parsed
+Authenticated into GCS with project: wide-gecko-275009
 
-The crawling for test query finished at: 2025-04-10 06:04:49
+Downloaded test_cases.txt from the Google Storage Bucket finance-app-back-end-evaluation-logs to ./data/test_cases.txt
 
-The crawling for test query took: 0.06 seconds
+The input file has been read, it contains 18 rows, 2 will be processed
 
-The generation of the most impactful news for Bitcoin started at: 2025-04-10 06:04:49
+Outputs will be appended to the file ./data/test_cases-processed-2025-04-10-06:13:59.txt
 
-The prompt for the generation of the most impactful news for Bitcoin contains 2208 characters
+Processing 2 queries in sequential mode
 
-Generated 0 most impactful news for Bitcoin
+Rate limiters configured: search=30/sec, llm=5/sec
 
-The generation of the most impactful news for Bitcoin finished at: 2025-04-10 06:04:49
+Started 2 background processes for rate limiters
 
-The generation of the most impactful news for Bitcoin took: 0.00 seconds
+Processing query "US Economy" started: 2025-04-10 06:13:59
 
-The generation of the most impactful news for Bitcoin started at: 2025-04-10 06:04:49
+The generation of the search terms for US Economy started at: 2025-04-10 06:13:59
 
-The prompt for the generation of the most impactful news for Bitcoin contains 2208 characters
+LLM response text for ('US Economy', 'search terms'): ```json
+{
+    "query_meaning": "US Economy",
+    "list_search_terms": [
+        "US Economy news latest",
+        "US economic outlook latest",
+        "US GDP growth latest",
+        "US inflation rate latest",
+        "US unemployment rate latest"
+    ],
+    "tracked_index": "",
+    "list_search_terms_tracked_index": [],
+    "country_or_region": "US",
+    "list_search_terms_country_or_region": [
+        "US news latest",
+        "United States economic news latest",
+        "US financial news latest",
+        "News about USA latest",
+        "Current events in US latest"
+    ],
+    "industries_and_sectors": "all industries",
+    "list_search_terms_industries_and_sectors": [
+        "US industries latest news",
+        "US sectors performance latest",
+        "US business news latest",
+        "US market overview latest",
+        "US economic sectors latest"
+    ],
+    "related_terms": "Global economy, Federal Reserve, US stock market, US housing market, US labor market",
+    "list_search_terms_related_terms": [
+        "Global economy news latest",
+        "Federal Reserve news latest",
+        "US stock market news latest",
+        "US housing market news latest",
+        "US labor market news latest"
+    ]
+}
+```
 
-Error generating most impactful news for Bitcoin: LLM call failed for Bitcoin with status code 500
+Cache entry set for LLM call: ('US Economy', 'search terms') of length 997
 
-Validation error for Bitcoin: No relevant articles have been identified
+The meaning of the query is: US Economy
 
-The generation of the most impactful news for Bitcoin started at: 2025-04-10 06:04:49
+Generated 21 search terms
 
-The prompt for the generation of the most impactful news for Bitcoin contains 2417 characters
+The generation of the search terms for US Economy finished at: 2025-04-10 06:14:04
 
-Generated 2 most impactful news for Bitcoin
+The generation of the search terms for US Economy took: 5.16 seconds
 
-The generation of the most impactful news for Bitcoin finished at: 2025-04-10 06:04:49
+The web search for US Economy started at: 2025-04-10 06:14:04
 
-The generation of the most impactful news for Bitcoin took: 0.00 seconds
+Searching the web for Current events in US latest
 
-The identification of relevant articles for Bitcoin started at: 2025-04-10 06:04:49
+Searching the web for Federal Reserve news latest
 
-The prompt for the identification of relevant articles for Bitcoin contains 1783 characters
+Searching the web for News about USA latest
 
-The LLM completion 1 had an issue: 500
+Searching the web for US GDP growth latest
 
-The LLM completion 2 had an issue: 500
+Searching the web for US Economy
 
-The LLM completion 3 had an issue: 500
+Searching the web for Global economy news latest
 
-The counts of relevant articles identified for Bitcoin are: [0, 0, 0]
+Searching the web for US Economy news latest
 
-The identification of relevant articles for Bitcoin finished at: 2025-04-10 06:04:49
+Searching the web for US economic sectors latest
 
-The identification of relevant articles for Bitcoin took: 0.03 seconds
+Searching the web for US business news latest
 
-The identification of relevant articles for Bitcoin started at: 2025-04-10 06:04:49
+Searching the web for US economic outlook latest
 
-The prompt for the identification of relevant articles for Bitcoin contains 1783 characters
+Searching the web for US financial news latest
 
-The counts of relevant articles identified for Bitcoin are: [2, 2, 2]
+Searching the web for US industries latest news
 
-The identification of relevant articles for Bitcoin finished at: 2025-04-10 06:04:49
+Searching the web for US inflation rate latest
 
-The identification of relevant articles for Bitcoin took: 0.02 seconds
+Searching the web for US housing market news latest
 
-The generation of the search terms for test query started at: 2025-04-10 06:04:49
+Searching the web for US market overview latest
 
-The meaning of the query is: Test query meaning
+Searching the web for US news latest
 
-Generated 6 search terms
+Searching the web for US stock market news latest
 
-The generation of the search terms for test query finished at: 2025-04-10 06:04:49
+Searching the web for US labor market news latest
 
-The generation of the search terms for test query took: 0.00 seconds
+Searching the web for US sectors performance latest
 
-The generation of the search terms for  started at: 2025-04-10 06:04:49
+Searching the web for United States economic news latest
 
-The meaning of the query is: 
+Searching the web for US unemployment rate latest
 
-Generated 1 search terms
+Search results: [8, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 8, 10, 10, 10]
 
-The generation of the search terms for  finished at: 2025-04-10 06:04:49
+Found 157 search results
 
-The generation of the search terms for  took: 0.00 seconds
+The web search for US Economy finished at: 2025-04-10 06:14:06
 
-The generation of the search terms for test query started at: 2025-04-10 06:04:49
+The web search for US Economy took: 2.11 seconds
 
-The meaning of the query is: 
+The crawling for US Economy started at: 2025-04-10 06:14:06
 
-Generated 1 search terms
+Crawled URL https://www.reuters.com/world/us/whats-trumps-partial-tariff-pause-2025-04-09/ successfully using Crawlbase
 
-The generation of the search terms for test query finished at: 2025-04-10 06:04:49
+Crawled URL https://nypost.com/2025/04/09/us-news/maryland-man-dinari-mcalmont-on-bahamas-vacation-with-parents-beaten-to-death-at-atlantis-paradise-resort/ successfully using Crawlbase
 
-The generation of the search terms for test query took: 0.00 seconds
+Crawled URL https://www.fxempire.com/forecasts/article/xrp-news-today-blackrock-etf-rumors-and-sec-silence-shape-xrps-outlook-btc-at-83k-1509646 successfully using Crawlbase
 
-The generation of the search terms for test query started at: 2025-04-10 06:04:49
+Crawled URL https://www.exchangerates.org.uk/Dollars-to-Rupees-currency-conversion-page.html successfully using Crawlbase
 
-The generation of the search terms for test query started at: 2025-04-10 06:04:49
+Crawled URL https://www.reuters.com/markets/rates-bonds/india-cenbank-cuts-rates-second-time-us-tariffs-add-growth-risks-changes-stance-2025-04-09/ successfully using Crawlbase
 
-The meaning of the query is: Test query meaning
+Crawled URL https://www.morningstar.com/economy/even-with-trumps-rollback-tariffs-would-still-damage-us-economy successfully using Crawlbase
 
-Generated 11 search terms
+Crawled URL https://www.exchangerates.org.uk/Pounds-to-Malawi-Kwacha-currency-conversion-page.html successfully using Crawlbase
 
-The generation of the search terms for test query finished at: 2025-04-10 06:04:49
+Crawled URL https://finance.yahoo.com/news/analysis-tariffs-caused-us-treasury-041235882.html successfully using Crawlbase
 
-The generation of the search terms for test query took: 0.00 seconds
+Crawled URL https://finance.yahoo.com/news/live/stock-market-today-dow-sinks-300-points-sp-500-nears-bear-market-as-trumps-tariffs-keep-roiling-wall-street-200257670.html successfully using Crawlbase
 
-The web search for test query started at: 2025-04-10 06:04:49
+Crawled URL https://finance.yahoo.com/news/live/stock-market-today-dow-sinks-350-points-sp-500-falls-for-third-day-as-tariffs-send-stocks-on-roller-coaster-200044633.html successfully using Crawlbase
 
-Search results: [3, 3]
+Crawled URL https://www.nytimes.com/live/2025/04/08/business/trump-tariffs-stock-market successfully using Crawlbase
 
-Found 4 search results
+Crawled URL https://uk.finance.yahoo.com/news/ftse-100-live-stocks-trump-china-tariffs-markets-083321697.html successfully using Crawlbase
 
-The web search for test query finished at: 2025-04-10 06:04:49
+Crawled URL https://www.reuters.com/world/china/goldman-sachs-revises-down-china-gdp-growth-forecasts-cites-tariff-effects-2025-04-10/ successfully using Crawlbase
 
-The web search for test query took: 0.02 seconds
+Crawled URL https://www.newsweek.com/2025/04/18/birth-fertility-rates-millennials-gen-z-marriage-relationships-2034965.html successfully using Crawlbase
 
-The web search for test query started at: 2025-04-10 06:04:49
+Crawled URL https://www.lelezard.com/en/news-21773426.html successfully using Crawlbase
 
-Search results: [0, 0]
+Crawled URL https://www.bloomberg.com/news/articles/2025-04-09/millions-of-americans-blocked-from-accessing-their-home-equity successfully using Crawlbase
 
-Found 0 search results
+Crawled URL https://www.financialexpress.com/policy/economy-rbi-mpc-meeting-2025-live-updates-governor-sanjay-malhotra-monetary-policy-announcement-repo-rate-loan-interest-rate-cpi-data-3803643/ successfully using Crawlbase
 
-The web search for test query finished at: 2025-04-10 06:04:49
-
-The web search for test query took: 0.02 seconds
-
-The web search for test query started at: 2025-04-10 06:04:49
-
-Search results: [2, 0]
-
-Found 2 search results
-
-The web search for test query finished at: 2025-04-10 06:04:49
-
-The web search for test query took: 0.02 seconds
-
-The web search for test query started at: 2025-04-10 06:04:49
-
-The web search for test query started at: 2025-04-10 06:04:49
-
-Search results: [2, 2]
-
-Found 3 search results
-
-The web search for test query finished at: 2025-04-10 06:04:49
-
-The web search for test query took: 0.03 seconds
-
+Crawled URL https://finance.yahoo.com/news/live/stock-market-today-dow-sp-500-nasdaq-futures-edge-higher-after-trumps-tariff-pause-sparks-historic-rally-221820717.html successfully using Crawlbase
+
+Crawled URL https://money.usnews.com/investing/news/articles/2025-04-09/fed-officials-signal-they-are-not-planning-to-ride-to-the-rescue-with-rate-cuts successfully using Crawlbase
+
+The crawling timed out for 103 URLs
+
+46 URLs out of 157 could be parsed
+
+The crawling for US Economy finished at: 2025-04-10 06:14:15
+
+The crawling for US Economy took: 8.82 seconds
+
+The identification of relevant articles for US Economy started at: 2025-04-10 06:14:15
+
+The prompt for the identification of relevant articles for US Economy contains 448169 characters
+
+LLM response text for ('US Economy', 'relevant articles 1'): ```json
+{
+  "items": [
+    {
+      "article_number": "1",
+      "article_url": "https://finance.yahoo.com/news/live/stock-market-today-dow-sp-500-nears-bear-market-as-trumps-tariffs-keep-roiling-wall-street-200257670.html",
+      "impact_on_term_of_interest": "US stocks tumbled, with the S&P 500 narrowly avoiding a bear market, after the White House confirmed plans to move forward with 104% tariffs on China. This signifies a significant negative impact due to increased trade tensions and market instability, escalating recession fears.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "3",
+      "article_url": "https://finance.yahoo.com/news/live/stock-market-today-dow-sinks-350-points-sp-500-falls-for-third-day-as-tariffs-send-stocks-on-roller-coaster-200044633.html",
+      "impact_on_term_of_interest": "US stock market experienced a historic two-day sell-off, with the Nasdaq Composite entering a bear market and over $5 trillion in value being shed. This indicates a severe negative shock to the US economy and investor confidence due to tariff policies.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "4",
+      "article_url": "https://finance.yahoo.com/news/analysis-tariffs-caused-us-treasury-041235882.html",
+      "impact_on_term_of_interest": "Tariffs caused dislocations in the US Treasuries market, the bedrock of the global financial system, as hedge funds unwound bets and investors raised concerns about lasting damage to US assets. Economists increased recession odds, reflecting a significant negative impact on financial stability and economic outlook.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "2",
+      "article_url": "https://abcnews.go.com/Politics/trump-moves-full-steam-ahead-politically-risky-tariffs/story?id=120609719",
+      "impact_on_term_of_interest": "Trump imposed aggressive tariffs against trading partners, leading to immediate retaliation from China and the EU. Market volatility increased, with US markets experiencing their worst week since the pandemic and economists increasing recession odds. This signifies a strong negative impact due to trade disputes and economic uncertainty.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "6",
+      "article_url": "https://money.usnews.com/investing/news/articles/2025-04-09/fed-officials-signal-they-are-not-planning-to-ride-to-the-rescue-with-rate-cuts",
+      "impact_on_term_of_interest": "Federal Reserve officials signaled they won't quickly cut interest rates to counter the negative growth effects of Trump's tariffs, as they expect tariffs to boost inflation. This indicates a challenging situation for the US economy, facing both slower growth and potential inflation, with limited immediate monetary policy relief.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "7",
+      "article_url": "https://finance.yahoo.com/news/live/stock-market-today-dow-sp-500-nasdaq-futures-edge-higher-after-trumps-tariff-pause-sparks-historic-rally-221820717.html",
+      "impact_on_term_of_interest": "US stock futures rose after a historic rally sparked by Trump's pause on tariffs for many countries. However, increased tariffs on China and existing tariffs remain, suggesting a mixed impact. While the pause provides short-term relief and market rebound, long-term uncertainty and trade tensions with China persist.",
+      "impact_type": "neutral"
+    },
+    {
+      "article_number": "8",
+      "article_url": "https://inews.co.uk/news/uk-politics-latest-updates-tariffs-starmer-trump-3623581",
+      "impact_on_term_of_interest": "Trump announced a 90-day pause on higher tariffs for most countries, leading to a surge in US financial markets. Goldman Sachs rescinded its recession forecast due to this pause, suggesting a positive short-term impact and reduced immediate recession fears, although uncertainty about long-term policy remains.",
+      "impact_type": "positive"
+    },
+    {
+      "article_number": "24",
+      "article_url": "https://www.livemint.com/market/stock-market-news/rbi-monetary-policy-meeting-2025-live-rbi-mpc-key-expectation-repo-rate-to-be-cut-25-bps-sanjay-malhotra-trump-tariff-11744133436763.html",
+      "impact_on_term_of_interest": "RBI cut India's GDP growth forecast to 6.5% due to rising uncertainty and downside risks from tariff-related developments, indicating a negative global economic outlook influenced by US tariffs, which indirectly impacts the US economy through global economic slowdown and trade relations.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "33",
+      "article_url": "https://www.morningstar.com/economy/even-with-trumps-rollback-tariffs-would-still-damage-us-economy",
+      "impact_on_term_of_interest": "Even with Trump's tariff pause, economists still expect significant damage to the US economy, including a major rise in inflation and a high risk of recession. This suggests that the pause is insufficient to avert negative economic consequences from the tariff policies.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "36",
+      "article_url": "https://www.ndtv.com/world-news/trump-tariffs-us-china-tariff-war-could-cut-trade-between-two-by-80-wto-8127980",
+      "impact_on_term_of_interest": "WTO chief warned that the US-China tariff war could reduce trade between the two by 80%, significantly damaging the global economic outlook and potentially breaking the world economy into blocs. This indicates a severe negative impact on global trade and the US economy due to trade war escalation.",
+      "impact_type": "negative"
+    }
+  ]
+}
+```
+
+Cache entry set for LLM call: ('US Economy', 'relevant articles 1') of length 5318
+
+LLM response text for ('US Economy', 'relevant articles 3'): ```json
+{
+  "items": [
+    {
+      "article_number": 36,
+      "article_url": "https://www.ndtv.com/world-news/trump-tariffs-us-china-tariff-war-could-cut-trade-between-two-by-80-wto-8127980",
+      "impact_on_term_of_interest": "The World Trade Organization (WTO) warns that the escalating US-China tariff war could drastically reduce trade between the two nations by as much as 80%, significantly damaging the US economy through trade disruption and broader global economic instability.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": 33,
+      "article_url": "https://www.morningstar.com/economy/even-with-trumps-rollback-tariffs-would-still-damage-us-economy",
+      "impact_on_term_of_interest": "Analysis indicates that even with President Trump's partial rollback of tariffs, significant damage to the US economy is still expected. This includes a major rise in inflation, slowing economic growth, and a considerable risk of recession, suggesting persistent negative economic consequences despite tariff adjustments.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": 9,
+      "article_url": "https://news.sky.com/story/bluesky-13345062",
+      "impact_on_term_of_interest": "China's retaliation with 84% tariffs on US goods is reported to make trade between the US and China 'all but impossible,' signaling a severe disruption to trade relations and significant negative implications for the US economy due to hampered trade flows.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": 4,
+      "article_url": "https://finance.yahoo.com/news/live/stock-market-today-dow-sinks-300-points-sp-500-nears-bear-market-as-trumps-tariffs-keep-roiling-wall-street-200257670.html",
+      "impact_on_term_of_interest": "US stock markets are experiencing extreme chaos and volatility, with the S&P 500 nearing a bear market as a direct consequence of Trump's tariffs. This market turmoil and potential bear market entry signify a major negative impact on the US economy and investor confidence.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": 5,
+      "article_url": "https://finance.yahoo.com/news/live/stock-market-today-dow-sinks-350-points-sp-500-falls-for-third-day-as-tariffs-send-stocks-on-roller-coaster-200044633.html",
+      "impact_on_term_of_interest": "The US stock market is in a significant sell-off, with the Nasdaq entering a bear market, and the S&P 500 approaching bear market territory. This drastic market downturn, triggered by Trump's tariff policies, indicates a substantial negative impact and growing recession fears for the US economy.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": 1,
+      "article_url": "https://abcnews.go.com/Politics/trump-moves-full-steam-ahead-politically-risky-tariffs/story?id=120609719",
+      "impact_on_term_of_interest": "President Trump's aggressive tariffs against major trading partners are causing 'market tumult' and 'mounting concerns' from Republicans and business leaders about making an economic mistake. Economists are increasing odds of a recession this year due to these policies, indicating a significant negative impact on the US economy.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": 17,
+      "article_url": "https://www.china-briefing.com/news/trump-raises-tariffs-on-china-to-54-overview-and-trade-implications/",
+      "impact_on_term_of_interest": "Trump's raising of tariffs on Chinese goods to 54% and ending the de minimis exemption are expected to heavily impact Chinese exporters and disrupt global trade networks. This escalation in trade tensions is poised to increase inflationary pressures in the US and globally, negatively impacting the US economy through higher consumer prices and trade disruptions.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": 46,
+      "article_url": "https://www.usatoday.com/story/news/politics/2025/04/09/trump-tariffs-increasing-wednesday-who-pays/82987700007/",
+      "impact_on_term_of_interest": "Analysis suggests that US consumers will bear the brunt of Trump's tariffs through higher prices, disproportionately affecting lower and middle-class families.  Historical parallels to the Tariff Act of 1930 raise concerns that these tariffs could worsen the US economy, potentially leading to an economic downturn.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": 27,
+      "article_url": "https://www.fwi.co.uk/business/markets-and-trends/input-prices/us-tariffs-hit-fuel-and-fertiliser-markets",
+      "impact_on_term_of_interest": "US tariffs are negatively impacting key input markets like fuel and fertilizer, causing market disruptions and cost increases for US farm businesses. While red diesel prices may decrease short-term, other input costs like fertilizer remain firm, indicating mixed and potentially negative effects on the US agricultural sector and broader economy.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": 3,
+      "article_url": "https://finance.yahoo.com/news/analysis-tariffs-caused-us-treasury-041235882.html",
+      "impact_on_term_of_interest": "Trump's tariffs are causing 'dislocations' in the US Treasuries market, the bedrock of the global financial system, leading to hedge fund stress and raising concerns about lasting damage to US assets. While Trump's tariff pause provided some relief, the initial market instability points to potential long-term negative consequences for US financial markets and the economy.",
+      "impact_type": "negative"
+    }
+  ]
+}
+```
+
+Cache entry set for LLM call: ('US Economy', 'relevant articles 3') of length 5254
+
+LLM response text for ('US Economy', 'relevant articles 2'): ```json
+{
+  "items": [
+    {
+      "article_number": "36",
+      "article_url": "https://www.ndtv.com/world-news/trump-tariffs-us-china-tariff-war-could-cut-trade-between-two-by-80-wto-8127980",
+      "impact_on_term_of_interest": "The World Trade Organization warned that the US-China tariff war could lead to an 80% decrease in trade between the two countries, significantly damaging the global economic outlook and potentially fragmenting the world economy.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "4",
+      "article_url": "https://finance.yahoo.com/news/live/stock-market-today-dow-sinks-300-points-sp-500-nears-bear-market-as-trumps-tariffs-keep-roiling-wall-street-200257670.html",
+      "impact_on_term_of_interest": "US stock markets experienced chaotic stretches and significant losses, with the S&P 500 narrowly avoiding a bear market, as Trump's tariffs and retaliatory measures from China and EU roiled Wall Street and increased recession fears.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "5",
+      "article_url": "https://finance.yahoo.com/news/live/stock-market-today-dow-sinks-350-points-sp-500-falls-for-third-day-as-tariffs-send-stocks-on-roller-coaster-200044633.html",
+      "impact_on_term_of_interest": "US stock market faced extreme volatility and losses, with the Nasdaq entering a bear market and over $5 trillion in value being shed, as Trump's administration doubled down on aggressive tariff policies, increasing recession probability.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "33",
+      "article_url": "https://www.morningstar.com/economy/even-with-trumps-rollback-tariffs-would-still-damage-us-economy",
+      "impact_on_term_of_interest": "Economists warned that even with a partial rollback, Trump's tariffs would still damage the US economy by causing a major rise in inflation, slowing economic growth, and creating a significant risk of recession this year.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "1",
+      "article_url": "https://abcnews.go.com/Politics/trump-moves-full-steam-ahead-politically-risky-tariffs/story?id=120609719",
+      "impact_on_term_of_interest": "Trump's aggressive tariffs against trading partners sparked market tumult, with US markets experiencing their worst week since the pandemic, trillions lost, and economists increasing recession odds for the US economy.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "3",
+      "article_url": "https://finance.yahoo.com/news/analysis-tariffs-caused-us-treasury-041235882.html",
+      "impact_on_term_of_interest": "Tariffs caused dislocations in the US Treasuries market, raising concerns about lasting damage to US assets and broader financial stability issues, potentially hampering policymakers' ability to manage the economy.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "8",
+      "article_url": "https://money.usnews.com/investing/news/articles/2025-04-09/fed-officials-signal-they-are-not-planning-to-ride-to-the-rescue-with-rate-cuts",
+      "impact_on_term_of_interest": "Federal Reserve officials expressed concerns that Trump's trade policy could harm US economic growth and signaled they would not quickly cut interest rates to offset the damage, expecting tariffs to boost inflation.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "17",
+      "article_url": "https://www.china-briefing.com/news/trump-raises-tariffs-on-china-to-54-overview-and-trade-implications/",
+      "impact_on_term_of_interest": "Trump's escalating tariffs on China, reaching 54%, and other trade partners threaten to spark inflationary pressures in the US, potentially leading to decreased consumer demand and slower economic growth.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "21",
+      "article_url": "https://www.enr.com/articles/60558-enr-2025-top-owners-sourcebook-tariff-golden-age-stuns-construction-market",
+      "impact_on_term_of_interest": "Trump's tariffs are expected to negatively impact the US construction market by causing material price volatility, increased inflation, shaken business confidence and potentially higher interest rates, leading to reduced construction activity.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "34",
+      "article_url": "https://www.nbcchicago.com/news/business/money-report/heres-how-china-could-crush-the-u-s-housing-market/3717988/",
+      "impact_on_term_of_interest": "China, a major holder of US mortgage-backed securities, could sell these holdings in retaliation to US trade policies, potentially causing mortgage rates to rise and further destabilize the already faltering US housing market.",
+      "impact_type": "negative"
+    }
+  ]
+}
+```
+
+Cache entry set for LLM call: ('US Economy', 'relevant articles 2') of length 4480
+
+The counts of relevant articles identified for US Economy are: [9, 10, 10]
+
+The identification of relevant articles for US Economy finished at: 2025-04-10 06:14:33
+
+The identification of relevant articles for US Economy took: 17.86 seconds
+
+The generation of the most impactful news for US Economy started at: 2025-04-10 06:14:33
+
+The prompt for the generation of the most impactful news for US Economy contains 307821 characters
+
+LLM response text for ('US Economy', 'most impactful news'): ```json
+{
+  "items": [
+    {
+      "news": "Risk of US Recession Intensifies Amidst Stock Market Turmoil Triggered by Trump's Tariffs",
+      "most_relevant_url": "https://finance.yahoo.com/news/live/stock-market-today-dow-sinks-350-points-sp-500-falls-for-third-day-as-tariffs-send-stocks-on-roller-coaster-200044633.html",
+      "impact_of_news_on_term_of_interest": "Aggressive tariff policies implemented by the Trump administration have led to a historic stock market sell-off, with the Nasdaq entering a bear market and the S&P 500 narrowly avoiding it. This market chaos, combined with warnings from financial leaders and economists, significantly increases the probability of a US recession.",
+      "impact_type_of_news": "negative"
+    },
+    {
+      "news": "WTO Warns US-China Trade War Could Collapse Bilateral Trade by 80%, Severely Damaging Global Economy",
+      "most_relevant_url": "https://www.ndtv.com/world-news/trump-tariffs-us-china-tariff-war-could-cut-trade-between-two-by-80-wto-8127980",
+      "impact_of_news_on_term_of_interest": "The World Trade Organization (WTO) has cautioned that the escalating trade war between the US and China could lead to an 80% reduction in trade between the world's two largest economies. This drastic contraction in trade would significantly damage the global economic outlook and negatively impact the US economy through reduced trade and global instability.",
+      "impact_type_of_news": "negative"
+    },
+    {
+      "news": "US Treasuries Market Faces 'Dislocations' Due to Tariff-Induced Selloff, Raising Financial Stability Concerns",
+      "most_relevant_url": "https://finance.yahoo.com/news/analysis-tariffs-caused-us-treasury-041235882.html",
+      "impact_of_news_on_term_of_interest": "President Trump's tariffs have caused significant disruptions in the US Treasuries market, a critical component of the global financial system. This 'searing selloff' has led to hedge fund instability and broader financial market stress, raising concerns about lasting damage to US financial assets and the overall economic stability.",
+      "impact_type_of_news": "negative"
+    },
+    {
+      "news": "Federal Reserve Signals Reluctance to Cut Rates to Counter Tariff Impacts, Citing Inflation Fears",
+      "most_relevant_url": "https://money.usnews.com/investing/news/articles/2025-04-09/fed-officials-signal-they-are-not-planning-to-ride-to-the-rescue-with-rate-cuts",
+      "impact_of_news_on_term_of_interest": "Federal Reserve officials have indicated they are unlikely to implement interest rate cuts to offset the negative economic effects of President Trump's tariffs. This is due to concerns that tariffs will fuel inflation, leaving the US economy facing slower growth without the usual monetary policy support, potentially worsening economic conditions.",
+      "impact_type_of_news": "negative"
+    },
+    {
+      "news": "Economists Warn Trump's Tariff Pause Insufficient to Prevent Significant Damage to US Economy",
+      "most_relevant_url": "https://www.morningstar.com/economy/even-with-trumps-rollback-tariffs-would-still-damage-us-economy",
+      "impact_of_news_on_term_of_interest": "Despite President Trump's temporary pause on some tariffs, economic analysis suggests that the US economy will still suffer significant damage. Economists project a major rise in inflation, slower economic growth, and a substantial risk of recession, indicating that the tariff pause is not enough to avert negative economic consequences.",
+      "impact_type_of_news": "negative"
+    }
+  ]
+}
+```
+
+Cache entry set for LLM call: ('US Economy', 'most impactful news') of length 3374
+
+Generated 5 most impactful news for US Economy
+
+The generation of the most impactful news for US Economy finished at: 2025-04-10 06:14:52
+
+The generation of the most impactful news for US Economy took: 19.34 seconds
+
+Processing query "US Economy" finished: 2025-04-10 06:14:52
+
+Processing query "S&P 500" started: 2025-04-10 06:14:52
+
+The generation of the search terms for S&P 500 started at: 2025-04-10 06:14:52
+
+LLM response text for ('S&P 500', 'search terms'): ```json
+{
+    "query_meaning": "Standard & Poor's 500 Index",
+    "list_search_terms": [
+        "S&P 500 latest news",
+        "S&P 500 financial news latest",
+        "S&P 500 market news latest",
+        "S&P 500 stock market news latest",
+        "S&P 500 index news latest"
+    ],
+    "tracked_index": "",
+    "list_search_terms_tracked_index": [],
+    "country_or_region": "US",
+    "list_search_terms_country_or_region": [
+        "US latest financial news",
+        "United States economy latest news",
+        "US market news latest",
+        "US stock market news latest",
+        "economy of United States latest news"
+    ],
+    "industries_and_sectors": "all industries",
+    "list_search_terms_industries_and_sectors": [
+        "US industries latest news",
+        "US sectors latest news",
+        "US industry trends latest news",
+        "US sector performance latest news",
+        "US economy sectors latest news"
+    ],
+    "related_terms": "Dow Jones, Nasdaq 100, Russell 2000, SPY ETF",
+    "list_search_terms_related_terms": [
+        "Dow Jones latest news",
+        "Nasdaq 100 latest news",
+        "Russell 2000 latest news",
+        "SPY ETF latest news",
+        "US economy latest news"
+    ]
+}
+```
+
+Cache entry set for LLM call: ('S&P 500', 'search terms') of length 991
+
+The meaning of the query is: Standard & Poor's 500 Index
+
+Generated 21 search terms
+
+The generation of the search terms for S&P 500 finished at: 2025-04-10 06:15:01
+
+The generation of the search terms for S&P 500 took: 8.58 seconds
+
+The web search for S&P 500 started at: 2025-04-10 06:15:01
+
+Searching the web for Russell 2000 latest news
+
+Searching the web for S&P 500
+
+Searching the web for Dow Jones latest news
+
+Searching the web for Nasdaq 100 latest news
+
+Searching the web for S&P 500 index news latest
+
+Searching the web for S&P 500 financial news latest
+
+Searching the web for S&P 500 latest news
+
+Cache hit for Search results for: US stock market news latest
+
+Searching the web for S&P 500 stock market news latest
+
+Searching the web for S&P 500 market news latest
+
+Searching the web for United States economy latest news
+
+Searching the web for economy of United States latest news
+
+Cache hit for Search results for: US industries latest news
+
+Searching the web for SPY ETF latest news
+
+Searching the web for US latest financial news
+
+Searching the web for US sectors latest news
+
+Searching the web for US sector performance latest news
+
+Searching the web for US industry trends latest news
+
+Searching the web for US economy latest news
+
+Searching the web for US economy sectors latest news
+
+Searching the web for US market news latest
+
+Search results: [10, 10, 5, 10, 10, 10, 10, 10, 10, 8, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
+
+Found 135 search results
+
+The web search for S&P 500 finished at: 2025-04-10 06:15:04
+
+The web search for S&P 500 took: 2.97 seconds
+
+The crawling for S&P 500 started at: 2025-04-10 06:15:04
+
+Crawled URL https://www.barrons.com/livecoverage/stock-market-today-040925/card/u-s-stocks-head-for-mixed-open-as-treasury-yields-surge-on-day-trump-tariffs-kick-in-bGstIzrhPKBuAF6e6kb4?siteid=yhoof2 successfully using Crawlbase
+
+Crawled URL https://invezz.com/news/2025/04/09/jepi-etf-put-to-the-ultimate-test-is-it-beating-voo-and-spy/ successfully using Crawlbase
+
+Crawled URL https://www.independent.co.uk/news/world/americas/us-politics/trump-market-manipulation-tariffs-b2730542.html successfully using Crawlbase
+
+Crawled URL https://www.barrons.com/livecoverage/stock-market-today-040925 successfully using Crawlbase
+
+Crawled URL https://www.reuters.com/world/middle-east/most-gulf-markets-retreat-global-trade-war-escalates-2025-04-09/ successfully using Crawlbase
+
+Crawled URL https://www.reuters.com/business/energy/want-cut-your-trade-surplus-with-trump-crude-lng-coal-can-help-bit-russell-2025-04-10/ successfully using Crawlbase
+
+Crawled URL https://www.nytimes.com/2025/04/09/world/asia/china-us-tariff-trade.html successfully using Crawlbase
+
+Crawled URL https://www.bloomberg.com/news/live-blog/2025-04-10/ftse-100-live-trump-tariffs-news-bonds-pound-tesco-gbp-what-s-moving-uk-markets-right-now-markets-today successfully using Crawlbase
+
+Crawled URL https://finance.yahoo.com/news/stock-bond-etfs-react-tariff-220000483.html?fr=sycsrp_catchall successfully using Crawlbase
+
+Crawled URL https://www.reuters.com/markets/us/wall-streets-week-whiplash-brought-fear-relief-caution-2025-04-10/ successfully using Crawlbase
+
+Crawled URL https://finance.yahoo.com/news/live/stock-market-today-dow-explodes-3000-points-higher-sp-500-has-best-day-since-2008-as-trump-pauses-most-reciprocal-tariffs-133616395.html successfully using Crawlbase
+
+Crawled URL https://www.abc.net.au/news/programs/kohler-report successfully using Crawlbase
+
+Crawled URL https://www.nytimes.com/2025/04/09/world/asia/china-tariffs-censorship.html successfully using Crawlbase
+
+The crawling timed out for 39 URLs
+
+54 URLs out of 105 could be parsed
+
+The crawling for S&P 500 finished at: 2025-04-10 06:15:11
+
+The crawling for S&P 500 took: 6.94 seconds
+
+The identification of relevant articles for S&P 500 started at: 2025-04-10 06:15:11
+
+The prompt for the identification of relevant articles for S&P 500 contains 529307 characters
+
+The counts of relevant articles identified for S&P 500 are: []
+
+The identification of relevant articles for S&P 500 finished at: 2025-04-10 06:15:13
+
+The identification of relevant articles for S&P 500 took: 1.74 seconds
+
+Validation error for S&P 500: No relevant articles have been identified
+
+Error processing batch: No relevant articles have been identified

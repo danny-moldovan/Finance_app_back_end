@@ -67,7 +67,7 @@ class TestBatchProcessingEndpoints:
             message1 = json.loads(message)
 
             if 'number_of_outputs' in message1['message']:
-                assert 'number_of_outputs' in message1['message'] and message1['message']['number_of_outputs'] == 1
+                assert 'number_of_outputs' in message1['message'] and message1['message']['number_of_outputs'] == 2
 
             if message1['message_type'] == 'final':
                 found_final_message = True
@@ -91,7 +91,7 @@ class TestBatchProcessingEndpoints:
             message1 = json.loads(message)
 
             if 'number_of_outputs' in message1['message']:
-                assert 'number_of_outputs' in message1['message'] and message1['message']['number_of_outputs'] == 1
+                assert 'number_of_outputs' in message1['message'] and message1['message']['number_of_outputs'] == 2
 
             if message1['message_type'] == 'final':
                 found_final_message = True
