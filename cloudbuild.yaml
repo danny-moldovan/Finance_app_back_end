@@ -33,6 +33,7 @@ steps:
       - |
         source /workspace/env_vars.sh
         python -m pytest tests/integration/test_app_integration.py -v -s
+        python -m pytest tests/integration/test_app_integration_batch.py -v -s
 
   # Docker Build
   - name: 'gcr.io/cloud-builders/docker'

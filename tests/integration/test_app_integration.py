@@ -81,7 +81,6 @@ class TestHealthCheckEndpoints:
         data = json.loads(response.data)
         assert 'error' in data
 
-
 class TestNewsGenerationEndpoints:
     """Test suite for news generation endpoints."""
 
@@ -91,16 +90,23 @@ class TestNewsGenerationEndpoints:
         assert response.status_code == 200
         
         found_final_message = False
-        for line in response.response:
+        # Get the response data and split it into lines
+        response_data = response.get_data().decode('utf-8')
+        for line in response_data.split('\n'):
+            if not line.strip():  # Skip empty lines
+                continue
+            
+            print(line)
             message = json.loads(line)
-            if message['message_type'] == 'final':
+            message1 = json.loads(message)
+            print('Message:', message1)
+            if message1['message_type'] == 'final':
                 found_final_message = True
-                final_message = message['message']
-                #print('Final message: ', final_message, '\n')
-                assert len(final_message) >= 1 and len(final_message[0])>= 300
+                final_message = message1['message']
+                assert isinstance(final_message, list) and len(final_message) >= 1
+                assert len(final_message[0]) >= 300
                 break
         
-        #print('Found final message: ', found_final_message)
         assert found_final_message, "No final message found in the response stream"
 
     def test_generate_recent_news_endpoint_with_missing_query(self, client):
@@ -111,60 +117,3 @@ class TestNewsGenerationEndpoints:
         assert 'error' in data
 
 
-class TestBatchProcessingEndpoints:
-    """Test suite for batch processing functionality."""
-
-    def test_process_batch_sequential(self, client):
-        """Test sequential batch processing through the endpoint."""
-        response = client.post('/generate_recent_news_batch', 
-                            json={
-                                'input_filename': 'test_cases.txt',
-                                'n_rows': '2',
-                                'in_parallel': False
-                            })
-        assert response.status_code == 200
-        
-        found_final_message = False
-        for line in response.response:
-            message = json.loads(line)
-
-            if 'number_of_outputs' in message['message']:
-                assert message['message']['number_of_outputs'] == 2
-
-            if message['message_type'] == 'final':
-                found_final_message = True
-                assert message['message']['status_code'] == 200
-                break
-        
-        assert found_final_message, "No final message found in the response stream"
-
-    def test_process_batch_parallel(self, client):
-        """Test parallel batch processing through the endpoint."""
-        response = client.post('/generate_recent_news_batch', 
-                            json={
-                                'input_filename': 'test_cases.txt',
-                                'n_rows': '2',
-                                'in_parallel': True
-                            })
-        assert response.status_code == 200
-        
-        found_final_message = False
-        for data in response.response:
-            message = json.loads(data)
-
-            if 'number_of_outputs' in message['message']:
-                assert message['message']['number_of_outputs'] == 2
-
-            if message['message_type'] == 'final':
-                found_final_message = True
-                assert message['message']['status_code'] == 200
-                break
-        
-        assert found_final_message, "No final message found in the response stream"
-
-    def test_generate_recent_news_batch_endpoint_with_missing_filename(self, client):
-        """Test batch news generation endpoint with missing filename."""
-        response = client.post('/generate_recent_news_batch', json={})
-        assert response.status_code == 400
-        data = json.loads(response.data)
-        assert 'error' in data

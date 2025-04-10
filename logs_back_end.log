@@ -1,0 +1,894 @@
+Processing file "test_cases.txt" started: 2025-04-10 05:37:56
+
+Authenticated into GCS with project: wide-gecko-275009
+
+Downloaded test_cases.txt from the Google Storage Bucket finance-app-back-end-evaluation-logs to ./data/test_cases.txt
+
+The input file has been read, it contains 18 rows, 1 will be processed
+
+Outputs will be appended to the file ./data/test_cases-processed-2025-04-10-05:37:59.txt
+
+Processing 1 queries in sequential mode
+
+Rate limiters configured: search=30/sec, llm=5/sec
+
+Started 2 background processes for rate limiters
+
+Processing query "US Economy" started: 2025-04-10 05:37:59
+
+The generation of the search terms for US Economy started at: 2025-04-10 05:37:59
+
+LLM response text for ('US Economy', 'search terms'): ```json
+{
+    "query_meaning": "US Economy",
+    "list_search_terms": [
+        "US Economy latest financial news",
+        "US economic outlook latest",
+        "US economy news latest",
+        "US economy updates latest",
+        "US economic indicators latest"
+    ],
+    "tracked_index": "",
+    "list_search_terms_tracked_index": [],
+    "country_or_region": "US",
+    "list_search_terms_country_or_region": [
+        "US latest financial news",
+        "US economic news latest",
+        "US market news latest",
+        "Economy of United States latest",
+        "Financial news United States latest"
+    ],
+    "industries_and_sectors": "all industries",
+    "list_search_terms_industries_and_sectors": [
+        "US industries latest news",
+        "US sectors latest news",
+        "US economy by sector latest",
+        "US industry performance latest",
+        "US economic sectors latest"
+    ],
+    "related_terms": "global economy, US GDP, US inflation, US unemployment, Federal Reserve, US stock market",
+    "list_search_terms_related_terms": [
+        "global economy latest news",
+        "US GDP latest news",
+        "US inflation latest news",
+        "US unemployment latest news",
+        "Federal Reserve latest news"
+    ]
+}
+```
+
+Cache entry set for LLM call: ('US Economy', 'search terms') of length 1017
+
+The meaning of the query is: US Economy
+
+Generated 21 search terms
+
+The generation of the search terms for US Economy finished at: 2025-04-10 05:38:03
+
+The generation of the search terms for US Economy took: 4.87 seconds
+
+The web search for US Economy started at: 2025-04-10 05:38:03
+
+Searching the web for Financial news United States latest
+
+Searching the web for US Economy latest financial news
+
+Searching the web for US Economy
+
+Searching the web for Federal Reserve latest news
+
+Searching the web for US economic indicators latest
+
+Searching the web for Economy of United States latest
+
+Searching the web for US economic outlook latest
+
+Searching the web for US economic news latest
+
+Searching the web for US economic sectors latest
+
+Searching the web for US GDP latest news
+
+Searching the web for US economy news latest
+
+Searching the web for US economy updates latest
+
+Searching the web for US economy by sector latest
+
+Searching the web for US sectors latest news
+
+Searching the web for US latest financial news
+
+Searching the web for US industries latest news
+
+Searching the web for US inflation latest news
+
+Searching the web for US market news latest
+
+Searching the web for US industry performance latest
+
+Searching the web for US unemployment latest news
+
+Searching the web for global economy latest news
+
+Search results: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
+
+Found 143 search results
+
+The web search for US Economy finished at: 2025-04-10 05:38:06
+
+The web search for US Economy took: 2.23 seconds
+
+The crawling for US Economy started at: 2025-04-10 05:38:06
+
+Crawled URL https://www.fxempire.com/forecasts/article/xrp-news-today-blackrock-etf-rumors-and-sec-silence-shape-xrps-outlook-btc-at-83k-1509646 successfully using Crawlbase
+
+Crawled URL https://www.telegraph.co.uk/business/2025/04/09/trump-tariffs-trade-war-china-bonds-ftse-100-markets-latest/ successfully using Crawlbase
+
+Crawled URL https://www.independent.co.uk/news/world/americas/us-politics/trump-market-manipulation-tariffs-b2730542.html successfully using Crawlbase
+
+Crawled URL https://finance.yahoo.com/news/live/trump-tariffs-live-updates-trump-raises-rate-on-china-to-125-pauses-reciprocal-tariffs-on-other-countries-191201868.html successfully using Crawlbase
+
+Error crawling URL https://www.bloomberg.com/markets/sectors/energy using Crawlbase: 520 Server Error: CUSTOM for url: https://api.crawlbase.com/?token=RwHusDfW3UMTnOZ6dA7LkA&url=https%3A%2F%2Fwww.bloomberg.com%2Fmarkets%2Fsectors%2Fenergy
+
+Crawled URL https://finance.yahoo.com/news/live/stock-market-today-dow-explodes-3000-points-higher-sp-500-has-best-day-since-2008-as-trump-pauses-most-reciprocal-tariffs-133616395.html successfully using Crawlbase
+
+Crawled URL https://socialistworker.co.uk/in-depth/trump-tariffs-and-trade-wars-where-is-the-world-economy-going/ successfully using Crawlbase
+
+Crawled URL https://nypost.com/2025/04/10/us-news/canadian-pm-mark-carney-quickly-pledges-to-negotiate-new-economic-and-security-relationship-with-us-after-trump-pauses-tariffs-on-other-nations/ successfully using Crawlbase
+
+Crawled URL https://www.nytimes.com/2025/04/09/business/media/trump-tariffs-stock-market-fox-cnbc-jamie-dimon.html successfully using Crawlbase
+
+Error crawling URL https://www.reuters.com/markets/us/global-markets-bonds-trading-analysispix-2025-04-10/ using Crawlbase: 520 Server Error: CUSTOM for url: https://api.crawlbase.com/?token=RwHusDfW3UMTnOZ6dA7LkA&url=https%3A%2F%2Fwww.reuters.com%2Fmarkets%2Fus%2Fglobal-markets-bonds-trading-analysispix-2025-04-10%2F
+
+Crawled URL https://finance.yahoo.com/news/live/stock-market-today-dow-sinks-300-points-sp-500-nears-bear-market-as-trumps-tariffs-keep-roiling-wall-street-200257670.html successfully using Crawlbase
+
+Error crawling URL https://www.reuters.com/business/finance/wall-street-bosses-fear-anti-american-backlash-trumps-trade-war-intensifies-2025-04-09/ using Crawlbase: 520 Server Error: CUSTOM for url: https://api.crawlbase.com/?token=RwHusDfW3UMTnOZ6dA7LkA&url=https%3A%2F%2Fwww.reuters.com%2Fbusiness%2Ffinance%2Fwall-street-bosses-fear-anti-american-backlash-trumps-trade-war-intensifies-2025-04-09%2F
+
+Error crawling URL https://www.bloomberg.com/professional/insights/data/data-spotlight-economic-forecasts-leveraged-loans-more/ using Crawlbase: 520 Server Error: CUSTOM for url: https://api.crawlbase.com/?token=RwHusDfW3UMTnOZ6dA7LkA&url=https%3A%2F%2Fwww.bloomberg.com%2Fprofessional%2Finsights%2Fdata%2Fdata-spotlight-economic-forecasts-leveraged-loans-more%2F
+
+Error crawling URL https://www.reuters.com/markets/us/feds-musalem-sees-growth-slipping-below-trend-higher-inflation-risk-2025-04-09/ using Crawlbase: 520 Server Error: CUSTOM for url: https://api.crawlbase.com/?token=RwHusDfW3UMTnOZ6dA7LkA&url=https%3A%2F%2Fwww.reuters.com%2Fmarkets%2Fus%2Ffeds-musalem-sees-growth-slipping-below-trend-higher-inflation-risk-2025-04-09%2F
+
+Error crawling URL https://www.bloomberg.com/news/articles/2025-04-09/escalating-tariffs-war-between-us-china-risks-wiping-out-19-trillion using Crawlbase: 520 Server Error: CUSTOM for url: https://api.crawlbase.com/?token=RwHusDfW3UMTnOZ6dA7LkA&url=https%3A%2F%2Fwww.bloomberg.com%2Fnews%2Farticles%2F2025-04-09%2Fescalating-tariffs-war-between-us-china-risks-wiping-out-19-trillion
+
+Crawled URL https://www.motortrend.com/reviews/2025-polestar-3-dual-motor-first-test-review/ successfully using Crawlbase
+
+Error crawling URL https://www.reuters.com/world/africa/african-finance-corp-reports-record-11-billion-annual-revenue-2025-04-09/ using Crawlbase: 520 Server Error: CUSTOM for url: https://api.crawlbase.com/?token=RwHusDfW3UMTnOZ6dA7LkA&url=https%3A%2F%2Fwww.reuters.com%2Fworld%2Fafrica%2Fafrican-finance-corp-reports-record-11-billion-annual-revenue-2025-04-09%2F
+
+Error crawling URL https://www.nytimes.com/live/2025/04/08/business/trump-tariffs-stock-market using Crawlbase: 520 Server Error: CUSTOM for url: https://api.crawlbase.com/?token=RwHusDfW3UMTnOZ6dA7LkA&url=https%3A%2F%2Fwww.nytimes.com%2Flive%2F2025%2F04%2F08%2Fbusiness%2Ftrump-tariffs-stock-market
+
+Crawled URL https://www.nytimes.com/2025/04/09/world/asia/china-us-tariff-trade.html successfully using Crawlbase
+
+Error crawling URL https://www.telegraph.co.uk/business/2025/04/09/trumps-trade-war-risks-financial-crisis-bank-england-warns/ using Crawlbase: 520 Server Error: CUSTOM for url: https://api.crawlbase.com/?token=RwHusDfW3UMTnOZ6dA7LkA&url=https%3A%2F%2Fwww.telegraph.co.uk%2Fbusiness%2F2025%2F04%2F09%2Ftrumps-trade-war-risks-financial-crisis-bank-england-warns%2F
+
+Error crawling URL https://www.nytimes.com/2025/04/09/world/asia/china-tariffs-censorship.html using Crawlbase: HTTPSConnectionPool(host='api.crawlbase.com', port=443): Read timed out. (read timeout=5)
+
+Error crawling URL https://www.reuters.com/world/middle-east/most-gulf-markets-retreat-global-trade-war-escalates-2025-04-09/ using Crawlbase: HTTPSConnectionPool(host='api.crawlbase.com', port=443): Read timed out. (read timeout=5)
+
+Crawled URL https://www.enr.com/articles/60558-enr-2025-top-owners-review-tariff-golden-age-stuns-construction-market successfully using Crawlbase
+
+The crawling timed out for 95 URLs
+
+37 URLs out of 143 could be parsed
+
+The crawling for US Economy finished at: 2025-04-10 05:38:14
+
+The crawling for US Economy took: 8.19 seconds
+
+The identification of relevant articles for US Economy started at: 2025-04-10 05:38:14
+
+The prompt for the identification of relevant articles for US Economy contains 590574 characters
+
+LLM response text for ('US Economy', 'relevant articles 2'): ```json
+{
+  "items": [
+    {
+      "article_number": "2",
+      "article_url": "https://finance.yahoo.com/news/live/stock-market-today-dow-explodes-3000-points-higher-sp-500-has-best-day-since-2008-as-trump-pauses-most-reciprocal-tariffs-133616395.html",
+      "impact_on_term_of_interest": "US stock market experienced a historic rally with Dow Jones up 3000 points, S&P 500 having its best day since 2008, and Nasdaq rising 12% after President Trump announced a 90-day pause on reciprocal tariffs, signaling a significant positive shift in market sentiment and a potential avoidance of recession previously feared due to tariffs.",
+      "impact_type": "positive"
+    },
+    {
+      "article_number": "4",
+      "article_url": "https://finance.yahoo.com/news/live/trump-tariffs-live-updates-trump-raises-rate-on-china-to-125-pauses-reciprocal-tariffs-on-other-countries-191201868.html",
+      "impact_on_term_of_interest": "President Trump escalated trade tensions with China by raising tariffs to 125% while pausing reciprocal tariffs for other countries, leading to market jubilation and a historic stock rally, but also raising concerns about long-term trade relations and potential for recession despite the positive short-term market reaction.",
+      "impact_type": "positive"
+    },
+    {
+      "article_number": "3",
+      "article_url": "https://finance.yahoo.com/news/live/stock-market-today-dow-sinks-300-points-sp-500-nears-bear-market-as-trumps-tariffs-keep-roiling-wall-street-200257670.html",
+      "impact_on_term_of_interest": "US stock market experienced extreme volatility and a sharp downturn as Trump's tariffs induced fears of a trade war and economic recession, with the S&P 500 nearing bear market territory, indicating a significant negative impact on investor confidence and economic outlook.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "14",
+      "article_url": "https://www.cnn.com/politics/live-news/trump-tariffs-cnn-town-hall-04-09-25/index.html",
+      "impact_on_term_of_interest": "Goldman Sachs warned of increased recession risk due to Trump's tariffs, even after a 90-day pause, while JPMorgan Chase CEO Jamie Dimon stated recession is a 'likely outcome', reflecting significant negative economic outlook and increased probability of economic contraction.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "24",
+      "article_url": "https://www.livemint.com/market/stock-market-news/rbi-monetary-policy-meeting-2025-live-rbi-mpc-key-expectation-repo-rate-to-be-cut-25-bps-sanjay-malhotra-trump-tariff-11744133436763.html",
+      "impact_on_term_of_interest": "RBI Governor Sanjay Malhotra acknowledged that US tariffs pose downside risks to India's GDP growth, revising FY26 GDP growth projections downwards from 6.7% to 6.5% due to global uncertainties and tariff wars, indicating a negative impact on the broader economic outlook.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "33",
+      "article_url": "https://www.telegraph.co.uk/business/2025/04/09/trump-tariffs-trade-war-china-bonds-ftse-100-markets-latest/",
+      "impact_on_term_of_interest": "The Bank of England warned that Donald Trump's trade war has increased risks to global financial stability and could trigger a financial crisis, with rising UK government borrowing costs and a potential recession in Germany adding to the negative outlook for the global economy.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "37",
+      "article_url": "https://www.usatoday.com/story/money/economy/2025/04/09/federal-reserve-kashkari-tariffs-inflation-expectations/83007039007/",
+      "impact_on_term_of_interest": "Federal Reserve Bank of Minneapolis President Neel Kashkari stated that Trump's tariffs threaten to unanchor inflation expectations and could harm the US economy, raising the hurdle for interest rate cuts and suggesting potential for rate hikes despite economic weakening.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "25",
+      "article_url": "https://www.moneycontrol.com/banking/trump-tariffs-india-relatively-better-placed-due-to-low-export-dependency-says-rbi-governor-article-12989852.html",
+      "impact_on_term_of_interest": "RBI Governor Sanjay Malhotra stated that the US tariffs' impact on India is expected to be less severe compared to other export-dependent nations like China and Vietnam due to India's lower export dependency, suggesting a relatively neutral to slightly positive outlook for India compared to others.",
+      "impact_type": "neutral"
+    },
+    {
+      "article_number": "13",
+      "article_url": "https://www.cnbctv18.com/market/us-stock-market-live-updates-trump-tariff-pause-impact-dow-snp-nasdaq-china-bonds-liveblog-19587418.htm",
+      "impact_on_term_of_interest": "Chinese state newspaper suggests easing monetary policy to support the economy amid trade tensions with the US, indicating potential negative pressure on the Chinese economy but a proactive response to mitigate the impact of US tariffs.",
+      "impact_type": "neutral"
+    },
+    {
+      "article_number": "5",
+      "article_url": "https://inews.co.uk/news/uk-politics-latest-updates-tariffs-starmer-trump-3623581",
+      "impact_on_term_of_interest": "Goldman Sachs rescinded its recession forecast for the US economy after Trump's tariff pause, reverting to a baseline forecast of GDP growth in 2025, suggesting a neutral to slightly positive revision of the immediate economic outlook based on policy changes.",
+      "impact_type": "neutral"
+    }
+  ]
+}
+```
+
+LLM response text for ('US Economy', 'relevant articles 3'): ```json
+{
+  "items": [
+    {
+      "article_number": "2",
+      "article_url": "https://finance.yahoo.com/news/live/stock-market-today-dow-explodes-3000-points-higher-sp-500-has-best-day-since-2008-as-trump-pauses-most-reciprocal-tariffs-133616395.html",
+      "impact_on_term_of_interest": "US stock market experiences historic rally after President Trump announces a 90-day pause on reciprocal tariffs, easing recession fears. Dow Jones explodes 3,000 points, S&P 500 has best day since 2008, and Nasdaq has best day since 2001. This indicates a significant positive shift in market sentiment and reduced immediate recession concerns due to tariff policies.",
+      "impact_type": "positive"
+    },
+    {
+      "article_number": "4",
+      "article_url": "https://finance.yahoo.com/news/live/trump-tariffs-live-updates-trump-raises-rate-on-china-to-125-pauses-reciprocal-tariffs-on-other-countries-191201868.html",
+      "impact_on_term_of_interest": "President Trump pauses reciprocal tariffs for 90 days for most countries except China, but increases tariffs on China to 125%. This action provides relief to most US trading partners, causing a stock market surge and easing immediate recession fears. However, the increased tariffs on China and the remaining baseline tariffs still pose a negative impact on trade relations and potentially the US economy in the long run.",
+      "impact_type": "positive"
+    },
+    {
+      "article_number": "5",
+      "article_url": "https://inews.co.uk/news/uk-politics-latest-updates-tariffs-starmer-trump-3623581",
+      "impact_on_term_of_interest": "Global markets, including US markets, surge following Trump's announcement of a 90-day pause on higher tariffs for most countries. Goldman Sachs rescinds recession forecast after the tariff pause. However, uncertainty remains about the long-term impact of Trump's economic policies and the increased tariffs on China.",
+      "impact_type": "positive"
+    },
+    {
+      "article_number": "14",
+      "article_url": "https://www.cnn.com/politics/live-news/trump-tariffs-cnn-town-hall-04-09-25/index.html",
+      "impact_on_term_of_interest": "US stock markets, along with Asian markets, rally after Trump's tariff pause announcement. However, experts warn that recession risk remains significant despite the pause. Goldman Sachs economists warn US economy still faces recession risk, even after tariff pause. JPMorgan highlights that the 10% baseline tariffs still in place are a 'large shock' to the US economy.",
+      "impact_type": "neutral"
+    },
+    {
+      "article_number": "30",
+      "article_url": "https://www.news18.com/business/economy/repo-rate-2025-live-updates-reserve-bank-of-india-slashes-repo-rate-cut-25-bps-gdp-growth-6-5pcs-rbi-monetary-policy-meeting-april-latest-news-liveblog-9291916.html",
+      "impact_on_term_of_interest": "RBI Governor Sanjay Malhotra acknowledges that US tariffs pose a lower impact on India compared to other countries, but recognizes global uncertainty. RBI cuts India's GDP growth projections for FY26 from 6.7% to 6.5% due to global uncertainties, including potential impact of US tariffs. RBI also shifts policy stance to 'accommodative' to support growth amidst global trade tensions, indicating a potential negative impact of US tariffs on global economic growth which indirectly influences India.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "33",
+      "article_url": "https://www.telegraph.co.uk/business/2025/04/09/trump-tariffs-trade-war-china-bonds-ftse-100-markets-latest/",
+      "impact_on_term_of_interest": "Global financial markets, including FTSE 100 and European markets, initially plunge as Trump's tariffs come into effect, raising recession fears. US Treasury bonds are sold off as investors question their 'safe haven' status. However, Wall Street recovers later in the day after Trump pauses some tariffs, but long-term economic uncertainty and recession risks related to trade war remain.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "3",
+      "article_url": "https://finance.yahoo.com/news/live/stock-market-today-dow-sinks-300-points-sp-500-nears-bear-market-as-trumps-tariffs-keep-roiling-wall-street-200257670.html",
+      "impact_on_term_of_interest": "US stock market experiences significant volatility and sharp declines as Trump's tariffs continue to cause uncertainty. Dow sinks 300 points, and S&P 500 nears bear market territory.  Despite intraday rallies, markets remain under pressure due to the ongoing trade tensions and the implementation of 104% tariffs on China, highlighting negative market sentiment due to tariff policies.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "21",
+      "article_url": "https://www.independent.co.uk/news/world/americas/us-politics/trump-market-manipulation-tariffs-b2730542.html",
+      "impact_on_term_of_interest": "Democratic Senator calls for investigation into potential insider trading related to Trump's tariff policies, suggesting unethical activities and market manipulation due to the abrupt policy changes. This adds to the negative sentiment surrounding the US economy and raises concerns about market integrity under the current administration's tariff policies.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "9",
+      "article_url": "https://theintercept.com/2025/04/09/trump-tariffs-trade/",
+      "impact_on_term_of_interest": "Article discusses concerns from economists about Trump's tariff policies, highlighting the risk of recession and the potential long-term damage to the US economy. It suggests that tariffs alone are not effective for industrial policy and may lead to a less competitive and isolated US economy. The article points to the haphazard nature of Trump's trade policy and the uncertainty it creates.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "7",
+      "article_url": "https://socialistworker.co.uk/in-depth/trump-tariffs-and-trade-wars-where-is-the-world-economy-going/",
+      "impact_on_term_of_interest": "Article argues that Trump's tariffs are both inflationary and recessionary for the US economy, increasing the probability of stagflation. It suggests that tariffs will harm the US economy by raising prices, choking off demand, and restraining investment. It also highlights the risk of retaliatory tariffs and a broader trade war, leading to negative economic consequences for the US.",
+      "impact_type": "negative"
+    }
+  ]
+}
+```
+
+Cache entry set for LLM call: ('US Economy', 'relevant articles 2') of length 5249
+
+Cache entry set for LLM call: ('US Economy', 'relevant articles 3') of length 6175
+
+LLM response text for ('US Economy', 'relevant articles 1'): ```json
+{
+  "items": [
+    {
+      "article_number": 2,
+      "article_url": "https://finance.yahoo.com/news/live/stock-market-today-dow-explodes-3000-points-higher-sp-500-has-best-day-since-2008-as-trump-pauses-most-reciprocal-tariffs-133616395.html",
+      "impact_on_term_of_interest": "US stock market experiences a historic rally after President Trump announces a 90-day pause on reciprocal tariffs for most countries and a tariff increase on China to 125%. The Dow Jones explodes 3,000 points higher, S&P 500 has its best day since 2008, and Nasdaq has its best day since 2001. This suggests a significant positive impact on investor confidence and market outlook due to the perceived easing of trade war tensions, although concerns about tariffs on China remain.",
+      "impact_type": "positive"
+    },
+    {
+      "article_number": 4,
+      "article_url": "https://finance.yahoo.com/news/live/trump-tariffs-live-updates-trump-raises-rate-on-china-to-125-pauses-reciprocal-tariffs-on-other-countries-191201868.html",
+      "impact_on_term_of_interest": "President Trump raises tariffs on China to 125% while pausing reciprocal tariffs for 90 days for other countries, leading to a surge in the US stock market. The S&P 500 has its best day since 2008, and the Nasdaq has its best day since 2001. This indicates a major market reaction to tariff policy changes and highlights the significant influence of trade policy on market sentiment and economic outlook.",
+      "impact_type": "positive"
+    },
+    {
+      "article_number": 5,
+      "article_url": "https://inews.co.uk/news/uk-politics-latest-updates-tariffs-starmer-trump-3623581",
+      "impact_on_term_of_interest": "Following Trump's announcement of a 90-day tariff pause, US financial markets, including NASDAQ and S&P 500, experience a significant surge. Goldman Sachs rescinds its recession forecast and reverts to previous baseline GDP growth estimate for 2025. This signifies a considerable shift in economic outlook from recessionary fears to a more stable, though still uncertain, growth trajectory.",
+      "impact_type": "positive"
+    },
+    {
+      "article_number": 3,
+      "article_url": "https://finance.yahoo.com/news/live/stock-market-today-dow-sinks-300-points-sp-500-nears-bear-market-as-trumps-tariffs-keep-roiling-wall-street-200257670.html",
+      "impact_on_term_of_interest": "US stock market experiences extreme volatility due to Trump's tariff announcements. Initially, markets rally on hopes of trade talks, but then sharply decline as the White House confirms moving forward with 104% tariffs on China. The S&P 500 narrowly avoids a bear market, indicating significant economic uncertainty and potential negative impact from tariff policies.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": 14,
+      "article_url": "https://www.cnn.com/politics/live-news/trump-tariffs-cnn-town-hall-04-09-25/index.html",
+      "impact_on_term_of_interest": "Goldman Sachs warns that a US recession is still likely despite Trump's tariff pause. They estimate a 1% decline in GDP growth for 2025, although this stance is conditional on the tariff policy. JPMorgan Chase CEO Jamie Dimon also warns of a 'likely recession' due to escalating trade war. This suggests that despite market rallies, underlying economic concerns about recession remain significant.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": 24,
+      "article_url": "https://www.livemint.com/market/stock-market-news/rbi-monetary-policy-meeting-2025-live-rbi-mpc-key-expectation-repo-rate-to-be-cut-25-bps-sanjay-malhotra-trump-tariff-11744133436763.html",
+      "impact_on_term_of_interest": "RBI Governor Sanjay Malhotra acknowledges that US tariffs pose downside risks to Indian and global growth. RBI cuts India's GDP growth projections for FY26 from 6.7% to 6.5% due to global uncertainties including Trump's tariffs, indicating a recognized negative impact of US trade policies on broader economic forecasts.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": 33,
+      "article_url": "https://www.telegraph.co.uk/business/2025/04/09/trump-tariffs-trade-war-china-bonds-ftse-100-markets-latest/",
+      "impact_on_term_of_interest": "Wall Street bank JP Morgan warns that a US recession is a 'likely outcome' due to Trump's tariff plans. The Bank of England warns that Trump's trade war increases the risk of a global financial crisis. Investors are dumping US Treasuries, questioning their safe-haven status. These reports highlight significant concerns about the broader economic and financial stability implications of Trump's trade policies.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": 21,
+      "article_url": "https://www.independent.co.uk/news/world/americas/us-politics/trump-market-manipulation-tariffs-b2730542.html",
+      "impact_on_term_of_interest": "Democratic Senator Adam Schiff calls for investigation into potential insider trading related to Trump's tariff policy changes, highlighting concerns about market manipulation and unethical practices exploiting the volatility created by tariff announcements. This introduces a negative aspect of governance and market integrity concerns related to tariff policy.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": 25,
+      "article_url": "https://www.moneycontrol.com/banking/trump-tariffs-india-relatively-better-placed-due-to-low-export-dependency-says-rbi-governor-article-12989852.html",
+      "impact_on_term_of_interest": "RBI Governor Sanjay Malhotra states that India is relatively insulated from US tariffs compared to export-dependent economies like China and Vietnam, suggesting a limited direct negative impact on the US economy from tariffs on these specific countries, while also implying potential shifts in global supply chains that could benefit some economies over others.",
+      "impact_type": "neutral"
+    },
+    {
+      "article_number": 37,
+      "article_url": "https://www.usatoday.com/story/money/economy/2025/04/09/federal-reserve-kashkari-tariffs-inflation-expectations/83007039007/",
+      "impact_on_term_of_interest": "Federal Reserve Bank of Minneapolis President Neel Kashkari indicates that tariffs increase the hurdle for interest rate cuts and raise the possibility of rate hikes due to the risk of unanchoring inflation expectations, even as tariffs threaten economic downturn. This signals a complex and potentially negative outlook for monetary policy and economic stability due to tariff policy.",
+      "impact_type": "negative"
+    }
+  ]
+}
+```
+
+Cache entry set for LLM call: ('US Economy', 'relevant articles 1') of length 6254
+
+The counts of relevant articles identified for US Economy are: [7, 9, 9]
+
+The identification of relevant articles for US Economy finished at: 2025-04-10 05:38:27
+
+The identification of relevant articles for US Economy took: 13.15 seconds
+
+The generation of the most impactful news for US Economy started at: 2025-04-10 05:38:27
+
+The prompt for the generation of the most impactful news for US Economy contains 744875 characters
+
+LLM response text for ('US Economy', 'most impactful news'): ```json
+{
+  "items": [
+    {
+      "news": "Economists and Institutions Warn of Persistent Recession Risks Despite Tariff Pause",
+      "most_relevant_url": "https://www.cnn.com/politics/live-news/trump-tariffs-cnn-town-hall-04-09-25/index.html",
+      "impact_of_news_on_term_of_interest": "Despite a temporary pause in tariffs, major financial institutions like Goldman Sachs and JPMorgan Chase continue to warn about the significant risk of a US recession. Goldman Sachs estimates a 1% GDP growth decline in 2025, and JPMorgan Chase CEO Jamie Dimon states a recession is a 'likely outcome' due to the ongoing trade war and tariff policies. These warnings indicate that the US economy is not 'out of the woods' and faces substantial negative pressures despite the recent market rally.",
+      "impact_type_of_news": "negative"
+    },
+    {
+      "news": "Bank of England and Major Banks Signal Increased Risk of Global Financial Crisis Due to US Trade Policy",
+      "most_relevant_url": "https://www.telegraph.co.uk/business/2025/04/09/trump-tariffs-trade-war-china-bonds-ftse-100-markets-latest/",
+      "impact_of_news_on_term_of_interest": "The Bank of England and major financial institutions like JP Morgan are raising alarms about the increased risk of a global financial crisis triggered by President Trump's trade war. They point to the dumping of US Treasuries by investors and rising long-term borrowing costs as signs of a potential economic downturn, suggesting a severe negative impact on global financial stability which will also affect the US economy.",
+      "impact_type_of_news": "negative"
+    },
+    {
+      "news": "US Stock Market Experiences Extreme Volatility and Downturn Amid Tariff Uncertainty",
+      "most_relevant_url": "https://finance.yahoo.com/news/live/stock-market-today-dow-sinks-300-points-sp-500-nears-bear-market-as-trumps-tariffs-keep-roiling-wall-street-200257670.html",
+      "impact_of_news_on_term_of_interest": "The US stock market is experiencing significant volatility and a downward trend, with the S&P 500 nearing bear market territory. This instability is driven by President Trump's tariff policies, which are creating fears of a trade war and broader economic recession. Despite occasional rallies, the underlying trend indicates a negative impact on investor confidence and market stability due to the tariff-induced uncertainty.",
+      "impact_type_of_news": "negative"
+    },
+    {
+      "news": "Investigation Called for Potential Insider Trading and Market Manipulation Related to Tariff Policy",
+      "most_relevant_url": "https://www.independent.co.uk/news/world/americas/us-politics/trump-market-manipulation-tariffs-b2730542.html",
+      "impact_of_news_on_term_of_interest": "Democratic Senator Adam Schiff is calling for a formal investigation into potential insider trading and market manipulation related to President Trump's tariff policy changes. This call for investigation raises serious ethical and governance concerns, suggesting that individuals within the administration may be profiting from non-public knowledge of tariff decisions, further undermining public trust and potentially destabilizing markets.",
+      "impact_type_of_news": "negative"
+    },
+    {
+      "news": "US Stock Market Soars in Historic Rally After Trump Pauses Tariffs, Signaling Short-Term Relief",
+      "most_relevant_url": "https://finance.yahoo.com/news/live/stock-market-today-dow-explodes-3000-points-higher-sp-500-has-best-day-since-2008-as-trump-pauses-most-reciprocal-tariffs-133616395.html",
+      "impact_of_news_on_term_of_interest": "President Trump's announcement of a 90-day pause on reciprocal tariffs, excluding China, triggered a historic rally in the US stock market. The Dow Jones surged 3,000 points, the S&P 500 had its best day since 2008, and the Nasdaq saw its largest single-day rise since 2001. This indicates a significant positive short-term market reaction, driven by eased fears of an immediate economic downturn and improved investor sentiment.",
+      "impact_type_of_news": "positive"
+    }
+  ]
+}
+```
+
+Cache entry set for LLM call: ('US Economy', 'most impactful news') of length 3899
+
+Generated 5 most impactful news for US Economy
+
+The generation of the most impactful news for US Economy finished at: 2025-04-10 05:38:41
+
+The generation of the most impactful news for US Economy took: 13.80 seconds
+
+Processing query "US Economy" finished: 2025-04-10 05:38:41
+
+Uploaded ./data/test_cases-processed-2025-04-10-05:37:59.txt to gs://finance-app-back-end-evaluation-logs/test_cases-processed-2025-04-10-05:37:59.txt
+
+Uploaded logs_back_end.log to gs://finance-app-back-end-evaluation-logs/test_cases-processed-2025-04-10-05:37:59-logs.log
+
+Processing file "test_cases.txt" finished: 2025-04-10 05:38:44
+
+Processing file "test_cases.txt" took: 48.20 seconds
+
+Processing file "test_cases.txt" started: 2025-04-10 05:38:44
+
+Authenticated into GCS with project: wide-gecko-275009
+
+Downloaded test_cases.txt from the Google Storage Bucket finance-app-back-end-evaluation-logs to ./data/test_cases.txt
+
+The input file has been read, it contains 18 rows, 1 will be processed
+
+Outputs will be appended to the file ./data/test_cases-processed-2025-04-10-05:38:46.txt
+
+Processing 1 queries in parallel mode
+
+Rate limiters configured: search=10/sec, llm=1/sec
+
+Started 2 background processes for rate limiters
+
+Processing query "US Economy" started: 2025-04-10 05:38:46
+
+The generation of the search terms for US Economy started at: 2025-04-10 05:38:46
+
+LLM response text for ('US Economy', 'search terms'): ```json
+{
+    "query_meaning": "United States Economy",
+    "list_search_terms": [
+        "US Economy latest news",
+        "United States Economy financial news latest",
+        "US Economy economic outlook latest",
+        "US Economy market analysis latest",
+        "US Economy recession risk latest"
+    ],
+    "tracked_index": "",
+    "list_search_terms_tracked_index": [],
+    "country_or_region": "US",
+    "list_search_terms_country_or_region": [
+        "US latest financial news",
+        "United States economic news latest",
+        "News about US economy latest",
+        "US market news latest",
+        "US business news latest"
+    ],
+    "industries_and_sectors": "All industries",
+    "list_search_terms_industries_and_sectors": [
+        "US industries latest news",
+        "US sectors latest news",
+        "US economy industries performance latest",
+        "US economy sectors outlook latest",
+        "US industry news latest"
+    ],
+    "related_terms": "Global Economy, Federal Reserve, US Stock Market, US GDP, US Inflation",
+    "list_search_terms_related_terms": [
+        "Global Economy latest news",
+        "Federal Reserve latest news",
+        "US Stock Market latest news",
+        "US GDP latest news",
+        "US Inflation latest news"
+    ]
+}
+```
+
+Cache entry set for LLM call: ('US Economy', 'search terms') of length 1050
+
+The meaning of the query is: United States Economy
+
+Generated 21 search terms
+
+The generation of the search terms for US Economy finished at: 2025-04-10 05:38:51
+
+The generation of the search terms for US Economy took: 4.50 seconds
+
+The web search for US Economy started at: 2025-04-10 05:38:51
+
+Searching the web for Federal Reserve latest news
+
+Searching the web for News about US economy latest
+
+Searching the web for US Economy
+
+Searching the web for Global Economy latest news
+
+Searching the web for US Economy economic outlook latest
+
+Searching the web for US Economy market analysis latest
+
+Searching the web for US Economy latest news
+
+Searching the web for US Economy recession risk latest
+
+Searching the web for US GDP latest news
+
+Searching the web for US Inflation latest news
+
+Searching the web for US economy industries performance latest
+
+Searching the web for US business news latest
+
+Searching the web for US Stock Market latest news
+
+Searching the web for US industries latest news
+
+Searching the web for US industry news latest
+
+Searching the web for US market news latest
+
+Searching the web for US sectors latest news
+
+Searching the web for US latest financial news
+
+Searching the web for US economy sectors outlook latest
+
+Searching the web for United States economic news latest
+
+Searching the web for United States Economy financial news latest
+
+Search results: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 5, 10, 10, 10, 10, 10, 10, 10, 10]
+
+Found 144 search results
+
+The web search for US Economy finished at: 2025-04-10 05:38:54
+
+The web search for US Economy took: 3.57 seconds
+
+The crawling for US Economy started at: 2025-04-10 05:38:54
+
+Crawled URL https://www.independent.co.uk/news/world/americas/us-politics/trump-market-manipulation-tariffs-b2730542.html successfully using Crawlbase
+
+Crawled URL https://www.reuters.com/business/finance/wall-street-bosses-fear-anti-american-backlash-trumps-trade-war-intensifies-2025-04-09/ successfully using Crawlbase
+
+Crawled URL https://www.reuters.com/markets/us/feds-musalem-sees-growth-slipping-below-trend-higher-inflation-risk-2025-04-09/ successfully using Crawlbase
+
+Crawled URL https://www.financialexpress.com/policy/economy-rbi-mpc-meeting-2025-live-updates-governor-sanjay-malhotra-monetary-policy-announcement-repo-rate-loan-interest-rate-cpi-data-3803643/ successfully using Crawlbase
+
+Crawled URL https://www.business-standard.com/markets/debock-industries-ltd-share-price-72150.html successfully using Crawlbase
+
+Crawled URL https://finance.yahoo.com/news/live/stock-market-today-dow-explodes-3000-points-higher-sp-500-has-best-day-since-2008-as-trump-pauses-most-reciprocal-tariffs-133616395.html successfully using Crawlbase
+
+Error crawling URL https://www.reuters.com/markets/us/global-markets-bonds-trading-analysispix-2025-04-10/ using Crawlbase: 520 Server Error: CUSTOM for url: https://api.crawlbase.com/?token=RwHusDfW3UMTnOZ6dA7LkA&url=https%3A%2F%2Fwww.reuters.com%2Fmarkets%2Fus%2Fglobal-markets-bonds-trading-analysispix-2025-04-10%2F
+
+Crawled URL https://finance.yahoo.com/news/live/stock-market-today-dow-sp-500-nasdaq-futures-edge-higher-after-trumps-tariff-pause-sparks-historic-rally-221820717.html successfully using Crawlbase
+
+Error crawling URL https://www.telegraph.co.uk/business/2025/04/09/trump-tariffs-trade-war-china-bonds-ftse-100-markets-latest/ using Crawlbase: 520 Server Error: CUSTOM for url: https://api.crawlbase.com/?token=RwHusDfW3UMTnOZ6dA7LkA&url=https%3A%2F%2Fwww.telegraph.co.uk%2Fbusiness%2F2025%2F04%2F09%2Ftrump-tariffs-trade-war-china-bonds-ftse-100-markets-latest%2F
+
+Crawled URL https://uk.finance.yahoo.com/news/ftse-100-live-stocks-trump-china-tariffs-markets-083321697.html successfully using Crawlbase
+
+Crawled URL https://seekingalpha.com/article/4774072-from-epicenter-to-aftermath-preparing-for-economic-impact-of-trump-tariffs successfully using Crawlbase
+
+Crawled URL https://nypost.com/2025/04/10/us-news/canadian-pm-mark-carney-quickly-pledges-to-negotiate-new-economic-and-security-relationship-with-us-after-trump-pauses-tariffs-on-other-nations/ successfully using Crawlbase
+
+Error crawling URL https://www.nytimes.com/2025/04/09/world/asia/china-us-tariff-trade.html using Crawlbase: 520 Server Error: CUSTOM for url: https://api.crawlbase.com/?token=RwHusDfW3UMTnOZ6dA7LkA&url=https%3A%2F%2Fwww.nytimes.com%2F2025%2F04%2F09%2Fworld%2Fasia%2Fchina-us-tariff-trade.html
+
+Crawled URL https://www.morningstar.com/economy/even-with-trumps-rollback-tariffs-would-still-damage-us-economy successfully using Crawlbase
+
+Error crawling URL https://www.reuters.com/world/middle-east/most-gulf-markets-retreat-global-trade-war-escalates-2025-04-09/ using Crawlbase: 520 Server Error: CUSTOM for url: https://api.crawlbase.com/?token=RwHusDfW3UMTnOZ6dA7LkA&url=https%3A%2F%2Fwww.reuters.com%2Fworld%2Fmiddle-east%2Fmost-gulf-markets-retreat-global-trade-war-escalates-2025-04-09%2F
+
+Crawled URL https://www.aol.com/news/does-canada-future-lie-european-134840242.html successfully using Crawlbase
+
+Error crawling URL https://www.nytimes.com/live/2025/04/08/business/trump-tariffs-stock-market using Crawlbase: HTTPSConnectionPool(host='api.crawlbase.com', port=443): Read timed out. (read timeout=5)
+
+The crawling timed out for 96 URLs
+
+42 URLs out of 144 could be parsed
+
+The crawling for US Economy finished at: 2025-04-10 05:39:03
+
+The crawling for US Economy took: 8.33 seconds
+
+The identification of relevant articles for US Economy started at: 2025-04-10 05:39:03
+
+The prompt for the identification of relevant articles for US Economy contains 506153 characters
+
+LLM response text for ('US Economy', 'relevant articles 2'): ```json
+{
+  "items": [
+    {
+      "article_number": "4",
+      "article_url": "https://finance.yahoo.com/news/live/stock-market-today-dow-explodes-3000-points-higher-sp-500-has-best-day-since-2008-as-trump-pauses-most-reciprocal-tariffs-133616395.html",
+      "impact_on_term_of_interest": "President Trump's announcement of a 90-day pause on reciprocal tariffs for most countries and a lowered tariff rate led to a historic market rally. The S&P 500 had its best day since 2008, the Nasdaq had its largest single-day rise since 2008, and the Dow Jones saw a surge of approximately 3,000 points. This signifies a significant positive impact on market sentiment and investor confidence in the US economy, reversing previous recession fears.",
+      "impact_type": "positive"
+    },
+    {
+      "article_number": "5",
+      "article_url": "https://finance.yahoo.com/news/live/stock-market-today-dow-sp-500-nasdaq-futures-edge-higher-after-trumps-tariff-pause-sparks-historic-rally-221820717.html",
+      "impact_on_term_of_interest": "Following Trump's tariff pause, US stock futures indicated further gains, with major indexes coming off one of their biggest one-day rallies since WWII. Asian markets also rebounded sharply. However, concerns remain about the long-term resolution and the potential for rising prices and slower economic growth due to the remaining tariffs, including increased tariffs on China.",
+      "impact_type": "positive"
+    },
+    {
+      "article_number": "6",
+      "article_url": "https://inews.co.uk/news/uk-politics-latest-updates-tariffs-starmer-trump-3623581",
+      "impact_on_term_of_interest": "Article reports on the immediate positive reaction of US financial markets to Trump's 90-day tariff pause. The NASDAQ index rose by 9% and the S&P 500 by 8%.  However, it also highlights the uncertainty and 'chaos' caused by Trump's 'government by chaos' approach to economic policy, suggesting potential long-term negative impacts on investor confidence and economic stability.",
+      "impact_type": "positive"
+    },
+    {
+      "article_number": "18",
+      "article_url": "https://www.cnbctv18.com/market/us-stock-market-live-updates-trump-tariff-pause-impact-dow-snp-nasdaq-china-bonds-liveblog-19587418.htm",
+      "impact_on_term_of_interest": "US stock markets, including the Dow Jones, S&P 500, and Nasdaq, experienced massive rallies after President Trump's tariff pause announcement. However, futures later indicated a slight pullback, suggesting initial enthusiasm is tempered by underlying economic concerns and the remaining tariffs, especially the increased tariffs on China. China's deflation and potential monetary policy easing are also highlighted.",
+      "impact_type": "positive"
+    },
+    {
+      "article_number": "19",
+      "article_url": "https://www.cnn.com/politics/live-news/trump-tariffs-cnn-town-hall-04-09-25/index.html",
+      "impact_on_term_of_interest": "This article details the immediate market surge following Trump's tariff pause, with the Dow, S&P 500, and Nasdaq experiencing significant gains. It also presents expert opinions suggesting that while the pause provides temporary relief, the underlying risk of recession remains due to the ongoing tariff policies and economic shocks. Goldman Sachs, despite the pause, still sees a recession risk, indicating a mixed outlook for the US economy.",
+      "impact_type": "neutral"
+    },
+    {
+      "article_number": "21",
+      "article_url": "https://www.financialexpress.com/policy/economy-rbi-mpc-meeting-2025-live-updates-governor-sanjay-malhotra-monetary-policy-announcement-repo-rate-loan-interest-rate-cpi-data-3803643/liveblog/120111096.cms",
+      "impact_on_term_of_interest": "RBI Governor in India expresses concern about the impact of Trump's tariffs on global and Indian economic growth.  The RBI cut its GDP growth forecast due to tariff-related uncertainties, indicating negative impacts on global trade and investment which indirectly affects the US economy through global economic linkages.  However, the RBI also took accommodative monetary policy measures to support domestic growth, suggesting a mixed impact.",
+      "impact_type": "neutral"
+    },
+    {
+      "article_number": "25",
+      "article_url": "https://www.fxstreet.com/news/gold-jumps-to-3-050-as-us-tariffs-go-into-effect-202504090924",
+      "impact_on_term_of_interest": "Gold prices increased as US tariffs took effect, reflecting investor anxiety over trade tensions and potential economic uncertainty. China's retaliation with 84% tariffs further escalated trade war fears. The market speculates that increased volatility may prompt the Federal Reserve to speed up interest rate cuts to prevent a recession, suggesting a potential negative impact on the US economy prompting monetary easing.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "32",
+      "article_url": "https://www.morningstar.com/economy/even-with-trumps-rollback-tariffs-would-still-damage-us-economy",
+      "impact_on_term_of_interest": "Even with the tariff pause, the article suggests that Trump's tariffs will still damage the US economy. Morningstar expects a major rise in inflation and a high risk of recession. While acknowledging a quicker-than-expected tariff relief, the article maintains a negative outlook for US GDP growth in the coming years due to persistent cost inflation and uncertainty.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "34",
+      "article_url": "https://www.ndtv.com/world-news/trump-tariffs-us-china-tariff-war-could-cut-trade-between-two-by-80-wto-8127980",
+      "impact_on_term_of_interest": "The World Trade Organization (WTO) warns that the US-China tariff war could drastically reduce trade between the two countries by as much as 80%, significantly harming the global economy and potentially fragmenting it into blocs.  This substantial contraction in trade and global economic fragmentation represents a major negative impact on the US economy through reduced global demand and supply chain disruptions.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "37",
+      "article_url": "https://www.reuters.com/markets/us/feds-musalem-sees-growth-slipping-below-trend-higher-inflation-risk-2025-04-09/",
+      "impact_on_term_of_interest": "A Federal Reserve official, Musalem, indicates concern about US economic growth slipping below trend and higher inflation risks due to Trump's tariffs.  This suggests the tariffs pose a negative risk to the US economy, potentially leading to slower growth and increased inflation, creating a challenging scenario for monetary policy.",
+      "impact_type": "negative"
+    }
+  ]
+}
+```
+
+Cache entry set for LLM call: ('US Economy', 'relevant articles 2') of length 6355
+
+LLM response text for ('US Economy', 'relevant articles 1'): ```json
+{
+  "items": [
+    {
+      "article_number": "4",
+      "article_url": "https://finance.yahoo.com/news/live/stock-market-today-dow-explodes-3000-points-higher-sp-500-has-best-day-since-2008-as-trump-pauses-most-reciprocal-tariffs-133616395.html",
+      "impact_on_term_of_interest": "President Trump announced a 90-day pause on reciprocal tariffs and lowered them to 10%, which caused a massive market rally with the Dow Jones surging roughly 3,000 points, the S&P 500 having its best day since 2008, and the Nasdaq its second-best day on record. This indicates a significant positive impact on market sentiment and potentially averting immediate recession fears.",
+      "impact_type": "positive"
+    },
+    {
+      "article_number": "3",
+      "article_url": "https://economictimes.indiatimes.com/markets/stocks/live-blog/bse-sensex-today-live-nifty-stock-market-updates-9-april-2025/liveblog/120111096.cms",
+      "impact_on_term_of_interest": "Escalating trade tensions due to Trump's tariffs and China's retaliation (84% tariff) caused US stock futures to plunge, Treasury yields to surge, oil prices to tumble and sectors like airlines and pharma to slump, fueling recession fears and deepening global market uncertainty. This signifies a major negative impact by increasing economic instability and recession risks.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "1",
+      "article_url": "https://abcnews.go.com/Politics/trump-moves-full-steam-ahead-politically-risky-tariffs/story?id=120609719",
+      "impact_on_term_of_interest": "President Trump imposed aggressive tariffs against dozens of U.S. trading partners, including a 104% tariff on China, leading to immediate retaliation from China (84% tariff) and the EU, causing market volatility, increased recession odds by economists, and concerns from Republicans and business leaders about the negative economic consequences of trade wars, indicating a strong negative impact.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "5",
+      "article_url": "https://finance.yahoo.com/news/live/stock-market-today-dow-sp-500-nasdaq-futures-edge-higher-after-trumps-tariff-pause-sparks-historic-rally-221820717.html",
+      "impact_on_term_of_interest": "Despite the market rally following Trump's tariff pause, concerns remain about long-term economic consequences, including rising prices and slower economic growth. The article highlights that economists still warn about recession risks, and the pause might only offer temporary relief, suggesting a mixed but leaning negative impact.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "18",
+      "article_url": "https://www.cnbctv18.com/market/us-stock-market-live-updates-trump-tariff-pause-impact-dow-snp-nasdaq-china-bonds-liveblog-19587418.htm",
+      "impact_on_term_of_interest": "China's consumer deflation extended for the second month in March, partly influenced by the trade war with the US, which threatens to put further pressure on prices. A Chinese state newspaper suggested easing monetary policy, signaling potential economic headwinds for both China and indirectly impacting the US economy via trade relations. This represents a negative impact due to the broader economic uncertainty and deflationary pressures.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "6",
+      "article_url": "https://inews.co.uk/news/uk-politics-latest-updates-tariffs-starmer-trump-3623581",
+      "impact_on_term_of_interest": "Goldman Sachs rescinded its recession forecast after Trump's tariff pause, reverting to a baseline estimate of economic growth in 2025. This indicates a positive shift in economic outlook due to the policy change, although uncertainty remains as baseline tariffs are still in effect. This is a moderate positive impact.",
+      "impact_type": "positive"
+    },
+    {
+      "article_number": "21",
+      "article_url": "https://www.financialexpress.com/policy/economy-rbi-mpc-meeting-2025-live-updates-governor-sanjay-malhotra-monetary-policy-announcement-repo-rate-loan-interest-rate-cpi-data-3803643/",
+      "impact_on_term_of_interest": "RBI Governor Sanjay Malhotra stated that the central bank is more concerned about the tariff impact on growth than inflation.  RBI also cut India's GDP growth forecast to 6.5% due to rising uncertainty and downside risks from tariff-related developments, reflecting a negative global economic outlook that indirectly impacts the US economy through global trade and financial linkages. This signifies a negative indirect impact.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "34",
+      "article_url": "https://www.ndtv.com/world-news/trump-tariffs-us-china-tariff-war-could-cut-trade-between-two-by-80-wto-8127980",
+      "impact_on_term_of_interest": "The World Trade Organization (WTO) chief warned that the US-China tariff war could reduce trade between the two countries by 80%, significantly damaging the global economic outlook and potentially impacting the US economy through reduced trade and global economic slowdown. This represents a significant negative impact due to drastic trade reduction.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "32",
+      "article_url": "https://www.morningstar.com/economy/even-with-trumps-rollback-tariffs-would-still-damage-us-economy",
+      "impact_on_term_of_interest": "Even with the tariff pause, Morningstar predicts that tariffs would still damage the US economy, expecting a major rise in inflation and a high risk of recession. They reduced their GDP growth forecasts for 2025-29. This signifies a negative outlook despite the tariff pause, indicating persistent economic damage.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": "41",
+      "article_url": "https://www.usatoday.com/story/money/economy/2025/04/09/federal-reserve-kashkari-tariffs-inflation-expectations/83007039007/",
+      "impact_on_term_of_interest": "Federal Reserve Bank of Minneapolis President Neel Kashkari indicated that tariffs threaten to unanchor inflation expectations and could warrant a Fed rate hike, even with a weakening economy. This highlights the dilemma tariffs pose for monetary policy and the potential for further economic tightening, which is a negative signal for economic growth.",
+      "impact_type": "negative"
+    }
+  ]
+}
+```
+
+Cache entry set for LLM call: ('US Economy', 'relevant articles 1') of length 6064
+
+LLM response text for ('US Economy', 'relevant articles 3'): ```json
+{
+  "items": [
+    {
+      "article_number": 4,
+      "article_url": "https://finance.yahoo.com/news/live/stock-market-today-dow-explodes-3000-points-higher-sp-500-has-best-day-since-2008-as-trump-pauses-most-reciprocal-tariffs-133616395.html",
+      "impact_on_term_of_interest": "President Trump announced a 90-day pause on reciprocal tariffs for most countries, leading to a historic market rally. The Dow Jones surged roughly 3,000 points, the S&P 500 had its best day since 2008, and the Nasdaq had its second-best day on record. This pause significantly reduced immediate recession fears and positively impacted investor sentiment.",
+      "impact_type": "positive"
+    },
+    {
+      "article_number": 6,
+      "article_url": "https://inews.co.uk/news/uk-politics-latest-updates-tariffs-starmer-trump-3623581",
+      "impact_on_term_of_interest": "Following President Trump's announcement of a 90-day tariff pause, financial markets in the US experienced a significant surge. The NASDAQ index rose by 9% and the S&P 500 by 8%. Goldman Sachs subsequently rescinded its recession forecast, indicating a positive shift in economic outlook due to the tariff pause.",
+      "impact_type": "positive"
+    },
+    {
+      "article_number": 34,
+      "article_url": "https://www.ndtv.com/world-news/trump-tariffs-us-china-tariff-war-could-cut-trade-between-two-by-80-wto-8127980",
+      "impact_on_term_of_interest": "The World Trade Organization (WTO) warned that the escalating tariff war between the US and China could drastically reduce trade between the two nations by as much as 80%, potentially dragging down the global economy and severely damaging the outlook for global GDP growth.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": 1,
+      "article_url": "https://abcnews.go.com/Politics/trump-moves-full-steam-ahead-politically-risky-tariffs/story?id=120609719",
+      "impact_on_term_of_interest": "President Trump's decision to impose aggressive tariffs against dozens of US trading partners led to immediate market turmoil and increased concerns about a potential recession. Economists increased their odds of a recession this year due to the tariffs, which are expected to raise prices and hurt American consumers.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": 3,
+      "article_url": "https://economictimes.indiatimes.com/markets/stocks/live-blog/bse-sensex-today-live-nifty-stock-market-updates-9-april-2025/liveblog/120111096.cms",
+      "impact_on_term_of_interest": "Escalating trade tensions between the US and China, triggered by massive tariffs from both sides, caused US stock futures to plunge. Treasury yields surged, and oil prices tumbled, fueling recession fears and deepening global market uncertainty, indicating a significant negative impact on the US economic outlook.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": 27,
+      "article_url": "https://www.indiatoday.in/world/story/donald-trump-reciprocal-tariffs-us-china-import-united-states-president-recession-jp-morgan-ceo-jamie-dimon-global-trade-2706554-2025-04-09",
+      "impact_on_term_of_interest": "Jamie Dimon, CEO of JPMorgan Chase, warned that President Trump's sweeping tariffs would likely lead to a recession in the US and potential defaults by borrowers. JPMorgan's economists increased the probability of a US recession to 60% due to the escalating trade tensions.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": 41,
+      "article_url": "https://www.usatoday.com/story/money/economy/2025/04/09/federal-reserve-kashkari-tariffs-inflation-expectations/83007039007/",
+      "impact_on_term_of_interest": "Federal Reserve Bank of Minneapolis President Neel Kashkari stated that President Trump's tariffs pose a threat to unanchor inflation expectations and could harm the US economy. He indicated that while tariffs increase inflation risks, they also weaken the economy, raising the possibility of either a rate hike or a rate cut by the Federal Reserve, and increasing uncertainty.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": 22,
+      "article_url": "https://www.foreignaffairs.com/united-states/how-trump-could-dethrone-dollar",
+      "impact_on_term_of_interest": "An analysis in Foreign Affairs suggests that President Trump's dramatic global tariffs and attacks on the rule of law pose a genuine threat to the US dollar's status as the world's reserve currency, potentially leading to higher costs, more complicated trade, and reduced living standards in the US.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": 32,
+      "article_url": "https://www.morningstar.com/economy/even-with-trumps-rollback-tariffs-would-still-damage-us-economy",
+      "impact_on_term_of_interest": "Morningstar analysts suggest that even with President Trump's tariff pause, significant damage to the US economy is still expected. They forecast a major rise in inflation, slower economic growth, and a considerable risk of recession, although slightly reduced compared to their previous estimates before the pause.",
+      "impact_type": "negative"
+    },
+    {
+      "article_number": 33,
+      "article_url": "https://www.nbcnews.com/politics/trump-administration/live-blog/trump-administration-live-updates-global-tariffs-china-rcna200346",
+      "impact_on_term_of_interest": "This article provides a live update on Trump's tariff policies, highlighting the 90-day pause for most countries but the increase to 125% for China. It covers market reactions, international responses, and political debates surrounding the tariffs, reflecting a mixed but overall uncertain outlook for the US economy due to the trade policy shifts.",
+      "impact_type": "neutral"
+    }
+  ]
+}
+```
+
+Cache entry set for LLM call: ('US Economy', 'relevant articles 3') of length 5450
+
+The counts of relevant articles identified for US Economy are: [8, 10, 9]
+
+The identification of relevant articles for US Economy finished at: 2025-04-10 05:39:29
+
+The identification of relevant articles for US Economy took: 25.87 seconds
+
+The generation of the most impactful news for US Economy started at: 2025-04-10 05:39:29
+
+The prompt for the generation of the most impactful news for US Economy contains 197586 characters
+
+LLM response text for ('US Economy', 'most impactful news'): ```json
+{
+  "items": [
+    {
+      "news": "WTO warns that the US-China tariff war could lead to an 80% reduction in trade between the two countries, severely damaging the global economic outlook and potentially fragmenting the global economy into blocs.",
+      "most_relevant_url": "https://www.ndtv.com/world-news/trump-tariffs-us-china-tariff-war-could-cut-trade-between-two-by-80-wto-8127980",
+      "impact_of_news_on_term_of_interest": "The World Trade Organization (WTO) has cautioned that escalating trade tensions between the United States and China, driven by tariff increases, could drastically reduce trade between the world's two largest economies. This significant trade contraction and potential fragmentation of the global economy pose a substantial threat to the US economy through reduced global demand, supply chain disruptions, and overall global economic instability.",
+      "impact_type_of_news": "negative"
+    },
+    {
+      "news": "JPMorgan Chase CEO Jamie Dimon warns that President Trump's sweeping tariffs will likely trigger a US recession and increase borrower defaults, with JPMorgan economists raising the US recession probability to 60%.",
+      "most_relevant_url": "https://www.indiatoday.in/world/story/donald-trump-reciprocal-tariffs-us-china-import-united-states-president-recession-jp-morgan-ceo-jamie-dimon-global-trade-2706554-2025-04-09",
+      "impact_of_news_on_term_of_interest": "The CEO of JPMorgan Chase, a major financial institution, has publicly stated that the extensive tariffs imposed by President Trump are expected to cause a recession in the United States. This warning from a prominent figure in the financial sector, coupled with JPMorgan's increased recession probability forecast, signals a significant negative outlook for the US economy.",
+      "impact_type_of_news": "negative"
+    },
+    {
+      "news": "Federal Reserve official Neel Kashkari indicates that tariffs pose a threat to unanchor inflation expectations and might necessitate a Federal Reserve rate hike, even amidst a weakening economy, signaling potential economic tightening.",
+      "most_relevant_url": "https://www.usatoday.com/story/money/economy/2025/04/09/federal-reserve-kashkari-tariffs-inflation-expectations/83007039007/",
+      "impact_of_news_on_term_of_interest": "A high-ranking official from the Federal Reserve has expressed concerns that President Trump's tariffs could destabilize inflation expectations and potentially require the Fed to raise interest rates. This scenario of potential rate hikes amidst economic weakness suggests a challenging outlook for the US economy, potentially hindering growth and increasing borrowing costs.",
+      "impact_type_of_news": "negative"
+    },
+    {
+      "news": "Analysis suggests that President Trump's tariff policies and challenges to the rule of law pose a genuine threat to the US dollar's status as the world's reserve currency, potentially diminishing its global dominance.",
+      "most_relevant_url": "https://www.foreignaffairs.com/united-states/how-trump-could-dethrone-dollar",
+      "impact_of_news_on_term_of_interest": "Experts at Foreign Affairs magazine argue that President Trump's trade and legal policies are undermining the fundamental factors that support the US dollar's position as the global reserve currency. A decline in the dollar's reserve status could have severe long-term negative consequences for the US economy, including increased trade costs, reduced financial influence, and a lower standard of living.",
+      "impact_type_of_news": "negative"
+    },
+    {
+      "news": "US stock market experiences historic rally, with the Dow Jones soaring roughly 3,000 points, the S&P 500 achieving its best day since 2008, and the Nasdaq reaching its second-best day on record, after President Trump announces a 90-day pause on tariffs.",
+      "most_relevant_url": "https://finance.yahoo.com/news/live/stock-market-today-dow-explodes-3000-points-higher-sp-500-has-best-day-since-2008-as-trump-pauses-most-reciprocal-tariffs-133616395.html",
+      "impact_of_news_on_term_of_interest": "President Trump's announcement of a temporary pause on tariffs led to an extraordinary surge in the US stock market. This massive rally, reflecting record-breaking gains in major indices, indicates a significant positive shift in market sentiment and investor confidence, suggesting a temporary alleviation of immediate recession fears and a boost to the perceived health of the US economy.",
+      "impact_type_of_news": "positive"
+    }
+  ]
+}
+```
+
+Cache entry set for LLM call: ('US Economy', 'most impactful news') of length 4367
+
+Generated 5 most impactful news for US Economy
+
+The generation of the most impactful news for US Economy finished at: 2025-04-10 05:39:43
+
+The generation of the most impactful news for US Economy took: 14.09 seconds
+
+Processing query "US Economy" finished: 2025-04-10 05:39:43
+
+Uploaded ./data/test_cases-processed-2025-04-10-05:38:46.txt to gs://finance-app-back-end-evaluation-logs/test_cases-processed-2025-04-10-05:38:46.txt
+
+Uploaded logs_back_end.log to gs://finance-app-back-end-evaluation-logs/test_cases-processed-2025-04-10-05:38:46-logs.log
+
+Processing file "test_cases.txt" finished: 2025-04-10 05:39:46
+
+Processing file "test_cases.txt" took: 61.77 seconds
+

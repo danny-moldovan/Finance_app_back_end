@@ -1,0 +1,7 @@
+"{\"message_type\": \"progress\", \"message\": \"Processing file \\\"test_cases.txt\\\" started: 2025-04-10 04:31:13\"}\n"
+"{\"message_type\": \"progress\", \"message\": \"Processing query \\\"US Economy\\\" started: 2025-04-10 04:32:27\"}\n"
+"{\"message_type\": \"progress\", \"message\": \"Processing query \\\"US Economy\\\" finished: 2025-04-10 04:33:25\"}\n"
+"{\"message_type\": \"progress\", \"message\": {\"number_of_outputs\": 1, \"number_of_search_terms\": [21], \"number_of_retrieved_urls\": [137], \"number_of_parsed_urls\": [35], \"number_of_relevant_articles\": [3], \"number_of_chars_in_most_impactful_news\": [431]}}\n"
+"{\"message_type\": \"progress\", \"message\": \"Processing file \\\"test_cases.txt\\\" finished: 2025-04-10 04:33:37\"}\n"
+"{\"message_type\": \"progress\", \"message\": \"Processing file \\\"test_cases.txt\\\" took: 143.91 seconds\"}\n"
+"{\"message_type\": \"final\", \"message\": {\"status_code\": 200, \"output_filename\": \"test_cases-processed-2025-04-10-04:32:27.txt\"}}\n"

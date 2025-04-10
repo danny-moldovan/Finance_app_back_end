@@ -27,7 +27,7 @@ CORS(app, resources={
         "methods": ["GET", "POST", "OPTIONS"],
         "allow_headers": ["Content-Type"],
         "expose_headers": ["Content-Type"],
-        "supports_credentials": False,
+        "supports_credentials": True,
         "max_age": 600
     }
 })
@@ -38,6 +38,7 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Origin', '*')
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
     response.headers.add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+    #response.headers.add('Access-Control-Allow-Credentials', 'true')
     return response
 
 
@@ -529,6 +530,6 @@ def generate_recent_news_batch():
         }
     )
     
-
-if __name__ == "__main__":
-    app.run(host = "0.0.0.0", port = 8080, debug = True)
+    
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080)

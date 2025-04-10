@@ -11,3 +11,6 @@ if ! jq -e 'select(.message_type == "final" and .message.status_code == 200)' /w
 fi
 
 echo "The batch summary was generated successfully!"
+
+
+curl -X POST http://localhost:8080/generate_recent_news -H "Content-Type: application/json" -d '{"query": "US inflation"}'
